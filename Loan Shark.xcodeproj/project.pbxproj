@@ -1,0 +1,582 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		74BDE57C28CD868C00D1DA25 /* Loan_SharkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */; };
+		74BDE57E28CD868C00D1DA25 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE57D28CD868C00D1DA25 /* ContentView.swift */; };
+		74BDE58028CD868E00D1DA25 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74BDE57F28CD868E00D1DA25 /* Assets.xcassets */; };
+		74BDE58328CD868E00D1DA25 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74BDE58228CD868E00D1DA25 /* Preview Assets.xcassets */; };
+		74BDE58D28CD868E00D1DA25 /* Loan_SharkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE58C28CD868E00D1DA25 /* Loan_SharkTests.swift */; };
+		74BDE59728CD868E00D1DA25 /* Loan_SharkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE59628CD868E00D1DA25 /* Loan_SharkUITests.swift */; };
+		74BDE59928CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE59828CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		74BDE58928CD868E00D1DA25 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 74BDE57028CD868C00D1DA25 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 74BDE57728CD868C00D1DA25;
+			remoteInfo = "Loan Shark";
+		};
+		74BDE59328CD868E00D1DA25 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 74BDE57028CD868C00D1DA25 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 74BDE57728CD868C00D1DA25;
+			remoteInfo = "Loan Shark";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		74BDE57828CD868C00D1DA25 /* Loan Shark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Loan Shark.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loan_SharkApp.swift; sourceTree = "<group>"; };
+		74BDE57D28CD868C00D1DA25 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		74BDE57F28CD868E00D1DA25 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		74BDE58228CD868E00D1DA25 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		74BDE58828CD868E00D1DA25 /* Loan SharkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Loan SharkTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		74BDE58C28CD868E00D1DA25 /* Loan_SharkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loan_SharkTests.swift; sourceTree = "<group>"; };
+		74BDE59228CD868E00D1DA25 /* Loan SharkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Loan SharkUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		74BDE59628CD868E00D1DA25 /* Loan_SharkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loan_SharkUITests.swift; sourceTree = "<group>"; };
+		74BDE59828CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loan_SharkUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		74BDE57528CD868C00D1DA25 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74BDE58528CD868E00D1DA25 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74BDE58F28CD868E00D1DA25 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		74BDE56F28CD868C00D1DA25 = {
+			isa = PBXGroup;
+			children = (
+				74BDE57A28CD868C00D1DA25 /* Loan Shark */,
+				74BDE58B28CD868E00D1DA25 /* Loan SharkTests */,
+				74BDE59528CD868E00D1DA25 /* Loan SharkUITests */,
+				74BDE57928CD868C00D1DA25 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		74BDE57928CD868C00D1DA25 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				74BDE57828CD868C00D1DA25 /* Loan Shark.app */,
+				74BDE58828CD868E00D1DA25 /* Loan SharkTests.xctest */,
+				74BDE59228CD868E00D1DA25 /* Loan SharkUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		74BDE57A28CD868C00D1DA25 /* Loan Shark */ = {
+			isa = PBXGroup;
+			children = (
+				74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */,
+				74BDE57D28CD868C00D1DA25 /* ContentView.swift */,
+				74BDE57F28CD868E00D1DA25 /* Assets.xcassets */,
+				74BDE58128CD868E00D1DA25 /* Preview Content */,
+			);
+			path = "Loan Shark";
+			sourceTree = "<group>";
+		};
+		74BDE58128CD868E00D1DA25 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				74BDE58228CD868E00D1DA25 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		74BDE58B28CD868E00D1DA25 /* Loan SharkTests */ = {
+			isa = PBXGroup;
+			children = (
+				74BDE58C28CD868E00D1DA25 /* Loan_SharkTests.swift */,
+			);
+			path = "Loan SharkTests";
+			sourceTree = "<group>";
+		};
+		74BDE59528CD868E00D1DA25 /* Loan SharkUITests */ = {
+			isa = PBXGroup;
+			children = (
+				74BDE59628CD868E00D1DA25 /* Loan_SharkUITests.swift */,
+				74BDE59828CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift */,
+			);
+			path = "Loan SharkUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		74BDE57728CD868C00D1DA25 /* Loan Shark */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74BDE59C28CD868E00D1DA25 /* Build configuration list for PBXNativeTarget "Loan Shark" */;
+			buildPhases = (
+				74BDE57428CD868C00D1DA25 /* Sources */,
+				74BDE57528CD868C00D1DA25 /* Frameworks */,
+				74BDE57628CD868C00D1DA25 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Loan Shark";
+			productName = "Loan Shark";
+			productReference = 74BDE57828CD868C00D1DA25 /* Loan Shark.app */;
+			productType = "com.apple.product-type.application";
+		};
+		74BDE58728CD868E00D1DA25 /* Loan SharkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74BDE59F28CD868E00D1DA25 /* Build configuration list for PBXNativeTarget "Loan SharkTests" */;
+			buildPhases = (
+				74BDE58428CD868E00D1DA25 /* Sources */,
+				74BDE58528CD868E00D1DA25 /* Frameworks */,
+				74BDE58628CD868E00D1DA25 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				74BDE58A28CD868E00D1DA25 /* PBXTargetDependency */,
+			);
+			name = "Loan SharkTests";
+			productName = "Loan SharkTests";
+			productReference = 74BDE58828CD868E00D1DA25 /* Loan SharkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		74BDE59128CD868E00D1DA25 /* Loan SharkUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74BDE5A228CD868E00D1DA25 /* Build configuration list for PBXNativeTarget "Loan SharkUITests" */;
+			buildPhases = (
+				74BDE58E28CD868E00D1DA25 /* Sources */,
+				74BDE58F28CD868E00D1DA25 /* Frameworks */,
+				74BDE59028CD868E00D1DA25 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				74BDE59428CD868E00D1DA25 /* PBXTargetDependency */,
+			);
+			name = "Loan SharkUITests";
+			productName = "Loan SharkUITests";
+			productReference = 74BDE59228CD868E00D1DA25 /* Loan SharkUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		74BDE57028CD868C00D1DA25 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1400;
+				LastUpgradeCheck = 1400;
+				TargetAttributes = {
+					74BDE57728CD868C00D1DA25 = {
+						CreatedOnToolsVersion = 14.0;
+					};
+					74BDE58728CD868E00D1DA25 = {
+						CreatedOnToolsVersion = 14.0;
+						TestTargetID = 74BDE57728CD868C00D1DA25;
+					};
+					74BDE59128CD868E00D1DA25 = {
+						CreatedOnToolsVersion = 14.0;
+						TestTargetID = 74BDE57728CD868C00D1DA25;
+					};
+				};
+			};
+			buildConfigurationList = 74BDE57328CD868C00D1DA25 /* Build configuration list for PBXProject "Loan Shark" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 74BDE56F28CD868C00D1DA25;
+			productRefGroup = 74BDE57928CD868C00D1DA25 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				74BDE57728CD868C00D1DA25 /* Loan Shark */,
+				74BDE58728CD868E00D1DA25 /* Loan SharkTests */,
+				74BDE59128CD868E00D1DA25 /* Loan SharkUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		74BDE57628CD868C00D1DA25 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74BDE58328CD868E00D1DA25 /* Preview Assets.xcassets in Resources */,
+				74BDE58028CD868E00D1DA25 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74BDE58628CD868E00D1DA25 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74BDE59028CD868E00D1DA25 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		74BDE57428CD868C00D1DA25 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74BDE57E28CD868C00D1DA25 /* ContentView.swift in Sources */,
+				74BDE57C28CD868C00D1DA25 /* Loan_SharkApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74BDE58428CD868E00D1DA25 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74BDE58D28CD868E00D1DA25 /* Loan_SharkTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74BDE58E28CD868E00D1DA25 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74BDE59928CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift in Sources */,
+				74BDE59728CD868E00D1DA25 /* Loan_SharkUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		74BDE58A28CD868E00D1DA25 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 74BDE57728CD868C00D1DA25 /* Loan Shark */;
+			targetProxy = 74BDE58928CD868E00D1DA25 /* PBXContainerItemProxy */;
+		};
+		74BDE59428CD868E00D1DA25 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 74BDE57728CD868C00D1DA25 /* Loan Shark */;
+			targetProxy = 74BDE59328CD868E00D1DA25 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		74BDE59A28CD868E00D1DA25 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		74BDE59B28CD868E00D1DA25 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		74BDE59D28CD868E00D1DA25 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Loan Shark/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "tk.sg.Loan-Shark";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		74BDE59E28CD868E00D1DA25 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Loan Shark/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "tk.sg.Loan-Shark";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		74BDE5A028CD868E00D1DA25 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "tk.sg.Loan-SharkTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Loan Shark.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Loan Shark";
+			};
+			name = Debug;
+		};
+		74BDE5A128CD868E00D1DA25 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "tk.sg.Loan-SharkTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Loan Shark.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Loan Shark";
+			};
+			name = Release;
+		};
+		74BDE5A328CD868E00D1DA25 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "tk.sg.Loan-SharkUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Loan Shark";
+			};
+			name = Debug;
+		};
+		74BDE5A428CD868E00D1DA25 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "tk.sg.Loan-SharkUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Loan Shark";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		74BDE57328CD868C00D1DA25 /* Build configuration list for PBXProject "Loan Shark" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74BDE59A28CD868E00D1DA25 /* Debug */,
+				74BDE59B28CD868E00D1DA25 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74BDE59C28CD868E00D1DA25 /* Build configuration list for PBXNativeTarget "Loan Shark" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74BDE59D28CD868E00D1DA25 /* Debug */,
+				74BDE59E28CD868E00D1DA25 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74BDE59F28CD868E00D1DA25 /* Build configuration list for PBXNativeTarget "Loan SharkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74BDE5A028CD868E00D1DA25 /* Debug */,
+				74BDE5A128CD868E00D1DA25 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74BDE5A228CD868E00D1DA25 /* Build configuration list for PBXNativeTarget "Loan SharkUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74BDE5A328CD868E00D1DA25 /* Debug */,
+				74BDE5A428CD868E00D1DA25 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 74BDE57028CD868C00D1DA25 /* Project object */;
+}
