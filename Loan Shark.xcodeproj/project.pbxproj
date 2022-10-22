@@ -24,6 +24,10 @@
 		74FB48292903892200F23E32 /* Debts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB48282903892200F23E32 /* Debts.swift */; };
 		74FB482A2903892200F23E32 /* Debts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB48282903892200F23E32 /* Debts.swift */; };
 		74FB482B2903892200F23E32 /* Debts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB48282903892200F23E32 /* Debts.swift */; };
+		74FB482E290391AA00F23E32 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 74FB482D290391AA00F23E32 /* WrappingHStack */; };
+		74FB4830290394E800F23E32 /* AddTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB482F290394E800F23E32 /* AddTransactionView.swift */; };
+		74FB4831290394E800F23E32 /* AddTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB482F290394E800F23E32 /* AddTransactionView.swift */; };
+		74FB4832290394E800F23E32 /* AddTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB482F290394E800F23E32 /* AddTransactionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +62,7 @@
 		74FB4820290388CC00F23E32 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		74FB4824290388F500F23E32 /* TransactionDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDetailsView.swift; sourceTree = "<group>"; };
 		74FB48282903892200F23E32 /* Debts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debts.swift; sourceTree = "<group>"; };
+		74FB482F290394E800F23E32 /* AddTransactionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTransactionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74FB482E290391AA00F23E32 /* WrappingHStack in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +120,7 @@
 				74FB481E2903887F00F23E32 /* ContactView.swift */,
 				74FB4820290388CC00F23E32 /* HomeView.swift */,
 				74FB4824290388F500F23E32 /* TransactionDetailsView.swift */,
+				74FB482F290394E800F23E32 /* AddTransactionView.swift */,
 				74BDE57F28CD868E00D1DA25 /* Assets.xcassets */,
 				74BDE58128CD868E00D1DA25 /* Preview Content */,
 			);
@@ -161,6 +168,9 @@
 			dependencies = (
 			);
 			name = "Loan Shark";
+			packageProductDependencies = (
+				74FB482D290391AA00F23E32 /* WrappingHStack */,
+			);
 			productName = "Loan Shark";
 			productReference = 74BDE57828CD868C00D1DA25 /* Loan Shark.app */;
 			productType = "com.apple.product-type.application";
@@ -233,6 +243,9 @@
 				Base,
 			);
 			mainGroup = 74BDE56F28CD868C00D1DA25;
+			packageReferences = (
+				74FB482C290391AA00F23E32 /* XCRemoteSwiftPackageReference "WrappingHStack" */,
+			);
 			productRefGroup = 74BDE57928CD868C00D1DA25 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -275,6 +288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74FB4830290394E800F23E32 /* AddTransactionView.swift in Sources */,
 				74FB4825290388F500F23E32 /* TransactionDetailsView.swift in Sources */,
 				74BDE57E28CD868C00D1DA25 /* ContentView.swift in Sources */,
 				74BDE57C28CD868C00D1DA25 /* Loan_SharkApp.swift in Sources */,
@@ -292,6 +306,7 @@
 				74FB4826290388F500F23E32 /* TransactionDetailsView.swift in Sources */,
 				74BDE58D28CD868E00D1DA25 /* Loan_SharkTests.swift in Sources */,
 				74FB4822290388CC00F23E32 /* HomeView.swift in Sources */,
+				74FB4831290394E800F23E32 /* AddTransactionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +317,7 @@
 				74FB4823290388CC00F23E32 /* HomeView.swift in Sources */,
 				74BDE59928CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift in Sources */,
 				74FB4827290388F500F23E32 /* TransactionDetailsView.swift in Sources */,
+				74FB4832290394E800F23E32 /* AddTransactionView.swift in Sources */,
 				74FB482B2903892200F23E32 /* Debts.swift in Sources */,
 				74BDE59728CD868E00D1DA25 /* Loan_SharkUITests.swift in Sources */,
 			);
@@ -605,6 +621,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		74FB482C290391AA00F23E32 /* XCRemoteSwiftPackageReference "WrappingHStack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dkk/WrappingHStack";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		74FB482D290391AA00F23E32 /* WrappingHStack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 74FB482C290391AA00F23E32 /* XCRemoteSwiftPackageReference "WrappingHStack" */;
+			productName = WrappingHStack;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 74BDE57028CD868C00D1DA25 /* Project object */;
 }

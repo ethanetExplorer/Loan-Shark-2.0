@@ -5,14 +5,16 @@
 //  Created by T Krobot on 11/9/22.
 //
 
-import Foundation
+import SwiftUI
 
-struct Debt: Identifiable {
-    var id = UUID()
-    var money: Double
-    var collector: String
-    var debtor: String
-    var debtor2: String
-    var appliedTags: [Int]
-    var daysDueFromNow: Int
+struct ContactsView: View {
+    var body: some View {
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    }
+}
+
+struct ContactsView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContactsView()
+    }
 }

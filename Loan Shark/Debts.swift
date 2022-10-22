@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Debt: Identifiable {
     var id = UUID()
@@ -15,4 +16,11 @@ struct Debt: Identifiable {
     var debtor2: String
     var appliedTags: [Int]
     var daysDueFromNow: Int
+}
+
+struct Tag: Identifiable{
+    var id = UUID()
+    var name: String
+    var icon: String
+    var colour: Color
 }
