@@ -10,11 +10,11 @@ import SwiftUI
 struct HomeView: View {
 
     @State var debts = [
-        Debt(money: 420.69, collector: "Mr. Tan", debtor: "me", debtor2: "Mr. Lee", appliedTags: [1, 3], daysDueFromNow: 3),
-        Debt(money: 32, collector: "Ah Fan", debtor: "me", debtor2: "Mrs. Koo", appliedTags: [0], daysDueFromNow: 9)
+        Debt(money: 420.69, name: "Mr. Tan", debtor: "Me", debtor2: "Mr. Lee", appliedTags: [1, 3], daysDueFromNow: 3),
+        Debt(money: 32, name: "Ah Fan", debtor: "Me", debtor2: "Mrs. Koo", appliedTags: [0], daysDueFromNow: 9)
     ]
     @State var debtsDueInAWeek = [
-        Debt(money: 420.69, collector: "Mr. Tan", debtor: "me", debtor2: "Mr. Lee", appliedTags: [1, 3], daysDueFromNow: 3)
+        Debt(money: 420.69, name: "Mr. Tan", debtor: "me", debtor2: "Mr. Lee", appliedTags: [1, 3], daysDueFromNow: 3)
     ]
     @State var tags = [
         Tag(name: "Bill Split", icon: "square.fill", colour: Color.blue),
@@ -36,7 +36,7 @@ struct HomeView: View {
         NavigationView {
             List {
                 Section {
-                    TextField("", text: $searchTerm, prompt: Text("Search for something"))
+                    TextField("", text: $searchTerm, prompt: Text("Search for a debt"))
                         .padding(.leading, 30)
                         .disableAutocorrection(true)
                         .overlay(
@@ -78,7 +78,7 @@ struct HomeView: View {
                         } label: {
                             HStack {
                                 VStack(alignment: .leading) {
-                                    Text(debt.collector)
+                                    Text(debt.name)
                                         .foregroundColor(.black)
                                     Text("\(debt.debtor), \(debt.debtor2) - Tag name")
                                         .font(.caption)
@@ -102,7 +102,7 @@ struct HomeView: View {
                         } label: {
                             HStack {
                                 VStack(alignment: .leading) {
-                                    Text(debt.collector)
+                                    Text(debt.name)
                                         .foregroundColor(.black)
                                     Text("\(debt.debtor), \(debt.debtor2) - Tag name")
                                         .font(.caption)
@@ -131,7 +131,6 @@ struct HomeView: View {
                         Image(systemName: "line.3.horizontal.decrease.circle")
                     }
                     .sheet(isPresented: $showAddTransactionSheet) {
-                        AddTransactionView()
                     }
                 }
                 .font(.system(size: 23))

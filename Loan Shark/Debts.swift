@@ -11,7 +11,7 @@ import SwiftUI
 struct Debt: Identifiable {
     var id = UUID()
     var money: Double
-    var collector: String
+    var name: String
     var debtor: String
     var debtor2: String
     var appliedTags: [Int]
