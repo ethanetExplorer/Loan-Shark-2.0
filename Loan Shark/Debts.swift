@@ -8,12 +8,13 @@
 import Foundation
 import SwiftUI
 
+
+
 struct Debt: Identifiable {
     var id = UUID()
     var money: Double
     var name: String
-    var debtor: String
-    var debtor2: String
+    var debtors: [String]
     var appliedTags: [Int]
     var daysDueFromNow: Int
 }

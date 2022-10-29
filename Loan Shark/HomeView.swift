@@ -10,16 +10,16 @@ import SwiftUI
 struct HomeView: View {
 
     @State var debts = [
-        Debt(money: 420.69, name: "Mr. Tan", debtor: "Me", debtor2: "Mr. Lee", appliedTags: [1, 3], daysDueFromNow: -3),
-        Debt(money: 32, name: "Ah Fan", debtor: "Me", debtor2: "Mrs. Koo", appliedTags: [0], daysDueFromNow: 9),
-        Debt(money: 420.69, name: "Mr. Tan", debtor: "me", debtor2: "Mr. Lee", appliedTags: [1, 3], daysDueFromNow: 3)
+        Debt(money: 420.69, name: "Mr. Tan", debtors: ["Me", "Mr. Lee"], appliedTags: [1, 3], daysDueFromNow: -3),
+        Debt(money: 32, name: "Ah Fan", debtors: ["Me", "Mrs. Koo"], appliedTags: [0], daysDueFromNow: 9),
+        Debt(money: 520.30, name: "Mr. Tan", debtors: ["me", "Mr. Lim"], appliedTags: [1, 3], daysDueFromNow: 3)
     ]
     
-    @State var debtsDueInAWeek: [Debt] = []
-    @State var outstandingDebts: [Debt] = []
+     var debtsDueInAWeek: [Debt] = []
+     var outstandingDebts: [Debt] = []
     @State var tags = [
         Tag(name: "Bill Split", icon: "square.fill", colour: Color.blue),
-        Tag(name: "Normal", icon: "triangle.fill", colour: Color.green),
+        Tag(name: "Normal", icon: "bag.fill", colour: Color.green),
         Tag(name: "Insurance", icon: "dollarsign.circle", colour: Color.red),
         Tag(name: "Car Fix", icon: "car", colour: Color.orange),
         Tag(name: "Renovation", icon: "hammer.fill", colour: Color.purple)
@@ -34,16 +34,15 @@ struct HomeView: View {
 //    @AppStorage ("key") var lastCheckedYear = 0
 
     init() {
+        print("bad")
         for debt in debts {
-            if debt.daysDueFromNow <= 7 {
+            if debt.daysDueFromNow <= 7 && debt.daysDueFromNow > 0 {
                 debtsDueInAWeek.append(debt)
-            }
-        }
-        for debt in debts {
-            if debt.daysDueFromNow < 0{
+            } else if debt.daysDueFromNow < 0 {
                 outstandingDebts.append(debt)
             }
         }
+        print(outstandingDebts.count)
     }
     
     var body: some View {
@@ -75,8 +74,7 @@ struct HomeView: View {
                                 Image(systemName: tag.icon)
                                     .foregroundColor(.white)
                                     .padding(.trailing, 66)
-                                    .font(.system(size: 14))
-                                    .padding(.bottom, 1)
+                                    .font(.system(size: 12))
                                 Text(tag.name)
                                     .foregroundColor(tag.colour)
                                     .font(.caption)
@@ -87,7 +85,7 @@ struct HomeView: View {
                     .padding(.bottom, 5)
                 }
                 Section(header: Text("OUTSTANDING")) {
-                    ForEach(debts) { debt in
+                    ForEach(outstandingDebts) { debt in
                         Button {
                             showTransactionDetailsSheet.toggle()
                             // decrease debt.daysDueFromNow by dayDifference()
@@ -96,7 +94,7 @@ struct HomeView: View {
                                 VStack(alignment: .leading) {
                                     Text(debt.name)
                                         .foregroundColor(.black)
-                                    Text("\(debt.debtor), \(debt.debtor2) - Tag name")
+                                    Text("\(debt.debtors[0]), \(debt.debtors[1])")
                                         .font(.caption)
                                         .foregroundColor(.gray)
                                 }
@@ -112,7 +110,6 @@ struct HomeView: View {
                     }
                 }
                 Section(header: Text("DUE IN NEXT 7 DAYS")) {
-                    if let debtsDueInAWeek = debtsDueInAWeek {
                         ForEach(debtsDueInAWeek) { debt in
                             Button {
                                 showTransactionDetailsSheet.toggle()
@@ -121,7 +118,7 @@ struct HomeView: View {
                                     VStack(alignment: .leading) {
                                         Text(debt.name)
                                             .foregroundColor(.black)
-                                        Text("\(debt.debtor), \(debt.debtor2) - Tag name")
+                                        Text("\(debt.debtors[0]), \(debt.debtors[1])")
                                             .font(.caption)
                                             .foregroundColor(.gray)
                                     }
@@ -132,8 +129,6 @@ struct HomeView: View {
                                 }
                             }
                         }
-                    } else {
-                        Text("None")
                     }
                 }
             }
@@ -251,7 +246,7 @@ struct HomeView: View {
             return daysPassedInYearNow - daysPassedInYear + (365 * (year - notUpdatedYear - 1)) + leapDaysBetween
         }
     }
-}
+
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
