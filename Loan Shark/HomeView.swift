@@ -10,12 +10,13 @@ import SwiftUI
 struct HomeView: View {
 
     @State var debts = [
-        Debt(money: 420.69, name: "Mr. Tan", debtor: "Me", debtor2: "Mr. Lee", appliedTags: [1, 3], daysDueFromNow: 3),
-        Debt(money: 32, name: "Ah Fan", debtor: "Me", debtor2: "Mrs. Koo", appliedTags: [0], daysDueFromNow: 9)
-    ]
-    @State var debtsDueInAWeek = [
+        Debt(money: 420.69, name: "Mr. Tan", debtor: "Me", debtor2: "Mr. Lee", appliedTags: [1, 3], daysDueFromNow: -3),
+        Debt(money: 32, name: "Ah Fan", debtor: "Me", debtor2: "Mrs. Koo", appliedTags: [0], daysDueFromNow: 9),
         Debt(money: 420.69, name: "Mr. Tan", debtor: "me", debtor2: "Mr. Lee", appliedTags: [1, 3], daysDueFromNow: 3)
     ]
+    
+    @State var debtsDueInAWeek: [Debt] = []
+    @State var outstandingDebts: [Debt] = []
     @State var tags = [
         Tag(name: "Bill Split", icon: "square.fill", colour: Color.blue),
         Tag(name: "Normal", icon: "triangle.fill", colour: Color.green),
@@ -28,9 +29,22 @@ struct HomeView: View {
     @State var showAddTransactionSheet = false
     @State var date = Date()
     @State var calendar = Calendar.current
-    @AppStorage ("key") var lastCheckedDay = 0
-    @AppStorage ("key") var lastCheckedMonth = 0
-    @AppStorage ("key") var lastCheckedYear = 0
+//    @AppStorage ("key") var lastCheckedDay = 0
+//    @AppStorage ("key") var lastCheckedMonth = 0
+//    @AppStorage ("key") var lastCheckedYear = 0
+
+    init() {
+        for debt in debts {
+            if debt.daysDueFromNow <= 7 {
+                debtsDueInAWeek.append(debt)
+            }
+        }
+        for debt in debts {
+            if debt.daysDueFromNow < 0{
+                outstandingDebts.append(debt)
+            }
+        }
+    }
     
     var body: some View {
         NavigationView {
@@ -46,6 +60,8 @@ struct HomeView: View {
                         )
                 }
                 ScrollView(.horizontal) {
+                    Spacer()
+                        .frame(height: 5)
                     HStack(spacing: 7) {
                         ForEach(tags) { tag in
                             ZStack {
@@ -68,7 +84,7 @@ struct HomeView: View {
                             }
                         }
                     }
-                    .padding(.bottom, 10)
+                    .padding(.bottom, 5)
                 }
                 Section(header: Text("OUTSTANDING")) {
                     ForEach(debts) { debt in
@@ -96,24 +112,28 @@ struct HomeView: View {
                     }
                 }
                 Section(header: Text("DUE IN NEXT 7 DAYS")) {
-                    ForEach(debtsDueInAWeek) { debt in
-                        Button {
-                            showTransactionDetailsSheet.toggle()
-                        } label: {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(debt.name)
-                                        .foregroundColor(.black)
-                                    Text("\(debt.debtor), \(debt.debtor2) - Tag name")
-                                        .font(.caption)
-                                        .foregroundColor(.gray)
+                    if let debtsDueInAWeek = debtsDueInAWeek {
+                        ForEach(debtsDueInAWeek) { debt in
+                            Button {
+                                showTransactionDetailsSheet.toggle()
+                            } label: {
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(debt.name)
+                                            .foregroundColor(.black)
+                                        Text("\(debt.debtor), \(debt.debtor2) - Tag name")
+                                            .font(.caption)
+                                            .foregroundColor(.gray)
+                                    }
+                                    Spacer()
+                                    Text("$" + String(format: "%.2f", debt.money))
+                                        .foregroundColor(Color(red: 0.8, green: 0, blue: 0))
+                                        .font(.title2)
                                 }
-                                Spacer()
-                                Text("$" + String(format: "%.2f", debt.money))
-                                    .foregroundColor(Color(red: 0.8, green: 0, blue: 0))
-                                    .font(.title2)
                             }
                         }
+                    } else {
+                        Text("None")
                     }
                 }
             }
@@ -138,6 +158,8 @@ struct HomeView: View {
             }
         }
     }
+    
+    
     
     func dayDifference(notUpdatedDay: Int, notUpdatedMonth: Int, notUpdatedYear: Int) -> Int {
         // set date variables

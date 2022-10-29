@@ -24,3 +24,10 @@ struct Tag: Identifiable{
     var icon: String
     var colour: Color
 }
+
+struct Contact: Identifiable{
+    var id = UUID()
+    var name: String
+    var creditScore: Int = 0
+    var isNegative: Bool?
+}

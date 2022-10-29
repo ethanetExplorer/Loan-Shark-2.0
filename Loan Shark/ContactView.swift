@@ -9,11 +9,12 @@ import SwiftUI
 
 struct ContactsView: View {
     @State var contactsList = [
-    
+        Contact(name: "Jason", creditScore: 10),
+        Contact(name: "Jackson", creditScore: -10)
     ]
     var body: some View {
-        List(contacts) { contacts in
-            Text(contacts.name)
+        List(contactsList) { contact in
+            Text(contact.name)
         }
     }
 }
