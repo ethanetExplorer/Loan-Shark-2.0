@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct ContactsView: View {
+    @State var contactsList = [
+    
+    ]
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List(contacts) { contacts in
+            Text(contacts.name)
+        }
     }
 }
 

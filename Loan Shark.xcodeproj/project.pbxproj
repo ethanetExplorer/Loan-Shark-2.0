@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		740DD18D290CB108002EBFF4 /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740DD18C290CB108002EBFF4 /* Contacts.swift */; };
 		74BDE57C28CD868C00D1DA25 /* Loan_SharkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */; };
 		74BDE57E28CD868C00D1DA25 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE57D28CD868C00D1DA25 /* ContentView.swift */; };
 		74BDE58028CD868E00D1DA25 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74BDE57F28CD868E00D1DA25 /* Assets.xcassets */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		740DD18C290CB108002EBFF4 /* Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
 		74BDE57828CD868C00D1DA25 /* Loan Shark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Loan Shark.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loan_SharkApp.swift; sourceTree = "<group>"; };
 		74BDE57D28CD868C00D1DA25 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; usesTabs = 1; wrapsLines = 0; };
@@ -118,6 +120,7 @@
 				74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */,
 				74BDE57D28CD868C00D1DA25 /* ContentView.swift */,
 				74FB481E2903887F00F23E32 /* ContactView.swift */,
+				740DD18C290CB108002EBFF4 /* Contacts.swift */,
 				74FB4820290388CC00F23E32 /* HomeView.swift */,
 				74FB4824290388F500F23E32 /* TransactionDetailsView.swift */,
 				74FB482F290394E800F23E32 /* AddTransactionView.swift */,
@@ -288,6 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				740DD18D290CB108002EBFF4 /* Contacts.swift in Sources */,
 				74FB4830290394E800F23E32 /* AddTransactionView.swift in Sources */,
 				74FB4825290388F500F23E32 /* TransactionDetailsView.swift in Sources */,
 				74BDE57E28CD868C00D1DA25 /* ContentView.swift in Sources */,
