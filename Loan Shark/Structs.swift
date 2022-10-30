@@ -10,13 +10,19 @@ import SwiftUI
 
 
 
-struct Debt: Identifiable {
+struct Transaction: Identifiable {
     var id = UUID()
-    var money: Double
     var name: String
-    var debtors: [String]
-    var appliedTags: [Int]
+    var people: String
+    var money: Double
+    var appliedTags: [Int]?
     var daysDueFromNow: Int
+    var isOverdue: Bool{
+        daysDueFromNow <= 0
+    }
+    var isDuIn7Days: Bool{
+        daysDueFromNow <= 7
+    }
 }
 
 struct Tag: Identifiable{
@@ -26,9 +32,11 @@ struct Tag: Identifiable{
     var colour: Color
 }
 
-struct Contact: Identifiable{
+struct Person: Identifiable{
     var id = UUID()
     var name: String
     var creditScore: Int = 0
-    var isNegative: Bool?
+    var isCreditScoreNegative: Bool{
+        creditScore < 0
+    }
 }
