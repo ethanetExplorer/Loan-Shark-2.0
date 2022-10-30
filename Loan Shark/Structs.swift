@@ -16,13 +16,14 @@ struct Transaction: Identifiable {
     var people: String
     var money: Double
     var appliedTags: [Int]?
-    var daysDueFromNow: Int
-    var isOverdue: Bool{
-        daysDueFromNow <= 0
-    }
-    var isDuIn7Days: Bool{
-        daysDueFromNow <= 7
-    }
+    var dueDate: Date
+    
+//    var isOverdue: Bool{
+//        daysDueFromNow <= 0
+//    }
+//    var isDueIn7Days: Bool{
+//        daysDueFromNow <= 7
+//    }
 }
 
 struct Tag: Identifiable{

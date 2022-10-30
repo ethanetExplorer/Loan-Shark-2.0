@@ -11,6 +11,10 @@ struct TransactionDetailSheet: View {
     
     @Binding var transaction: Transaction
     
+    @State var isDetailSyncronised: Bool = false
+    
+    @State var dueDate = Date()
+    
     var body: some View {
         NavigationView{
             VStack{
@@ -35,12 +39,11 @@ struct TransactionDetailSheet: View {
                     }
                 }
                 Form{
-                    HStack{
-                        Text("Thing")
-                        TextField("Text", text: $transaction.name)
-                            .foregroundColor(.gray)
-                            .multilineTextAlignment(.trailing)
+                    Toggle(isOn: $isDetailSyncronised){
+                        Text("Syncronise details")
                     }
+                    DatePicker("Due by", selection: $dueDate, in: dueDate, displayedComponents: .date)
+                    
                 }
                 Button{
                     print("Saved transaction")
@@ -60,6 +63,6 @@ struct TransactionDetailSheet: View {
 }
 struct TransactionDetailSheet_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionDetailSheet(transaction: .constant(Transaction(name: "Meal", people: "Jason", money: 50, appliedTags: [0], daysDueFromNow: 10)))
+        TransactionDetailSheet(transaction: .constant(Transaction(name: "Meal", people: "Jason", money: 50, appliedTags: [0], dueDate: 2022-12-25))))
     }
 }
