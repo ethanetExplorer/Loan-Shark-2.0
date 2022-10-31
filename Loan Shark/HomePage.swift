@@ -27,7 +27,7 @@ struct HomePage: View {
         NavigationView {
             List($allTransactions){ $transaction in
                 NavigationLink{
-                    TransactionDetailSheet(transaction: $transaction)
+                    TransactionDetailView(transaction: $transaction)
                 }label: {
                     HStack{
                         VStack(alignment: .leading){
