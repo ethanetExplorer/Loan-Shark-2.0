@@ -10,9 +10,9 @@ import SwiftUI
 struct HomePage: View {
     
     @State var allTags = [
-        Tag(name: "Loan", icon: "banknote", colour: .green),
-        Tag(name: "Meal", icon: "fork.knife", colour: .orange),
-        Tag(name: "Gifts", icon: "gift", colour: .purple),
+        Tag(name: "Loan", icon: "banknote", color: .green),
+        Tag(name: "Meal", icon: "fork.knife", color: .orange),
+        Tag(name: "Gifts", icon: "gift", color: .purple),
     ]
     
     @State var allTransactions = [

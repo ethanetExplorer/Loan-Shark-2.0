@@ -15,11 +15,18 @@ struct TransactionDetailView: View {
     
     @State var dueDate = Date()
     
+    var transactionTypes = ["Bill split", "Loan"]
+    @State var selectedTransactionType = "Bill split"
+    
+    var tagsList = [Tag(name: "Loan", icon: "banknote", color: .green), Tag(name: "Meal", icon: "fork.knife", color: .red),
+                    Tag(name: "Gift", icon: "gift", color: .purple)]
+    @State var selectedTag = "Meal"
+    
     var body: some View {
         NavigationView{
             VStack{
-                Section(header: Text("Name and blah")){
-                    Form{
+                Form{
+                    Section(header: Text("Transaction details")){
                         HStack{
                             Text("Title")
                             TextField("Add title", text: $transaction.name)
@@ -38,27 +45,40 @@ struct TransactionDetailView: View {
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)
                         }
+                        DatePicker("Due by", selection: $dueDate, in: ...dueDate, displayedComponents: .date)
+                        Picker("Transaction type", selection: $selectedTransactionType) {
+                            ForEach(transactionTypes, id: \.self) {
+                                Text($0)
+                            }
+                            
+                        }
                     }
-                }
-                Section {
-                    Form{
+                    Section(header: Text("Options")){
                         Toggle(isOn: $isDetailSyncronised){
                             Text("Syncronise details")
                         }
-                        DatePicker("Due by", selection: $dueDate, in: ...dueDate, displayedComponents: .date)
-                        
+//                        HStack{
+//                            Picker("Tags", selection: $selectedTag){
+//                                ForEach(tagsList, id: \.self){
+//                                    HStack{
+//                                        Image(systemName: String(tagsList.icon))
+//                                        Text($0)
+//                                    }
+//                                }
+//                            }
+//                        }
                     }
                 }
-                Button{
-                    print("Saved transaction")
-                } label: {
-                    ZStack{
-                        Rectangle()
-                            .frame(width: 100, height: 50)
-                            .cornerRadius(10)
-                        Text("Save")
-                            .foregroundColor(.white) //Note: To find out how to remove white background around save button
-            }
+            Button{
+                print("Saved transaction")
+            } label: {
+                ZStack{
+                    Rectangle()
+                        .frame(width: 100, height: 50)
+                        .cornerRadius(10)
+                    Text("Save")
+                        .foregroundColor(.white) //Note: To find out how to remove white background around save button
+                }
             .navigationTitle("Details")
                 }
             }
