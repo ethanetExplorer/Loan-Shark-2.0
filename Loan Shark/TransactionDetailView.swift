@@ -35,9 +35,9 @@ struct TransactionDetailView: View {
                         }
                         HStack{
                             Text("People involved:")
-                            TextField("Add people", text: $transaction.people)
-                                .foregroundColor(.gray)
-                                .multilineTextAlignment(.trailing)
+                            //                            TextField("Add people", text: $transaction.people)
+                            //                                .foregroundColor(.gray)
+                            //                                .multilineTextAlignment(.trailing)
                         }
                         HStack{
                             Text("Amount of money owed:")
@@ -69,17 +69,17 @@ struct TransactionDetailView: View {
 //                        }
                     }
                 }
-            Button{
-                print("Saved transaction")
-            } label: {
-                ZStack{
-                    Rectangle()
-                        .frame(width: 100, height: 50)
-                        .cornerRadius(10)
-                    Text("Save")
-                        .foregroundColor(.white) //Note: To find out how to remove white background around save button
-                }
-            .navigationTitle("Details")
+                Button{
+                    print("Saved transaction")
+                } label: {
+                    ZStack{
+                        Rectangle()
+                            .frame(width: 100, height: 50)
+                            .cornerRadius(10)
+                        Text("Save")
+                            .foregroundColor(.white) //Note: To find out how to remove white background around save button
+                    }
+                    .navigationTitle("Details")
                 }
             }
         }
@@ -87,6 +87,6 @@ struct TransactionDetailView: View {
 }
 struct TransactionDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionDetailView(transaction: .constant(Transaction(name: "Meal", people: "Jason", money: 50, appliedTags: [0])))
+        TransactionDetailView(transaction: .constant(Transaction(name: "Meal", people: ["Jason"], money: 50, appliedTags: [0], dueDate: .now)))
     }
 }

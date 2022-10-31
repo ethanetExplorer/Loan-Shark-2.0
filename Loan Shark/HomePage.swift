@@ -16,9 +16,9 @@ struct HomePage: View {
     ]
     
     @State var allTransactions = [
-        Transaction(name: "Meal", people: "Jason", money: 50, appliedTags: [0], dueDate: 2022-10-15),
-        Transaction(name: "Money loan", people: "Jerome", money: 10, appliedTags: [1], dueDate: 2022-11-15),
-        Transaction(name: "MacBook gift", people: "Jonathan", money: 2999, appliedTags: [2], dueDate: 2022-11-07)
+        Transaction(name: "Meal", people: ["Jason"], money: 50, appliedTags: [0], dueDate: "2022-10-15"),
+        Transaction(name: "Money loan", people: ["Jerome"], money: 10, appliedTags: [1], dueDate: "2022-11-15"),
+        Transaction(name: "MacBook gift", people: ["Jonathan"], money: 2999, appliedTags: [2], dueDate: "2022-11-07")
     ]
     
     @State var transactionsDueInAWeek: [Transaction] = []
