@@ -16,13 +16,14 @@ struct Transaction: Identifiable {
     var people: String
     var money: Double
     var appliedTags: [Int]?
-//    var dueDate: Date
-//    var isOverdue: Bool{
-//        Date.now > dueDate
-//    }
-//    var isDueIn7Days: Bool{
-//        sevenDayRange.contains(Date.now)
-//    }
+    var dueDate: Date
+    
+    var isOverdue: Bool{
+        Date.now > dueDate
+    }
+    var isDueIn7Days: Bool{
+        sevenDayRange.contains(Date.now)
+    }
 }
 
 struct Tag: Identifiable{
