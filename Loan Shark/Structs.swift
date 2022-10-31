@@ -50,7 +50,7 @@ struct Tag: Identifiable{
     let id = UUID()
     var name: String
     var icon: String
-    var colour: Color
+    var color: Color
 }
 
 struct Person: Identifiable{
