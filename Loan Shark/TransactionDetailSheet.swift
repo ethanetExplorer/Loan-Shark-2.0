@@ -42,7 +42,7 @@ struct TransactionDetailSheet: View {
                     Toggle(isOn: $isDetailSyncronised){
                         Text("Syncronise details")
                     }
-                    DatePicker("Due by", selection: $dueDate, in: dueDate, displayedComponents: .date)
+                    DatePicker("Due by", selection: $dueDate, in: ...dueDate, displayedComponents: .date)
                     
                 }
                 Button{
@@ -63,6 +63,6 @@ struct TransactionDetailSheet: View {
 }
 struct TransactionDetailSheet_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionDetailSheet(transaction: .constant(Transaction(name: "Meal", people: "Jason", money: 50, appliedTags: [0], dueDate: 2022-12-25))))
+        TransactionDetailSheet(transaction: .constant(Transaction(name: "Meal", people: "Jason", money: 50, appliedTags: [0])))
     }
 }
