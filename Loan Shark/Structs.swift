@@ -13,7 +13,7 @@ let sevenDayRange = Date.now...Date.now.addingTimeInterval(604800)
 struct Transaction: Identifiable {
     let id = UUID()
     var name: String
-    var people: String
+    var people: [String]
     var money: Double
     var appliedTags: [Int]?
     var dueDate: Date
@@ -23,6 +23,26 @@ struct Transaction: Identifiable {
     }
     var isDueIn7Days: Bool{
         sevenDayRange.contains(Date.now)
+    }
+    
+    init(name: String, people: [String], money: Double, appliedTags: [Int]? = nil, dueDate: Date) {
+        self.name = name
+        self.people = people
+        self.money = money
+        self.appliedTags = appliedTags
+        self.dueDate = dueDate
+    }
+    
+    init(name: String, people: [String], money: Double, appliedTags: [Int]? = nil, dueDate: String) {
+        self.name = name
+        self.people = people
+        self.money = money
+        self.appliedTags = appliedTags
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        self.dueDate = dateFormatter.date(from: dueDate)!
     }
 }
 
