@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 
+let sevenDayRange = Date.now...Date.now.addingTimeInterval(604800)
+
 struct Transaction: Identifiable {
     let id = UUID()
     var name: String
@@ -16,15 +18,13 @@ struct Transaction: Identifiable {
     var appliedTags: [Int]?
     var dueDate: Date
     
-    let sevenDayRange = Date.now...Date.now.addingTimeInterval(604800)
-    
     var isOverdue: Bool{
         Date.now > dueDate
     }
     var isDueIn7Days: Bool{
-        sevenDayRange.contains(dueDate)
+        sevenDayRange.contains(Date.now)
     }
-    
+
     init(name: String, people: [String], money: Double, appliedTags: [Int]? = nil, dueDate: Date) {
         self.name = name
         self.people = people
@@ -54,9 +54,9 @@ struct Tag: Identifiable{
 }
 
 struct Person: Identifiable{
-    let id = UUID()
+    var id = UUID()
     var name: String
-    var creditScore: Int = 0
+    var creditScore: Int
     var isCreditScoreNegative: Bool{
         creditScore < 0
     }
