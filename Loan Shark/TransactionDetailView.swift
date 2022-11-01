@@ -16,16 +16,17 @@ struct TransactionDetailView: View {
     @State var dueDate = Date()
     
     var transactionTypes = ["Bill split", "Loan"]
-    @State var selectedTransactionType = "Bill split"
+    @State var selectedTransactionType = "Loan"
     
-    var tagsList = [Tag(name: "Loan", icon: "banknote", color: .green), Tag(name: "Meal", icon: "fork.knife", color: .red),
+    var tagsList = [Tag(name: "Loan", icon: "banknote", color: .green),
+                    Tag(name: "Meal", icon: "fork.knife", color: .red),
                     Tag(name: "Gift", icon: "gift", color: .purple)]
     @State var selectedTag = "Meal"
     
     var body: some View {
         NavigationView{
             VStack{
-                Form{
+                Form {
                     Section(header: Text("Transaction details")){
                         HStack{
                             Text("Title")
@@ -35,9 +36,9 @@ struct TransactionDetailView: View {
                         }
                         HStack{
                             Text("People involved:")
-                            //                            TextField("Add people", text: $transaction.people)
-                            //                                .foregroundColor(.gray)
-                            //                                .multilineTextAlignment(.trailing)
+//                                                        TextField("Add people", text: $transaction.people)
+//                                                            .foregroundColor(.gray)
+//                                                            .multilineTextAlignment(.trailing)
                         }
                         HStack{
                             Text("Amount of money owed:")
@@ -57,16 +58,16 @@ struct TransactionDetailView: View {
                         Toggle(isOn: $isDetailSyncronised){
                             Text("Syncronise details")
                         }
-//                        HStack{
-//                            Picker("Tags", selection: $selectedTag){
-//                                ForEach(tagsList, id: \.self){
-//                                    HStack{
-//                                        Image(systemName: String(tagsList.icon))
-//                                        Text($0)
-//                                    }
-//                                }
-//                            }
-//                        }
+                        HStack{
+                            Picker("Tags", selection: $selectedTag){
+                                ForEach(tagsList, id: \.self){
+                                    HStack{
+                                        Image(systemName: tagsList.icon)
+                                        Text(tagsList.name)
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
                 Button{
@@ -87,6 +88,6 @@ struct TransactionDetailView: View {
 }
 struct TransactionDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionDetailView(transaction: .constant(Transaction(name: "Meal", people: ["Jason"], money: 50, appliedTags: [0], dueDate: .now)))
+        TransactionDetailView(transaction: .constant(Transaction(name: "Meal", people: ["Jason", "Jackson"], money: 500, dueDate: .now)))
     }
 }

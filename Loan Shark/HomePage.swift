@@ -16,9 +16,9 @@ struct HomePage: View {
     ]
     
     @State var allTransactions = [
-        Transaction(name: "Meal", people: ["Jason"], money: 50, appliedTags: [0], dueDate: "2022-10-15"),
-        Transaction(name: "Money loan", people: ["Jerome"], money: 10, appliedTags: [1], dueDate: "2022-11-15"),
-        Transaction(name: "MacBook gift", people: ["Jonathan"], money: 2999, appliedTags: [2], dueDate: "2022-11-07")
+        Transaction(name: "Meal", people: ["Jason", "Jackson"], money: 500, dueDate: Date("2022/12/25")),//, appliedTags: 0),
+        Transaction(name: "Money loan", people: ["Jerome"], money: 10, dueDate: Date("2022/12/25")),//, appliedTags: 1),
+        Transaction(name: "MacBook gift", people: ["Jonathan"], money: 2999, dueDate: Date("2022/12/25"))//, appliedTags: 2)
     ]
     
     @State var searchResults: [Transaction] = []
@@ -28,6 +28,16 @@ struct HomePage: View {
     @State var searchTerm = ""
     @State var showTransactionDetailsSheet = false
     @State var showAddTransactionSheet = false
+
+    init() {
+        for transaction in allTransactions {
+            if transaction.isDueIn7Days{
+                transactionsDueInAWeek.append(transaction)
+            } else if transaction.isOverdue {
+                transactionsOutstanding.append(transaction)
+            }
+        }
+    }
     
     var body: some View {
         
@@ -150,11 +160,11 @@ struct HomePage: View {
                 } label: {
                     Image(systemName: "line.3.horizontal.decrease.circle")
                 }
+                .font(.system(size: 23))
+                .padding(.top, 90)
             }
         }
     }
-}
-
 
 struct HomePage_Previews: PreviewProvider {
     static var previews: some View {

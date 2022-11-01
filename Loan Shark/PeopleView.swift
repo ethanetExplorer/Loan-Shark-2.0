@@ -1,11 +1,13 @@
 //
-//  Debt.swift
-//  Banker Collab App
+//  PeopleView.swift
+//  Test environment
 //
-//  Created by T Krobot on 11/9/22.
+//  Created by Ethan Lim on 1/11/22.
 //
 
 import SwiftUI
+
+
 
 struct PeopleView: View {
     @State var peopleList = [
@@ -13,21 +15,28 @@ struct PeopleView: View {
         Person(name: "Jackson", creditScore: -10)
     ]
     
-    @State var isPeopleDetailViewPresented = false
-    
     var body: some View {
-        List(peopleList) { person in
-            HStack {
-                Text(person.name)
-                Spacer()
-                Text(String(person.creditScore))
+        NavigationView{
+            List($peopleList) { $person in
+                NavigationLink {
+                    PersonDetailView(person: $person)
+                } label: {
+                    HStack {
+                        Text(person.name)
+                        Spacer()
+                        Text(String(person.creditScore))
+                    }
+                    .foregroundColor(person.isCreditScoreNegative ? .red : .black)
+                }
             }
+            .navigationTitle("All people!")
         }
     }
 }
 
-struct PeopleView_Previews: PreviewProvider {
+struct ContactView_Previews: PreviewProvider {
     static var previews: some View {
         PeopleView()
     }
 }
+
