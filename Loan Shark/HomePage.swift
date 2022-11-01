@@ -16,16 +16,27 @@ struct HomePage: View {
     ]
     
     @State var allTransactions = [
-        Transaction(name: "Meal", people: ["Jason"], money: 50, appliedTags: [0], dueDate: "2022-10-15"),
-        Transaction(name: "Money loan", people: ["Jerome"], money: 10, appliedTags: [1], dueDate: "2022-11-15"),
-        Transaction(name: "MacBook gift", people: ["Jonathan"], money: 2999, appliedTags: [2], dueDate: "2022-11-07")
+        Transaction(name: "Meal", people: ["Jason", "Jackson"], money: 500, dueDate: Date("2022/12/25")),//, appliedTags: 0),
+        Transaction(name: "Money loan", people: ["Jerome"], money: 10, dueDate: Date("2022/12/25")),//, appliedTags: 1),
+        Transaction(name: "MacBook gift", people: ["Jonathan"], money: 2999, dueDate: Date("2022/12/25"))//, appliedTags: 2)
     ]
     
-    @State var selectedTransactionIndex: Int?
-    
+    @State var transactionsDueInAWeek: [Transaction] = []
+    @State var transactionsOutstanding: [Transaction] = []
+
     @State var searchTerm = ""
     @State var showTransactionDetailsSheet = false
     @State var showAddTransactionSheet = false
+
+    init() {
+        for transaction in allTransactions {
+            if transaction.isDueIn7Days{
+                transactionsDueInAWeek.append(transaction)
+            } else if transaction.isOverdue {
+                transactionsOutstanding.append(transaction)
+            }
+        }
+    }
     
     var body: some View {
         NavigationView {
@@ -66,71 +77,74 @@ struct HomePage: View {
                     }
                     .padding(.bottom, 5)
                 }
-                Section(header: Text("OUTSTANDING")) {
-                    ForEach(allTransactions.filter({ $0.isOverdue })) { transaction in
-                        let bindingTransaction = Binding {
-                            transaction
-                        } set: { newTransaction in
-                            let transactionIndex = allTransactions.firstIndex(where: { $0.id == transaction.id })!
-                            allTransactions[transactionIndex] = newTransaction
+                Section(header: Text("Outstanding transactions")) {
+                    ForEach($transactionsOutstanding) { $transaction in
+                        Button {
+                            showTransactionDetailsSheet.toggle()
+                        } label: {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(transaction.name)
+                                        .foregroundColor(.black)
+                                    Text(transaction.people[0] + String(transaction.people[1]))
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
+                                }
+                                Spacer()
+                                Text("$" + String(format: "%.2f", transaction.money))
+                                    .foregroundColor(Color(red: 0.8, green: 0, blue: 0))
+                                    .font(.title2)
+                            }
                         }
-
-                        HomeTransactionView(transaction: bindingTransaction)
+                        .sheet(isPresented: $showTransactionDetailsSheet) {
+                            TransactionDetailView(transaction: $transaction)
+                        }
                     }
                 }
-                Section(header: Text("DUE IN NEXT 7 DAYS")) {
-                    ForEach(allTransactions.filter({ $0.isDueIn7Days })) { transaction in
-                        let bindingTransaction = Binding {
-                            transaction
-                        } set: { newTransaction in
-                            let transactionIndex = allTransactions.firstIndex(where: { $0.id == transaction.id })!
-                            allTransactions[transactionIndex] = newTransaction
+                Section(header: Text("Due in next 7 days")) {
+                        ForEach(transactionsDueInAWeek) { transaction in
+                            Button {
+                                showTransactionDetailsSheet.toggle()
+                            } label: {
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(transaction.name)
+                                            .foregroundColor(.black)
+                                        Text("\(transaction.people[0]), \(transaction.people[1])")
+                                            .font(.caption)
+                                            .foregroundColor(.gray)
+                                    }
+                                    Spacer()
+                                    Text("$" + String(format: "%.2f", transaction.money))
+                                        .foregroundColor(Color(red: 0.8, green: 0, blue: 0))
+                                        .font(.title2)
+                                }
+                            }
                         }
-
-                        HomeTransactionView(transaction: bindingTransaction)
                     }
                 }
-                
             }
             .navigationTitle("Home")
             .toolbar {
-                Button {
-                    showAddTransactionSheet.toggle()
-                } label: {
-                    Image(systemName: "plus.app")
-                }
-                .sheet(isPresented: $showAddTransactionSheet) {
-                    Text("yuhan is a genius")
-                    #warning("EXTREMELY IMPORTANT!!!!!!!!!")
-                }
-                
-                Menu {
+                HStack {
                     Button {
-                        
+                        showAddTransactionSheet.toggle()
                     } label: {
-                        Label("Time Due", systemImage: "clock")
+                        Image(systemName: "plus.app")
                     }
-                    
                     Button {
-                        
+                        print("filter search")
                     } label: {
-                        Label("Amount Due", systemImage: "dollarsign.circle")
+                        Image(systemName: "line.3.horizontal.decrease.circle")
                     }
-                    
-                    Button {
-                        
-                    } label: {
-                        Label("Date Added", systemImage: "calendar")
+                    .sheet(isPresented: $showAddTransactionSheet) {
                     }
-
-                } label: {
-                    Image(systemName: "line.3.horizontal.decrease.circle")
                 }
+                .font(.system(size: 23))
+                .padding(.top, 90)
             }
         }
     }
-}
-
 
 struct HomePage_Previews: PreviewProvider {
     static var previews: some View {
