@@ -103,8 +103,26 @@ struct HomePage: View {
                     Text("yuhan is a genius")
                     #warning("EXTREMELY IMPORTANT!!!!!!!!!")
                 }
-                Button {
-                    print("filter search")
+                
+                Menu {
+                    Button {
+                        
+                    } label: {
+                        Label("Time Due", systemImage: "clock")
+                    }
+                    
+                    Button {
+                        
+                    } label: {
+                        Label("Amount Due", systemImage: "dollarsign.circle")
+                    }
+                    
+                    Button {
+                        
+                    } label: {
+                        Label("Date Added", systemImage: "calendar")
+                    }
+
                 } label: {
                     Image(systemName: "line.3.horizontal.decrease.circle")
                 }
