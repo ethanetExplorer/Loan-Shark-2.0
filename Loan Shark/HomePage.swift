@@ -21,6 +21,8 @@ struct HomePage: View {
         Transaction(name: "MacBook gift", people: ["Jonathan"], money: 2999, appliedTags: [2], dueDate: "2022-11-07")
     ]
     
+    @State var searchResults: [Transaction] = []
+    
     @State var selectedTransactionIndex: Int?
     
     @State var searchTerm = ""
@@ -28,46 +30,48 @@ struct HomePage: View {
     @State var showAddTransactionSheet = false
     
     var body: some View {
+        
+        let transactions = searchResults.isEmpty ? allTransactions : searchResults
+        
         NavigationView {
             List {
-                Section {
-                    TextField("", text: $searchTerm, prompt: Text("Search for a transaction"))
-                        .padding(.leading, 30)
-                        .disableAutocorrection(true)
-                        .overlay(
-                            Image(systemName: "magnifyingglass")
-                                .foregroundColor(.gray)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        )
-                }
-                ScrollView(.horizontal) {
-                    Spacer()
-                        .frame(height: 5)
-                    HStack(spacing: 7) {
-                        ForEach(allTags) { tag in
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 12.5)
-                                    .stroke(tag.color, lineWidth: 1)
-                                    .frame(width: 90, height: 25)
-                                Circle()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(tag.color)
-                                    .padding(.trailing, 66)
-                                Image(systemName: tag.icon)
-                                    .foregroundColor(.white)
-                                    .padding(.trailing, 66)
-                                    .font(.system(size: 12))
-                                Text(tag.name)
-                                    .foregroundColor(tag.color)
-                                    .font(.caption)
-                                    .padding(.leading, 20)
+                HStack {
+                    ScrollView(.horizontal) {
+                        Spacer()
+                            .frame(height: 5)
+                        HStack(spacing: 7) {
+                            ForEach(allTags) { tag in
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 12.5)
+                                        .stroke(tag.color, lineWidth: 1)
+                                        .frame(width: 90, height: 25)
+                                    Circle()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundColor(tag.color)
+                                        .padding(.trailing, 66)
+                                    Image(systemName: tag.icon)
+                                        .foregroundColor(.white)
+                                        .padding(.trailing, 66)
+                                        .font(.system(size: 12))
+                                    Text(tag.name)
+                                        .foregroundColor(tag.color)
+                                        .font(.caption)
+                                        .padding(.leading, 20)
+                                }
                             }
                         }
+                        .padding(.bottom, 5)
                     }
-                    .padding(.bottom, 5)
+                    
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "plus.circle")
+                    }
                 }
+                .buttonStyle(.plain)
                 Section(header: Text("OUTSTANDING")) {
-                    ForEach(allTransactions.filter({ $0.isOverdue })) { transaction in
+                    ForEach(transactions.filter({ $0.isOverdue })) { transaction in
                         let bindingTransaction = Binding {
                             transaction
                         } set: { newTransaction in
@@ -79,7 +83,20 @@ struct HomePage: View {
                     }
                 }
                 Section(header: Text("DUE IN NEXT 7 DAYS")) {
-                    ForEach(allTransactions.filter({ $0.isDueIn7Days })) { transaction in
+                    ForEach(transactions.filter({ $0.isDueIn7Days })) { transaction in
+                        let bindingTransaction = Binding {
+                            transaction
+                        } set: { newTransaction in
+                            let transactionIndex = allTransactions.firstIndex(where: { $0.id == transaction.id })!
+                            allTransactions[transactionIndex] = newTransaction
+                        }
+
+                        HomeTransactionView(transaction: bindingTransaction)
+                    }
+                }
+                
+                Section(header: Text("OTHER TRANSACTIONS")) {
+                    ForEach(transactions.filter({ !$0.isDueIn7Days && !$0.isOverdue })) { transaction in
                         let bindingTransaction = Binding {
                             transaction
                         } set: { newTransaction in
@@ -92,6 +109,12 @@ struct HomePage: View {
                 }
                 
             }
+            .searchable(text: $searchTerm, prompt: Text("Search for a transaction"))
+            .onChange(of: searchTerm) { _ in
+                searchResults = allTransactions.filter({ transaction in
+                    transaction.name.lowercased().contains(searchTerm.lowercased())
+                })
+            }
             .navigationTitle("Home")
             .toolbar {
                 Button {
@@ -101,6 +124,7 @@ struct HomePage: View {
                 }
                 .sheet(isPresented: $showAddTransactionSheet) {
                     Text("yuhan is a genius")
+                        .presentationDetents([.fraction(1/4), .fraction(0.5), .fraction(6/8), .fraction(1/1)])
                     #warning("EXTREMELY IMPORTANT!!!!!!!!!")
                 }
                 
