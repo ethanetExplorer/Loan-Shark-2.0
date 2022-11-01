@@ -49,7 +49,6 @@ struct BillSplitDetailView: View {
                         ForEach(transactionTypes, id: \.self) {
                             Text($0)
                         }
-                        
                     }
                 }
                 Section(header: Text("Options")){
@@ -58,10 +57,10 @@ struct BillSplitDetailView: View {
                     }
                     HStack{
                         Picker("Tags", selection: $selectedTag){
-                            ForEach(tagsList, id: \.self){
+                            ForEach(tagsList) { tagItem in
                                 HStack{
-                                    Image(systemName: tagsList.icon)
-                                    Text(tagsList.name)
+                                    Image(systemName: tagItem.icon)
+                                    Text(tagItem.name)
                                 }
                             }
                         }

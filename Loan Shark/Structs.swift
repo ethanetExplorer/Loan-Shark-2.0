@@ -8,8 +8,6 @@
 import Foundation
 import SwiftUI
 
-let sevenDayRange = Date.now...Date.now.addingTimeInterval(604800)
-
 struct Transaction: Identifiable {
     let id = UUID()
     var name: String
@@ -22,7 +20,7 @@ struct Transaction: Identifiable {
         Date.now > dueDate
     }
     var isDueIn7Days: Bool{
-        sevenDayRange.contains(Date.now)
+        abs(dueDate.timeIntervalSinceNow) < 604800
     }
 
     init(name: String, people: [String], money: Double, appliedTags: [Int]? = nil, dueDate: Date) {
