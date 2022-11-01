@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55C2840A29110A040087C75C /* HomeTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C2840929110A040087C75C /* HomeTransactionView.swift */; };
 		740DD18D290CB108002EBFF4 /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740DD18C290CB108002EBFF4 /* Contacts.swift */; };
 		746A4B95290E57A000AF5522 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746A4B94290E57A000AF5522 /* HomePage.swift */; };
 		746A4B97290E607500AF5522 /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746A4B96290E607500AF5522 /* TransactionDetailView.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		55C2840929110A040087C75C /* HomeTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTransactionView.swift; sourceTree = "<group>"; };
 		740DD18C290CB108002EBFF4 /* Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
 		746A4B94290E57A000AF5522 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		746A4B96290E607500AF5522 /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				74FB48282903892200F23E32 /* Structs.swift */,
 				74BDE57D28CD868C00D1DA25 /* ContentView.swift */,
 				746A4B94290E57A000AF5522 /* HomePage.swift */,
+				55C2840929110A040087C75C /* HomeTransactionView.swift */,
 				746A4B96290E607500AF5522 /* TransactionDetailView.swift */,
 				74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */,
 				74FB481E2903887F00F23E32 /* PeopleView.swift */,
@@ -293,6 +296,7 @@
 				74BDE57E28CD868C00D1DA25 /* ContentView.swift in Sources */,
 				74BDE57C28CD868C00D1DA25 /* Loan_SharkApp.swift in Sources */,
 				74FB4821290388CC00F23E32 /* HomeView.swift in Sources */,
+				55C2840A29110A040087C75C /* HomeTransactionView.swift in Sources */,
 				74FB481F2903887F00F23E32 /* PeopleView.swift in Sources */,
 				74FB48292903892200F23E32 /* Structs.swift in Sources */,
 			);
