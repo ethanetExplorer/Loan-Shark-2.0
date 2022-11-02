@@ -13,6 +13,14 @@ struct PersonDetailView: View {
     
     @Binding var person : Person
     
+    struct Placeholder: Identifiable {
+        var id: UUID?
+        var number: Int
+    }
+    
+    @State var placeholderArray = [Placeholder(number: 1), Placeholder(number:2), Placeholder(number:3)
+    ]
+    
     var body: some View {
         VStack(alignment: .leading){
             Text ("Credit score: 50")
@@ -29,19 +37,19 @@ struct PersonDetailView: View {
                 //                        Text(String(10))
                 List {
                     Section(header: Text("ONGOING TRANSACTIONS")) {
-                        ForEach(numbersArraY) { numerous in
+                        ForEach(placeholderArray) { placeholder in
                             Button {
                                 
                             } label: {
                                 HStack{
                                     VStack{
-                                        Text("Example transaction \(numerous.number)")
+                                        Text("Example transaction \(placeholder.number)")
                                             .foregroundColor(.black)
                                         Text("Due in 5 days")
                                         
                                     }
                                     Spacer()
-                                    Text("$" + String(format: "%.2f", transaction.money))
+                                    Text("$50")
                                         .foregroundColor(Color(red: 0.8, green: 0, blue: 0))
                                         .font(.title2)
                                 }
@@ -49,26 +57,25 @@ struct PersonDetailView: View {
                         }
                     }
                     Section(header: Text("TRANSACTION HISTORY")) {
-                        ForEach(numbersArraY) { numerous in
+                        ForEach(placeholderArray) { placeholder in
                             Button {
                                 
                             } label: {
                                 HStack{
                                     VStack{
-                                        Text("Example transaction \(numerous.number)")
+                                        Text("Example transaction \(placeholder.number)")
                                             .foregroundColor(.black)
                                         Text("Due in 5 days")
-                                        
                                     }
                                     Spacer()
-                                    Text("$" + String(format: "%.2f", transaction.money))
+                                    Text("$50")
                                         .foregroundColor(Color(red: 0.8, green: 0, blue: 0))
                                         .font(.title2)
                                 }
                             }
                         }
                     }
-
+                    
                 }
             }
             .navigationTitle("Jason")
