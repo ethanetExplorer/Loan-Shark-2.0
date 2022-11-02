@@ -30,13 +30,29 @@ struct PeopleView: View {
                 }
             }
             .navigationTitle("All people!")
+            .toolbar {
+                Menu {
+                    Button {
+                        
+                    } label: {
+                        Label("Alphabetical", systemImage: "a.circle")
+                    }
+                    Button {
+                        
+                    } label: {
+                        Label("Credit Score", systemImage: "creditcard")
+                    }
+                } label: {
+                    Image(systemName: "line.3.horizontal.decrease.circle")
+                }
+            }
+        }
+    }
+    
+    
+    struct ContactView_Previews: PreviewProvider {
+        static var previews: some View {
+            PeopleView()
         }
     }
 }
-
-struct ContactView_Previews: PreviewProvider {
-    static var previews: some View {
-        PeopleView()
-    }
-}
-

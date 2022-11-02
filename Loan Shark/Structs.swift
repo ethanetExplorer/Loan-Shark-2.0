@@ -14,6 +14,7 @@ struct Transaction: Identifiable {
     var people: [String]
     var money: Double
     var appliedTags: [Int]?
+    //Should be UUID
     var dueDate: Date
     
     var isOverdue: Bool{
