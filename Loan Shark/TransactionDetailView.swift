@@ -24,8 +24,8 @@ struct TransactionDetailView: View {
     @State var selectedTag = "Meal"
     
     var body: some View {
-        NavigationView{
-            VStack{
+        NavigationView {
+            VStack {
                 Form {
                     Section(header: Text("Transaction details")){
                         HStack{

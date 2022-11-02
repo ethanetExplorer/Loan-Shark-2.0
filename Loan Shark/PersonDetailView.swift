@@ -10,24 +10,8 @@ import SwiftUI
 
 
 struct PersonDetailView: View {
-    @Binding var person: Person
     
-    struct Numerous: Identifiable{
-        var id = UUID()
-        var number: Int
-    }
-    
-    var numbersArraY = [
-        Numerous(number: 1),
-        Numerous(number: 2),
-        Numerous(number: 3),
-        Numerous(number: 4),
-        Numerous(number: 5)
-    ]
-    
-    @State var showTransactionDetailsSheet = false
-    
-#warning("ALL PLACEHOLDER VALUES")
+    @Binding var person : Person
     
     var body: some View {
         VStack(alignment: .leading){
@@ -95,6 +79,6 @@ struct PersonDetailView: View {
 
 struct contactDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        PersonDetailView(person: .constant(Person(name: "Jason", creditScore: 10)))
+        PersonDetailView(person: .constant(Person(name: "Jeremy", creditScore: 20)))
     }
 }
