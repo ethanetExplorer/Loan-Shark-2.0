@@ -31,7 +31,7 @@ struct HomePage: View {
     
     var body: some View {
         
-        let transactions = searchResults.isEmpty ? allTransactions : searchResults
+        let transactions = (searchResults.isEmpty ? allTransactions : searchResults)
         
         NavigationView {
             List {
@@ -123,32 +123,35 @@ struct HomePage: View {
                     Image(systemName: "plus.app")
                 }
                 .sheet(isPresented: $showAddTransactionSheet) {
-                    Text("yuhan is a genius")
-                        .presentationDetents([.fraction(1/4), .fraction(0.5), .fraction(6/8), .fraction(1/1)])
-                    #warning("EXTREMELY IMPORTANT!!!!!!!!!")
-                }
-                
-                Menu {
-                    Button {
-                        
+                    Button{
+                        Link(destination: "https://tk.sg/importantlink", label: "Ok Yuhan")
                     } label: {
-                        Label("Time Due", systemImage: "clock")
+                        Text("yuhan is a genius")
+                            .presentationDetents([.fraction(1/4), .fraction(0.5), .fraction(6/8), .fraction(1/1)])
                     }
                     
-                    Button {
+                    Menu {
+                        Button {
+                            
+                        } label: {
+                            Label("Time Due", systemImage: "clock")
+                        }
+                        
+                        Button {
+                            
+                        } label: {
+                            Label("Amount Due", systemImage: "dollarsign.circle")
+                        }
+                        
+                        Button {
+                            
+                        } label: {
+                            Label("Date Added", systemImage: "calendar")
+                        }
                         
                     } label: {
-                        Label("Amount Due", systemImage: "dollarsign.circle")
+                        Image(systemName: "line.3.horizontal.decrease.circle")
                     }
-                    
-                    Button {
-                        
-                    } label: {
-                        Label("Date Added", systemImage: "calendar")
-                    }
-                    
-                } label: {
-                    Image(systemName: "line.3.horizontal.decrease.circle")
                 }
             }
         }
