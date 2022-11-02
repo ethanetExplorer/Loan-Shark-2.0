@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-
-
 struct PeopleView: View {
     @State var peopleList = [
         Person(name: "Jason", creditScore: 10),

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Transaction: Identifiable {
+struct Transaction: Identifiable, Codable {
     let id = UUID()
     var name: String
     var people: [String]
@@ -53,7 +53,7 @@ struct Tag: Identifiable{
 }
 
 struct Person: Identifiable{
-    var id = UUID()
+    let id = UUID()
     var name: String
     var creditScore: Int
     var isCreditScoreNegative: Bool{
