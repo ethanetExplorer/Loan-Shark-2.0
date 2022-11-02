@@ -15,6 +15,7 @@ struct PeopleView: View {
         Person(name: "Jackson", creditScore: -10)
     ]
     
+    
     var body: some View {
         NavigationView{
             List($peopleList) { $person in

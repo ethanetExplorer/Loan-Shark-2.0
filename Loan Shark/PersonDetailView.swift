@@ -25,39 +25,74 @@ struct PersonDetailView: View {
         Numerous(number: 5)
     ]
     
-    #warning("PLACEHOLDER")
+    @State var showTransactionDetailsSheet = false
+    
+#warning("ALL PLACEHOLDER VALUES")
     
     var body: some View {
         VStack(alignment: .leading){
+            Text ("Credit score: 50")
+                .padding(.leading)
             NavigationView{
-                VStack{
-                    #warning("ALSO A PLACEHOLDER")
-                    Section{
-                    Text("Jason")
-                        .font(.title)
-                        .bold()
-                        .padding([.top, .leading, .trailing], 10)
-                    Text("Credit score: 50")
-                        .font(.subheadline)
-                        .padding([.leading, .bottom, .trailing], 10)
-                        }
-                    List(numbersArraY) { Numerous in
-                        HStack {
-                            VStack(alignment: .leading){
-                                Text("Transaction")
-                                Text("Amount of money: $50")
-                                    .font(.caption)
+                //                List(numbersArraY) { Numerous in
+                //                    HStack {
+                //                        VStack(alignment: .leading){
+                //                            Text("Transaction")
+                //                            Text("Amount of money: $50")
+                //                                .font(.caption)
+                //                        }
+                //                        Spacer()
+                //                        Text(String(10))
+                List {
+                    Section(header: Text("ONGOING TRANSACTIONS")) {
+                        ForEach(numbersArraY) { numerous in
+                            Button {
+                                
+                            } label: {
+                                HStack{
+                                    VStack{
+                                        Text("Example transaction \(numerous.number)")
+                                            .foregroundColor(.black)
+                                        Text("Due in 5 days")
+                                        
+                                    }
+                                    Spacer()
+                                    Text("$" + String(format: "%.2f", transaction.money))
+                                        .foregroundColor(Color(red: 0.8, green: 0, blue: 0))
+                                        .font(.title2)
+                                }
                             }
-                            Spacer()
-                            Text(String(10))
-                            
                         }
                     }
+                    Section(header: Text("TRANSACTION HISTORY")) {
+                        ForEach(numbersArraY) { numerous in
+                            Button {
+                                
+                            } label: {
+                                HStack{
+                                    VStack{
+                                        Text("Example transaction \(numerous.number)")
+                                            .foregroundColor(.black)
+                                        Text("Due in 5 days")
+                                        
+                                    }
+                                    Spacer()
+                                    Text("$" + String(format: "%.2f", transaction.money))
+                                        .foregroundColor(Color(red: 0.8, green: 0, blue: 0))
+                                        .font(.title2)
+                                }
+                            }
+                        }
+                    }
+
                 }
             }
+            .navigationTitle("Jason")
         }
     }
 }
+
+
 struct contactDetailView_Previews: PreviewProvider {
     static var previews: some View {
         PersonDetailView(person: .constant(Person(name: "Jason", creditScore: 10)))
