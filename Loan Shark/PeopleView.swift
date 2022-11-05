@@ -19,6 +19,7 @@ struct PeopleView: View {
             List($peopleList) { $person in
                 NavigationLink {
                     PersonDetailView(person: $person)
+                        .presentationDetents([.fraction(6/7), .fraction(1)])
                 } label: {
                     HStack {
                         Text(person.name)

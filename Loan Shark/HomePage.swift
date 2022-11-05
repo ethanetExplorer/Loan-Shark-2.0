@@ -123,8 +123,8 @@ struct HomePage: View {
                     Image(systemName: "plus.app")
                 }
                 .sheet(isPresented: $showNewTransactionSheet) {
-                    NewTransactionSheet()
-                        
+                    NewTransactionSheet(allTransactions: $allTransactions)
+                        .presentationDetents([.fraction(6/7), .fraction(1)])
                 }
                 Menu {
                     Button {

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NewTransactionSheet: View {
     
+    @Binding var allTransactions: [Transaction]
     @State var newTransaction = Transaction(name: "", people: [""], money: 00, dueDate: "1970-1-1")
     @State var selectedTransactionType = "Loan"
     var transactionTypes = ["Bill split", "Loan"]
@@ -17,38 +18,45 @@ struct NewTransactionSheet: View {
     var contacts = ["James", "Jason", "Jerome"]
     
     var body: some View {
-        VStack {
-            Form {
-                Section(header: Text("New Transaction")){
-                    HStack {
+        NavigationView{
+            VStack {
+                Form {
+                    Section{
                         TextField("Title", text: $newTransaction.name)
                             .foregroundColor(.gray)
                             .multilineTextAlignment(.leading)
-                        
-                    }
-                    HStack {
                         Picker("Transaction type", selection: $selectedTransactionType) {
                             ForEach(transactionTypes, id: \.self) {
                                 Text($0)
                             }
                         }
                     }
-                }
-                Section {
-                    HStack{
+                    Section {
                         Picker ("Contact", selection: $selectedContact) {
                             ForEach(contacts, id:\.self) {
                                 Text($0)
                             }
                         }
+                        DatePicker("Due by", selection: $newTransaction.dueDate, in: ...newTransaction.dueDate, displayedComponents: .date)
+                        //                    HStack {
+                        //                        TextField("Amount", text: Double($newTransaction.money))
                     }
-                    DatePicker("Due by", selection: $newTransaction.dueDate, in: ...newTransaction.dueDate, displayedComponents: .date)
-                    //                    HStack {
-                    //                        TextField("Amount", text: Double($newTransaction.money))
+                }
+                Button{
+                    allTransactions.append(newTransaction)
+                    //freezes the app
+                } label: {
+                    ZStack{
+                        Rectangle()
+                            .frame(width: 100, height: 50)
+                            .cornerRadius(10)
+                        Text("Save")
+                            .foregroundColor(.white)
+                    }
                 }
             }
+            .navigationTitle("New Transaction")
         }
-        .navigationTitle("New Transaction")
     }
 }
 

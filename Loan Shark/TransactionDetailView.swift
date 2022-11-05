@@ -69,24 +69,25 @@ struct TransactionDetailView: View {
                         //                        }
                         //                    }
                     }
-                        }
+                }
                 Button{
                     print("Saved transaction")
                 } label: {
-                    Text("Save")
-                        .foregroundColor(.blue)
-                        .multilineTextAlignment(.center)
-                        .padding()
-                        .cornerRadius(20)
-                        //Note: To find out how to remove white background around save button
+                    ZStack{
+                        Rectangle()
+                            .frame(width: 100, height: 50)
+                            .cornerRadius(10)
+                        Text("Save")
+                            .foregroundColor(.white)
                     }
                 }
-                .navigationTitle("Details")
             }
+            .navigationTitle("Details")
         }
     }
-    struct TransactionDetailView_Previews: PreviewProvider {
-        static var previews: some View {
-            TransactionDetailView(transaction: .constant(Transaction(name: "", people: [], money: 0, dueDate: .now)))
-        }
+}
+struct TransactionDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        TransactionDetailView(transaction: .constant(Transaction(name: "", people: [], money: 0, dueDate: .now)))
     }
+}
