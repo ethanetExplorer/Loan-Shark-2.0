@@ -17,11 +17,11 @@ struct TransactionDetailView: View {
     
     var transactionTypes = ["Bill split", "Loan"]
     @State var selectedTransactionType = "Loan"
-    
-    var tagsList = [Tag(name: "Loan", icon: "banknote", color: .green),
-                    Tag(name: "Meal", icon: "fork.knife", color: .red),
-                    Tag(name: "Gift", icon: "gift", color: .purple)]
-    @State var selectedTag = "Meal"
+//
+//    var tagsList = [Tag(name: "Loan", icon: "banknote", color: .green),
+//                    Tag(name: "Meal", icon: "fork.knife", color: .red),
+//                    Tag(name: "Gift", icon: "gift", color: .purple)]
+//    @State var selectedTag = "Meal"
     
     var body: some View {
         NavigationView {
@@ -54,21 +54,21 @@ struct TransactionDetailView: View {
 
                         }
                     }
-                    Section(header: Text("Options")){
-                        Toggle(isOn: $isDetailSyncronised){
-                            Text("Syncronise details")
-                        }
-                        HStack{
-                            Picker("Tags", selection: $selectedTag){
-                                ForEach(tagsList) { tagItem in
-                                    HStack{
-                                        Image(systemName: tagItem.icon)
-                                        Text(tagItem.name)
-                                    }
-                                }
-                            }
-                        }
-                    }
+//                    Section(header: Text("Options")){
+//                        Toggle(isOn: $isDetailSyncronised){
+//                            Text("Syncronise details")
+//                        }
+//                        HStack{
+//                            Picker("Tags", selection: $selectedTag){
+//                                ForEach(tagsList) { tagItem in
+//                                    HStack{
+//                                        Image(systemName: tagItem.icon)
+//                                        Text(tagItem.name)
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
                 }
                 Button{
                     print("Saved transaction")

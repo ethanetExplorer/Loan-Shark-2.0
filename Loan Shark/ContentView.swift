@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
 	
-	@StateObject var transactionManager = TransactionManager()
+//	@StateObject var transactionManager = TransactionManager()
 	
     var body: some View {
         TabView {

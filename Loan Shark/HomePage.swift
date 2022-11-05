@@ -9,11 +9,11 @@ import SwiftUI
 
 struct HomePage: View {
     
-    @State var allTags = [
-        Tag(name: "Loan", icon: "banknote", color: .green),
-        Tag(name: "Meal", icon: "fork.knife", color: .orange),
-        Tag(name: "Gifts", icon: "gift", color: .purple),
-    ]
+//    @State var allTags = [
+//        Tag(name: "Loan", icon: "banknote", color: .green),
+//        Tag(name: "Meal", icon: "fork.knife", color: .orange),
+//        Tag(name: "Gifts", icon: "gift", color: .purple),
+//    ]
     
     @State var allTransactions = [
         Transaction(name: "Meal", people: ["Jason", "Jackson"], money: 500, dueDate: "2022-12-25"),//, appliedTags: 0),
@@ -27,7 +27,7 @@ struct HomePage: View {
     
     @State var searchTerm = ""
     @State var showTransactionDetailsSheet = false
-    @State var showAddTransactionSheet = false
+    @State var showNewTransactionSheet = false
     
     var body: some View {
         
@@ -35,41 +35,41 @@ struct HomePage: View {
         
         NavigationView {
             List {
-                HStack {
-                    ScrollView(.horizontal) {
-                        Spacer()
-                            .frame(height: 5)
-                        HStack(spacing: 7) {
-                            ForEach(allTags) { tag in
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 12.5)
-                                        .stroke(tag.color, lineWidth: 1)
-                                        .frame(width: 90, height: 25)
-                                    Circle()
-                                        .frame(width: 20, height: 20)
-                                        .foregroundColor(tag.color)
-                                        .padding(.trailing, 66)
-                                    Image(systemName: tag.icon)
-                                        .foregroundColor(.white)
-                                        .padding(.trailing, 66)
-                                        .font(.system(size: 12))
-                                    Text(tag.name)
-                                        .foregroundColor(tag.color)
-                                        .font(.caption)
-                                        .padding(.leading, 20)
-                                }
-                            }
-                        }
-                        .padding(.bottom, 5)
-                    }
-                    
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "plus.circle")
-                    }
-                }
-                .buttonStyle(.plain)
+//                HStack {
+//                    ScrollView(.horizontal) {
+//                        Spacer()
+//                            .frame(height: 5)
+//                        HStack(spacing: 7) {
+//                            ForEach(allTags) { tag in
+//                                ZStack {
+//                                    RoundedRectangle(cornerRadius: 12.5)
+//                                        .stroke(tag.color, lineWidth: 1)
+//                                        .frame(width: 90, height: 25)
+//                                    Circle()
+//                                        .frame(width: 20, height: 20)
+//                                        .foregroundColor(tag.color)
+//                                        .padding(.trailing, 66)
+//                                    Image(systemName: tag.icon)
+//                                        .foregroundColor(.white)
+//                                        .padding(.trailing, 66)
+//                                        .font(.system(size: 12))
+//                                    Text(tag.name)
+//                                        .foregroundColor(tag.color)
+//                                        .font(.caption)
+//                                        .padding(.leading, 20)
+//                                }
+//                            }
+//                        }
+//                        .padding(.bottom, 5)
+//                    }
+//
+//                    Button {
+//
+//                    } label: {
+//                        Image(systemName: "plus.circle")
+//                    }
+//                }
+//                .buttonStyle(.plain)
                 Section(header: Text("OUTSTANDING")) {
                     ForEach(transactions.filter({ $0.isOverdue })) { transaction in
                         let bindingTransaction = Binding {
@@ -118,17 +118,12 @@ struct HomePage: View {
             .navigationTitle("Home")
             .toolbar {
                 Button {
-                    showAddTransactionSheet.toggle()
+                    showNewTransactionSheet = true
                 } label: {
                     Image(systemName: "plus.app")
                 }
-                .sheet(isPresented: $showAddTransactionSheet) {
-                    Button{
-                        Link(destination: "https://tk.sg/importantlink", label: "Ok Yuhan")
-                    } label: {
-                        Text("yuhan is a genius")
-                            .presentationDetents([.fraction(1/4), .fraction(0.5), .fraction(6/8), .fraction(1/1)])
-                    }
+                .sheet(isPresented: $showNewTransactionSheet) {
+                    NewTransactionSheet()
                     
                     Menu {
                         Button {

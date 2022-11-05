@@ -78,7 +78,7 @@ struct PersonDetailView: View {
                     
                 }
             }
-            .navigationTitle("Jason")
+            .navigationTitle(person.name)
         }
     }
 }

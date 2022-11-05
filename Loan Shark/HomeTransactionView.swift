@@ -26,7 +26,7 @@ struct HomeTransactionView: View {
                 }
                 Spacer()
                 Text("$" + String(format: "%.2f", transaction.money))
-                    .foregroundColor(Color(red: 0.8, green: 0, blue: 0))
+                    .foregroundColor(transaction.isOverdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
                     .font(.title2)
             }
         }
