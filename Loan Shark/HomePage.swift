@@ -124,6 +124,7 @@ struct HomePage: View {
                 }
                 .sheet(isPresented: $showNewTransactionSheet) {
                     NewTransactionSheet()
+                        
                 }
                 Menu {
                     Button {
