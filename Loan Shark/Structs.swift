@@ -8,6 +8,12 @@
 import Foundation
 import SwiftUI
 
+enum TransactionStatus: Int, Codable {
+    case overdue
+    case dueIn7Days
+    case normal
+}
+
 struct Transaction: Identifiable, Codable {
     let id = UUID()
     var name: String
@@ -17,11 +23,14 @@ struct Transaction: Identifiable, Codable {
     //Should be UUID
     var dueDate: Date
     
-    var isOverdue: Bool{
-        Date.now > dueDate
-    }
-    var isDueIn7Days: Bool{
-        abs(dueDate.timeIntervalSinceNow) < 604800
+    var status: TransactionStatus {
+        if Date.now > dueDate {
+            return .overdue
+        } else if abs(dueDate.timeIntervalSinceNow) < 604800 {
+            return .dueIn7Days
+        } else {
+            return .normal
+        }
     }
 
     init(name: String, people: [String], money: Double, appliedTags: [Int]? = nil, dueDate: Date) {

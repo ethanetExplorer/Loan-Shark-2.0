@@ -9,13 +9,24 @@ import SwiftUI
 
 struct NewTransactionSheet: View {
     
-    @Binding var allTransactions: [Transaction]
-    @State var newTransaction = Transaction(name: "", people: [""], money: 00, dueDate: "1970-1-1")
+    var onCreate: ((Transaction) -> ())
+    @State var newTransaction = Transaction(name: "", people: [""], money: 00, dueDate: .now)
     @State var selectedTransactionType = "Loan"
+    
+    @Environment(\.dismiss) var dismiss
+    
     var transactionTypes = ["Bill split", "Loan"]
     
     @State var selectedContact = "James"
     var contacts = ["James", "Jason", "Jerome"]
+    
+    var decimalNumberFormat: NumberFormatter {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.allowsFloats = true
+        numberFormatter.numberStyle = .currency
+        numberFormatter.currencySymbol = "$"
+        return numberFormatter
+    }
     
     var body: some View {
         NavigationView{
@@ -37,23 +48,26 @@ struct NewTransactionSheet: View {
                                 Text($0)
                             }
                         }
-                        DatePicker("Due by", selection: $newTransaction.dueDate, in: ...newTransaction.dueDate, displayedComponents: .date)
-                        //                    HStack {
-                        //                        TextField("Amount", text: Double($newTransaction.money))
+                        DatePicker("Due by", selection: $newTransaction.dueDate, in: .now..., displayedComponents: .date)
+                        HStack {
+                            TextField("Amount", value: $newTransaction.money, formatter: decimalNumberFormat)
+                        }
                     }
                 }
+                
                 Button{
-                    allTransactions.append(newTransaction)
-                    //freezes the app
+                    onCreate(newTransaction)
+                    dismiss()
                 } label: {
-                    ZStack{
-                        Rectangle()
-                            .frame(width: 100, height: 50)
-                            .cornerRadius(10)
-                        Text("Save")
-                            .foregroundColor(.white)
-                    }
+                    Text("Save")
+                        .frame(height: 50)
+                        .frame(maxWidth: .infinity)
+                        .background(.blue)
+                        .cornerRadius(10)
+                        .foregroundColor(.white)
                 }
+                .disabled(newTransaction.name.isEmpty)
+                .padding(.horizontal)
             }
             .navigationTitle("New Transaction")
         }

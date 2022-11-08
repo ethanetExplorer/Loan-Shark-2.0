@@ -71,15 +71,14 @@ struct BillSplitDetailView: View {
                 Button{
                     print("Saved transaction")
                 } label: {
-                    ZStack{
-                        Rectangle()
-                            .frame(width: 100, height: 50)
-                            .cornerRadius(10)
-                        Text("Save")
-                            .foregroundColor(.white) //Note: To find out how to remove white background around save button
-                    }
+                    Text("Save")
+                        .frame(height: 50)
+                        .frame(maxWidth: .infinity)
+                        .background(.blue)
+                        .cornerRadius(10)
+                        .foregroundColor(.white)
                 }
-                
+                .padding(.horizontal)
             }
             .navigationTitle("Details")
         }

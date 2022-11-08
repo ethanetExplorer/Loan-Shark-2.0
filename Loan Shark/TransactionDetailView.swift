@@ -27,7 +27,7 @@ struct TransactionDetailView: View {
         NavigationView {
             VStack {
                 Form {
-                    Section(header: Text("Transaction details")){
+                    Section(header: Text("Transaction details")) {
                         HStack{
                             Text("Title")
                             TextField("Add title", text: $transaction.name)
@@ -36,9 +36,9 @@ struct TransactionDetailView: View {
                         }
                         HStack{
                             Text("People involved:")
-                            //                            TextField("Add people", text: $transaction.people.joined(separator: ", "))
-                            //                                .foregroundColor(.gray)
-                            //                                .multilineTextAlignment(.trailing)
+//                            TextField("Add people", text: $transaction.people)
+//                                .foregroundColor(.gray)
+//                                .multilineTextAlignment(.trailing)
                         }
                         HStack{
                             Text("Amount of money owed:")
@@ -73,14 +73,14 @@ struct TransactionDetailView: View {
                 Button{
                     print("Saved transaction")
                 } label: {
-                    ZStack{
-                        Rectangle()
-                            .frame(width: 100, height: 50)
-                            .cornerRadius(10)
-                        Text("Save")
-                            .foregroundColor(.white)
-                    }
+                    Text("Save")
+                        .frame(height: 50)
+                        .frame(maxWidth: .infinity)
+                        .background(.blue)
+                        .cornerRadius(10)
+                        .foregroundColor(.white)
                 }
+                .padding(.horizontal)
             }
             .navigationTitle("Details")
         }
