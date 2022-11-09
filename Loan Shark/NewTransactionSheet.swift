@@ -2,23 +2,20 @@
 //  NewTransactionSheet.swift
 //  Loan Shark
 //
-//  Created by Yuhan Du on 3/11/22.
+//  Created by Yuhan Du Du Du Du on 6/11/22.
 //
 
 import SwiftUI
 
 struct NewTransactionSheet: View {
     
-    var onCreate: ((Transaction) -> ())
-    @State var newTransaction = Transaction(name: "", people: [""], money: 00, dueDate: .now)
-    @State var selectedTransactionType = "Loan"
+    @StateObject var manager = TransactionManager()
     
-    @Environment(\.dismiss) var dismiss
+    @State var newTransaction = Transaction(name: "", people: [""], dueDate: "", isPaid: false, isBillSplitTransaction: false, money: 0)
+    let transactionTypes = ["Loan", "Bill Split"]
     
-    var transactionTypes = ["Bill split", "Loan"]
-    
-    @State var selectedContact = "James"
-    var contacts = ["James", "Jason", "Jerome"]
+    @State var selectedContact = ""
+    var contacts = ["Dhoby Ghaut", "Bras Basah", "Esplanade", "Promenade", "Nicoll Highway", "Stadium", "Mountbatten", "Dakota", "Paya Lebar", "MacPherson", "Tai Seng", "Bartley", "Serangoon", "Lorong Chuan", "Bishan", "Marymount", "Caldecott", "Botanic Gardens", "Farrer Road", "Holland Village", "Buona Vista", "one-north", "Kent Ridge", "Haw Par Villa", "Pasir Panjang", "Labrador Park", "Telok Blangah", "HarbourFront", "Keppel", "Cantonment", "Prince Edward Road", "Marina Bay", "Bayfront"]
     
     var decimalNumberFormat: NumberFormatter {
         let numberFormatter = NumberFormatter()
@@ -29,54 +26,48 @@ struct NewTransactionSheet: View {
     }
     
     var body: some View {
-        NavigationView{
+        NavigationView {
             VStack {
                 Form {
                     Section{
                         TextField("Title", text: $newTransaction.name)
                             .foregroundColor(.gray)
                             .multilineTextAlignment(.leading)
-                        Picker("Transaction type", selection: $selectedTransactionType) {
+                        Picker("Transaction type", selection: $newTransaction.isBillSplitTransaction) {
                             ForEach(transactionTypes, id: \.self) {
                                 Text($0)
                             }
                         }
-                    }
-                    Section {
                         Picker ("Contact", selection: $selectedContact) {
                             ForEach(contacts, id:\.self) {
                                 Text($0)
                             }
                         }
+                        TextField("Amount", value: $newTransaction.money, formatter: decimalNumberFormat)
+                    }
+                    Section {
                         DatePicker("Due by", selection: $newTransaction.dueDate, in: .now..., displayedComponents: .date)
                         HStack {
                             TextField("Amount", value: $newTransaction.money, formatter: decimalNumberFormat)
                         }
                     }
                 }
-                
-                Button{
-                    onCreate(newTransaction)
-                    dismiss()
-                } label: {
-                    Text("Save")
-                        .frame(height: 50)
-                        .frame(maxWidth: .infinity)
-                        .background(.blue)
-                        .cornerRadius(10)
-                        .foregroundColor(.white)
-                }
-                .disabled(newTransaction.name.isEmpty)
-                .padding(.horizontal)
             }
-            .navigationTitle("New Transaction")
+            Button {
+                manager.allTransactions.append(newTransaction)
+            } label: {
+                Text("Save transaction")
+                    .padding()
+                    .background(.blue)
+                    .cornerRadius(10)
+            }
         }
     }
 }
 
-//    struct NewTransactionSheet_Previews: PreviewProvider {
-//        static var previews: some View {
-//            NewTransactionSheet()
-//        }
-//    }
 
+struct NewTransactionSheet_Previews: PreviewProvider {
+    static var previews: some View {
+        NewTransactionSheet()
+    }
+}
