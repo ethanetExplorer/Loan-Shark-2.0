@@ -1,23 +1,24 @@
 //
-//  TransactionDetailView.swift
+//  TransactionDetailSheet.swift
 //  Loan Shark
 //
-//  Created by Ethan Lim on 9/11/22.
+//  Created by Ethan Lim on 30/10/22.
 //
-
 import SwiftUI
 
 struct TransactionDetailView: View {
     
-    @State var showBillSplit: Bool
+    
     @StateObject var manager = TransactionManager()
-    
-    @State var newTransaction = Transaction(name: "", people: [""], dueDate: "", isPaid: false, isBillSplitTransaction: false, money: 0)
-    let transactionTypes = ["Loan", "Bill Split"]
-    
-    @State var selectedContact = ""
-    var contacts = ["Dhoby Ghaut", "Bras Basah", "Esplanade", "Promenade", "Nicoll Highway", "Stadium", "Mountbatten", "Dakota", "Paya Lebar", "MacPherson", "Tai Seng", "Bartley", "Serangoon", "Lorong Chuan", "Bishan", "Marymount", "Caldecott", "Botanic Gardens", "Farrer Road", "Holland Village", "Buona Vista", "one-north", "Kent Ridge", "Haw Par Villa", "Pasir Panjang", "Labrador Park", "Telok Blangah", "HarbourFront", "Keppel", "Cantonment", "Prince Edward Road", "Marina Bay", "Bayfront"]
-    
+    @Binding var transaction: Transaction
+    @State var isDetailSyncronised: Bool = false
+    @State var dueDate = Date()
+    @State var showBillSplit: Bool
+    var transactionTypes = ["Bill split", "Loan"]
+    @State var transactionType = "Loan"
+    @State var peopleInvolved = ""
+    @Environment(\.dismiss) var dismiss
+
     var decimalNumberFormat: NumberFormatter {
         let numberFormatter = NumberFormatter()
         numberFormatter.allowsFloats = true
@@ -26,46 +27,48 @@ struct TransactionDetailView: View {
         return numberFormatter
     }
     
+    var contacts = ["Dhoby Ghaut", "Bras Basah", "Esplanade", "Promenade", "Nicoll Highway", "Stadium", "Mountbatten", "Dakota", "Paya Lebar", "MacPherson", "Tai Seng", "Bartley", "Serangoon", "Lorong Chuan", "Bishan", "Marymount", "Caldecott", "Botanic Gardens", "Farrer Road", "Holland Village", "Buona Vista", "one-north", "Kent Ridge", "Haw Par Villa", "Pasir Panjang", "Labrador Park", "Telok Blangah", "HarbourFront", "Keppel", "Cantonment", "Prince Edward Road", "Marina Bay", "Bayfront"]
+    
     var body: some View {
         NavigationView {
             VStack {
                 Form {
                     Section(header: Text("Transaction details")) {
-                        HStack{
+                        HStack {
                             Text("Title")
-                            TextField("Add title", text: $0.name)
+                            TextField("Add title", text: $transaction.name)
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)
                         }
+                        Picker("Transaction type", selection: $transactionType) {
+                            ForEach(transactionTypes, id: \.self) {
+                                Text($0)
+                            }
+                        }
                         HStack{
-                            Text("People:")
-                            Picker ("People", selection: $selectedContact) {
-                                ForEach(contacts, id:\.self) {
+                            Text("People involved:")
+                            Picker("People", selection: $peopleInvolved){
+                                ForEach(contacts, id: \.self){
                                     Text($0)
                                 }
                             }
                         }
                         HStack{
                             Text("Amount of money:")
-                            TextField("Amount", value: $0.money, formatter: NumberFormatter())
+                            TextField("Amount", value: $transaction.money, formatter: NumberFormatter())
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)
                         }
-                        DatePicker("Due by", selection: $0.dueDate, in: .now..., displayedComponents: .date)
-                        Picker("Transaction type", selection: $0.transactionType) {
-                            ForEach(transactionTypes, id: \.self) {
-                                Text($0)
-                            }
-                        }
+                        DatePicker("Due by", selection: $dueDate, in: ...dueDate, displayedComponents: .date)
                     }
-                    Section(header: Text("Options")) {
-                        Toggle(isOn: $0.isDetailSyncronised) {
+                    Section(header: Text("Options")){
+                        Toggle(isOn: $isDetailSyncronised){
                             Text("Syncronise details")
                         }
                     }
                 }
                 Button{
-                    print("Saved transaction")
+                    dismiss()
                 } label: {
                     Text("Save")
                         .frame(height: 50)
@@ -76,24 +79,12 @@ struct TransactionDetailView: View {
                 }
                 .padding(.horizontal)
             }
-            Button{
-                print("Saved transaction")
-            } label: {
-                Text("Save")
-                    .frame(height: 50)
-                    .frame(maxWidth: .infinity)
-                    .background(.blue)
-                    .cornerRadius(10)
-                    .foregroundColor(.white)
-            }
             .navigationTitle("Details")
         }
     }
 }
-
 struct TransactionDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionDetailView(showBillSplit: true)
-        TransactionDetailView(showBillSplit: false)
+        TransactionDetailView(transaction: .constant(Transaction(name: "Plane ticket", people: ["Telok Blangah"], dueDate: "2022-12-25", isPaid: false, isBillSplitTransaction: false, money: 200)), showBillSplit: false)
     }
 }
