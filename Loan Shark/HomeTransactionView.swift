@@ -38,6 +38,6 @@ struct HomeTransactionView: View {
 
 struct HomeTransactionView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeTransactionView(transaction: .constant(Transaction(name: "", people: [], money: 0, dueDate: .now)))
+        HomeTransactionView(transaction: .constant(Transaction(name: "", people: [], money: 0, dueDate: Date.now)))
     }
 }

@@ -34,7 +34,7 @@ class TransactionManager: ObservableObject {
     var dueIn7DaysTransactions: [Transaction] {
         get {
             (searchResults.isEmpty ? allTransactions : searchResults).filter {
-                $0.status == .dueIn7Days
+                $0.status == .dueInOneWeek
             }
         }
         set {
@@ -48,12 +48,26 @@ class TransactionManager: ObservableObject {
     var otherTransactions: [Transaction] {
         get {
             (searchResults.isEmpty ? allTransactions : searchResults).filter {
-                $0.status == .normal
+                $0.status == .unpaid
             }
         }
         set {
             for transaction in newValue {
                 let transactionIndex = allTransactions.firstIndex(where: { $0.id == transaction.id })!
+                allTransactions[transactionIndex] = transaction
+            }
+        }
+    }
+    
+    var completedTransactions: [Transaction] {
+        get {
+            (searchResults.isEmpty ? allTransactions : searchResults).filter {
+                $0.status == .paidOff
+            }
+        }
+        set {
+            for transaction in newValue {
+                let transactionIndex = allTransactions.firstIndex(where: {$0.id == transaction.id})!
                 allTransactions[transactionIndex] = transaction
             }
         }
@@ -65,10 +79,11 @@ class TransactionManager: ObservableObject {
         })
     }
     
-    let sampleTransactions: [Transaction] = [
-        Transaction(name: "Meal", people: ["Jason", "Jackson"], money: 500, dueDate: "2022-12-25"),//, appliedTags: 0),
-        Transaction(name: "Money loan", people: ["Jerome"], money: 10, dueDate: "2022-11-7"),//, appliedTags: 1),
-        Transaction(name: "MacBook gift", people: ["Jonathan"], money: 2999, dueDate: "2022-10-25")//, appliedTags: 2)
+    let sampleTransactions = [
+        Transaction(name: "Dinner", people: ["Dhoby Ghaut", "Bras Basah"], dueDate: "2022-12-25", isPaid: false, isBillSplitTransaction: true, money: 60.0),
+        Transaction(name: "Loan to Jeremy for books", people: ["Esplanade"], dueDate: "2022-11-12", isPaid: false, isBillSplitTransaction: false, money: 15.0),
+        Transaction(name: "Delivery fees for bomb", people: ["Esplanade"], dueDate: "2022-06-12", isPaid: false, isBillSplitTransaction: false, money: 12.0),
+        Transaction(name: "Rick and Morty Body Pillow", people: ["Promenade"], dueDate: "2022-11-06", isPaid: true, isBillSplitTransaction: false, money: 21.5)
     ]
     
     init() {
@@ -105,5 +120,6 @@ class TransactionManager: ObservableObject {
         allTransactions = finalTransactions
     }
 }
+
 
 

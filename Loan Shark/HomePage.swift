@@ -24,41 +24,6 @@ struct HomePage: View {
     var body: some View {
         NavigationView {
             List {
-                //                HStack {
-                //                    ScrollView(.horizontal) {
-                //                        Spacer()
-                //                            .frame(height: 5)
-                //                        HStack(spacing: 7) {
-                //                            ForEach(allTags) { tag in
-                //                                ZStack {
-                //                                    RoundedRectangle(cornerRadius: 12.5)
-                //                                        .stroke(tag.color, lineWidth: 1)
-                //                                        .frame(width: 90, height: 25)
-                //                                    Circle()
-                //                                        .frame(width: 20, height: 20)
-                //                                        .foregroundColor(tag.color)
-                //                                        .padding(.trailing, 66)
-                //                                    Image(systemName: tag.icon)
-                //                                        .foregroundColor(.white)
-                //                                        .padding(.trailing, 66)
-                //                                        .font(.system(size: 12))
-                //                                    Text(tag.name)
-                //                                        .foregroundColor(tag.color)
-                //                                        .font(.caption)
-                //                                        .padding(.leading, 20)
-                //                                }
-                //                            }
-                //                        }
-                //                        .padding(.bottom, 5)
-                //                    }
-                //
-                //                    Button {
-                //
-                //                    } label: {
-                //                        Image(systemName: "plus.circle")
-                //                    }
-                //                }
-                //                .buttonStyle(.plain)
                 Section(header: Text("OUTSTANDING")) {
                     ForEach($manager.overdueTransactions) { $transaction in
                         HomeTransactionView(transaction: $transaction)
