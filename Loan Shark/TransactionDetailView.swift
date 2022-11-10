@@ -59,7 +59,7 @@ struct TransactionDetailView: View {
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)
                         }
-                        DatePicker("Due by", selection: $dueDate, in: ...dueDate, displayedComponents: .date)
+                        DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
                     }
                     Section(header: Text("Options")){
                         Toggle(isOn: $isDetailSyncronised){
