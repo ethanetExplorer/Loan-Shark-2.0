@@ -8,11 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		09E16BC729160437003090BB /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E16BC629160437003090BB /* TransactionManager.swift */; };
-		55ABB09C291121E200D496D6 /* BillSplitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ABB09A291121E200D496D6 /* BillSplitDetailView.swift */; };
-		55ABB09D291121E200D496D6 /* PersonDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ABB09B291121E200D496D6 /* PersonDetailView.swift */; };
-		55C2840A29110A040087C75C /* HomeTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C2840929110A040087C75C /* HomeTransactionView.swift */; };
 		55DBFA18291377FB008AFA32 /* NewTransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DBFA17291377FB008AFA32 /* NewTransactionSheet.swift */; };
-		746A4B95290E57A000AF5522 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746A4B94290E57A000AF5522 /* HomePage.swift */; };
 		746A4B97290E607500AF5522 /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746A4B96290E607500AF5522 /* TransactionDetailView.swift */; };
 		74BDE57C28CD868C00D1DA25 /* Loan_SharkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */; };
 		74BDE57E28CD868C00D1DA25 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE57D28CD868C00D1DA25 /* ContentView.swift */; };
@@ -21,7 +17,6 @@
 		74BDE58D28CD868E00D1DA25 /* Loan_SharkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE58C28CD868E00D1DA25 /* Loan_SharkTests.swift */; };
 		74BDE59728CD868E00D1DA25 /* Loan_SharkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE59628CD868E00D1DA25 /* Loan_SharkUITests.swift */; };
 		74BDE59928CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE59828CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift */; };
-		74FB481F2903887F00F23E32 /* PeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB481E2903887F00F23E32 /* PeopleView.swift */; };
 		74FB4821290388CC00F23E32 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB4820290388CC00F23E32 /* HomeView.swift */; };
 		74FB4822290388CC00F23E32 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB4820290388CC00F23E32 /* HomeView.swift */; };
 		74FB4823290388CC00F23E32 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB4820290388CC00F23E32 /* HomeView.swift */; };
@@ -50,11 +45,7 @@
 
 /* Begin PBXFileReference section */
 		09E16BC629160437003090BB /* TransactionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
-		55ABB09A291121E200D496D6 /* BillSplitDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillSplitDetailView.swift; sourceTree = "<group>"; };
-		55ABB09B291121E200D496D6 /* PersonDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonDetailView.swift; sourceTree = "<group>"; };
-		55C2840929110A040087C75C /* HomeTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTransactionView.swift; sourceTree = "<group>"; };
 		55DBFA17291377FB008AFA32 /* NewTransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransactionSheet.swift; sourceTree = "<group>"; };
-		746A4B94290E57A000AF5522 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		746A4B96290E607500AF5522 /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 		74BDE57828CD868C00D1DA25 /* Loan Shark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Loan Shark.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loan_SharkApp.swift; sourceTree = "<group>"; };
@@ -66,7 +57,6 @@
 		74BDE59228CD868E00D1DA25 /* Loan SharkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Loan SharkUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		74BDE59628CD868E00D1DA25 /* Loan_SharkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loan_SharkUITests.swift; sourceTree = "<group>"; };
 		74BDE59828CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loan_SharkUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		74FB481E2903887F00F23E32 /* PeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleView.swift; sourceTree = "<group>"; };
 		74FB4820290388CC00F23E32 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		74FB48282903892200F23E32 /* Loan Shark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Loan Shark.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,17 +110,12 @@
 		74BDE57A28CD868C00D1DA25 /* Loan Shark */ = {
 			isa = PBXGroup;
 			children = (
-				55ABB09A291121E200D496D6 /* BillSplitDetailView.swift */,
-				55ABB09B291121E200D496D6 /* PersonDetailView.swift */,
 				74FB48282903892200F23E32 /* Loan Shark.swift */,
 				74BDE57D28CD868C00D1DA25 /* ContentView.swift */,
-				746A4B94290E57A000AF5522 /* HomePage.swift */,
 				55DBFA17291377FB008AFA32 /* NewTransactionSheet.swift */,
-				55C2840929110A040087C75C /* HomeTransactionView.swift */,
 				746A4B96290E607500AF5522 /* TransactionDetailView.swift */,
 				09E16BC629160437003090BB /* TransactionManager.swift */,
 				74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */,
-				74FB481E2903887F00F23E32 /* PeopleView.swift */,
 				74FB4820290388CC00F23E32 /* HomeView.swift */,
 				74BDE57F28CD868E00D1DA25 /* Assets.xcassets */,
 				74BDE58128CD868E00D1DA25 /* Preview Content */,
@@ -299,16 +284,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55ABB09C291121E200D496D6 /* BillSplitDetailView.swift in Sources */,
 				746A4B97290E607500AF5522 /* TransactionDetailView.swift in Sources */,
-				746A4B95290E57A000AF5522 /* HomePage.swift in Sources */,
 				74BDE57E28CD868C00D1DA25 /* ContentView.swift in Sources */,
 				74BDE57C28CD868C00D1DA25 /* Loan_SharkApp.swift in Sources */,
 				74FB4821290388CC00F23E32 /* HomeView.swift in Sources */,
-				55C2840A29110A040087C75C /* HomeTransactionView.swift in Sources */,
-				74FB481F2903887F00F23E32 /* PeopleView.swift in Sources */,
 				55DBFA18291377FB008AFA32 /* NewTransactionSheet.swift in Sources */,
-				55ABB09D291121E200D496D6 /* PersonDetailView.swift in Sources */,
 				74FB48292903892200F23E32 /* Loan Shark.swift in Sources */,
 				09E16BC729160437003090BB /* TransactionManager.swift in Sources */,
 			);
