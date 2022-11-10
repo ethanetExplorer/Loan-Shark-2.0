@@ -67,7 +67,7 @@ struct TransactionDetailView: View {
                         }
                     }
                 }
-                Button{
+                Button {
                     dismiss()
                 } label: {
                     Text("Save")
