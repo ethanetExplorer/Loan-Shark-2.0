@@ -56,12 +56,16 @@ struct TransactionDetailView: View {
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)
                         }
-                        DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
+                        DatePicker("Due by", selection: $transaction.dueDate, in: Date.now..., displayedComponents: .date)
                     }
-                    Section(header: Text("Options")){
-                        Toggle(isOn: $isDetailSyncronised){
-                            Text("Syncronise details")
+                    if transactionType == "Bill Split"{
+                        Section(header: Text("Options")){
+                            Toggle(isOn: $isDetailSyncronised){
+                                Text("Syncronise details")
+                            }
                         }
+                    } else {
+                        Text("")
                     }
                 }
                 HStack {

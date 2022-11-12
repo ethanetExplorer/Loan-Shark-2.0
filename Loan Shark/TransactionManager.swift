@@ -80,10 +80,10 @@ class TransactionManager: ObservableObject {
     }
     
     let sampleTransactions = [
-        Transaction(name: "Dinner", people: ["Dhoby Ghaut", "Bras Basah"], dueDate: "2022-12-25", isPaid: false, isBillSplitTransaction: true, money: 60.0),
-        Transaction(name: "Loan to Jeremy for books", people: ["Esplanade"], dueDate: "2022-11-12", isPaid: false, isBillSplitTransaction: false, money: 15.0),
+        Transaction(name: "Dinner", people: ["Dhoby Ghaut", "Bras Basah"], dueDate: "2023-12-25", isPaid: false, isBillSplitTransaction: true, money: 60.0),
+        Transaction(name: "Loan to Jeremy for books", people: ["Esplanade"], dueDate: "2022-11-13", isPaid: false, isBillSplitTransaction: false, money: 15.0),
         Transaction(name: "Delivery fees for bomb", people: ["Esplanade"], dueDate: "2022-06-12", isPaid: false, isBillSplitTransaction: false, money: 12.0),
-        Transaction(name: "Rick and Morty Body Pillow", people: ["Promenade"], dueDate: "2022-11-06", isPaid: true, isBillSplitTransaction: false, money: 21.5)
+        Transaction(name: "Rick and Morty Body Pillow", people: ["Promenade"], dueDate: "2022-11-14", isPaid: true, isBillSplitTransaction: false, money: 21.5)
     ]
     
     init() {
