@@ -45,12 +45,9 @@ struct TransactionDetailView: View {
                                 Text($0)
                             }
                         }
-                        HStack{
-                            Text("People involved:")
-                            Picker("People", selection: $peopleInvolved){
-                                ForEach(contacts, id: \.self){
-                                    Text($0)
-                                }
+                        Picker("People", selection: $peopleInvolved){
+                            ForEach(contacts, id: \.self){
+                                Text($0)
                             }
                         }
                         HStack{
@@ -59,25 +56,43 @@ struct TransactionDetailView: View {
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)
                         }
-                        DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
+                        DatePicker("Due by", selection: $transaction.dueDate, in: Date.now..., displayedComponents: .date)
                     }
-                    Section(header: Text("Options")){
-                        Toggle(isOn: $isDetailSyncronised){
-                            Text("Syncronise details")
+                    if transactionType == "Bill Split"{
+                        Section(header: Text("Options")){
+                            Toggle(isOn: $isDetailSyncronised){
+                                Text("Syncronise details")
+                            }
                         }
+                    } else {
+                        Text("")
                     }
                 }
-                Button {
-                    dismiss()
-                } label: {
-                    Text("Save")
-                        .frame(height: 50)
-                        .frame(maxWidth: .infinity)
-                        .background(.blue)
-                        .cornerRadius(10)
-                        .foregroundColor(.white)
+                HStack {
+                    Button{
+                        dismiss()
+                    } label: {
+                        Text("Save")
+                            .frame(height: 50)
+                            .frame(maxWidth: .infinity)
+                            .background(.blue)
+                            .cornerRadius(10)
+                            .foregroundColor(.white)
+                    }
+                    .padding(.horizontal)
+                    Button{
+                        transaction.isPaid = true
+                        dismiss()
+                    } label: {
+                        Text("Mark as complete")
+                            .frame(height: 50)
+                            .frame(maxWidth: .infinity)
+                            .background(.blue)
+                            .cornerRadius(10)
+                            .foregroundColor(.white)
+                    }
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
             }
             .navigationTitle("Details")
         }
@@ -85,6 +100,6 @@ struct TransactionDetailView: View {
 }
 struct TransactionDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionDetailView(transaction: .constant(Transaction(name: "Plane ticket", people: ["Telok Blangah"], dueDate: "2022-12-25", isPaid: false, isBillSplitTransaction: false, money: 200)), showBillSplit: false)
+        TransactionDetailView(transaction: .constant(Transaction(name: "", people: [""], dueDate: "", isPaid: false, isBillSplitTransaction: false, money: 0)), showBillSplit: false)
     }
 }
