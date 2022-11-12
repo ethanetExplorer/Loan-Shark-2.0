@@ -60,11 +60,12 @@ struct NewTransactionSheet: View {
                         }
                         DatePicker("Due by", selection: $newTransaction.dueDate, in: Date.now..., displayedComponents: .date)
                     }
-                    Section(header: Text("Options")){
-                        Toggle(isOn: $isDetailSyncronised){
-                            Text("Syncronise details")
-                        }
-                    }
+//                    Section(header: Text("Options")){
+//                        Toggle(isOn: $isDetailSyncronised){
+//                            Text("Syncronise details")
+//                        }
+//                    }
+                    //TODO: Make this option only appear when bill split is selected
                 }
                 Button {
                     manager.allTransactions.append(newTransaction)
