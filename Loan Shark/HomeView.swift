@@ -28,9 +28,9 @@ struct HomeView: View {
                                 VStack(alignment: .leading) {
                                     Text(transaction.name)
                                         .foregroundColor(.black)
-//                                    Text(transaction.people.joined(separator: ", "))
-//                                        .font(.caption)
-//                                        .foregroundColor(.gray)
+                                    Text(transaction.people.joined(separator: ", "))
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
                                 }
                                 Spacer()
                                 Text("$" + String(format: "%.2f", transaction.money))
@@ -76,9 +76,9 @@ struct HomeView: View {
                                 VStack(alignment: .leading) {
                                     Text(transaction.name)
                                         .foregroundColor(.black)
-//                                    Text(transaction.people.joined(separator: ", "))
-//                                        .font(.caption)
-//                                        .foregroundColor(.gray)
+                                    Text(transaction.people.joined(separator: ", "))
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
                                 }
                                 Spacer()
                                 Text("$" + String(format: "%.2f", transaction.money))
@@ -100,9 +100,9 @@ struct HomeView: View {
                                 VStack(alignment: .leading) {
                                     Text(transaction.name)
                                         .foregroundColor(.black)
-//                                    Text(transaction.people.joined(separator: ", "))
-//                                        .font(.caption)
-//                                        .foregroundColor(.gray)
+                                    Text(transaction.people.joined(separator: ", "))
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
                                 }
                                 Spacer()
                                 Text("$" + String(format: "%.2f", transaction.money))
