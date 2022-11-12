@@ -21,98 +21,22 @@ struct HomeView: View {
             List {
                 Section(header: Text("Outstanding")) {
                     ForEach($manager.overdueTransactions) { $transaction in
-                        Button {
-                            showTransactionDetailsSheet = true
-                        } label: {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(transaction.name)
-                                        .foregroundColor(.black)
-                                    Text(transaction.people.joined(separator: ", "))
-                                        .font(.caption)
-                                        .foregroundColor(.gray)
-                                }
-                                Spacer()
-                                Text("$" + String(format: "%.2f", transaction.money))
-                                    .foregroundColor(transaction.status == .overdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
-                                    .font(.title2)
-                            }
-                        }
-                        .sheet(isPresented: $showTransactionDetailsSheet) {
-                            TransactionDetailView(transaction: $transaction, showBillSplit: transaction.isBillSplitTransaction)
-                        }
+                        HomeTransactionView(transaction: $transaction)
                     }
                 }
                 Section(header: Text("Due in 1 week")) {
                     ForEach($manager.dueIn7DaysTransactions) { $transaction in
-                        Button {
-                            showTransactionDetailsSheet = true
-                        } label: {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(transaction.name)
-                                        .foregroundColor(.black)
-                                    Text(transaction.people.joined(separator: ", "))
-                                        .font(.caption)
-                                        .foregroundColor(.gray)
-                                }
-                                Spacer()
-                                Text("$" + String(format: "%.2f", transaction.money))
-                                    .foregroundColor(transaction.status == .overdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
-                                    .font(.title2)
-                            }
-                        }
-                        .sheet(isPresented: $showTransactionDetailsSheet) {
-                            TransactionDetailView(transaction: $transaction, showBillSplit: transaction.isBillSplitTransaction)
-                        }
+                        HomeTransactionView(transaction: $transaction)
                     }
                 }
                 Section(header: Text("Others")) {
                     ForEach($manager.otherTransactions) { $transaction in
-                        Button {
-                            showTransactionDetailsSheet = true
-                        } label: {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(transaction.name)
-                                        .foregroundColor(.black)
-                                    Text(transaction.people.joined(separator: ", "))
-                                        .font(.caption)
-                                        .foregroundColor(.gray)
-                                }
-                                Spacer()
-                                Text("$" + String(format: "%.2f", transaction.money))
-                                    .foregroundColor(transaction.status == .overdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
-                                    .font(.title2)
-                            }
-                        }
-                        .sheet(isPresented: $showTransactionDetailsSheet){
-                            TransactionDetailView(transaction: $transaction, showBillSplit: transaction.isBillSplitTransaction)
-                        }
+                        HomeTransactionView(transaction: $transaction)
                     }
                 }
                 Section(header: Text("Completed")) {
                     ForEach($manager.completedTransactions) { $transaction in
-                        Button {
-                            showTransactionDetailsSheet = true
-                        } label: {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(transaction.name)
-                                        .foregroundColor(.black)
-                                    Text(transaction.people.joined(separator: ", "))
-                                        .font(.caption)
-                                        .foregroundColor(.gray)
-                                }
-                                Spacer()
-                                Text("$" + String(format: "%.2f", transaction.money))
-                                    .foregroundColor(transaction.status == .overdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
-                                    .font(.title2)
-                            }
-                        }
-                        .sheet(isPresented: $showTransactionDetailsSheet) {
-                            TransactionDetailView(transaction: $transaction, showBillSplit: transaction.isBillSplitTransaction)
-                        }
+                        HomeTransactionView(transaction: $transaction)
                     }
                 }
                 }
