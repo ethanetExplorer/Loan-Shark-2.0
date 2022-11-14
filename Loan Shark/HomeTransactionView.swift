@@ -14,13 +14,17 @@ struct HomeTransactionView: View {
                 VStack(alignment: .leading) {
                     Text(transaction.name)
                         .foregroundColor(.black)
-                    Text(transaction.people.joined(separator: ", "))
-                        .font(.caption)
-                        .foregroundColor(.gray)
+                    
+                    ForEach(transaction.people) { person in
+                        Text(person.name)
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                        
+                    }
                 }
                 Spacer()
                 Text("$" + String(format: "%.2f", transaction.money))
-                    .foregroundColor(transaction.status == .overdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
+                    .foregroundColor(transaction.transactionStatus == .overdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
                     .font(.title2)
             }
         }

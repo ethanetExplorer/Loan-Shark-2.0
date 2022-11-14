@@ -22,21 +22,21 @@ struct TransactionDetailSheet: View {
                     .padding(.leading, 21)
                 List {
                     Section {
-                        ForEach(transaction.people, id: \.self) { person in
+                        ForEach(transaction.people) { person in
                             ZStack {
                                 RoundedRectangle(cornerRadius: 10)
                                     .foregroundColor(.white)
                                 VStack{
                                     HStack {
                                         VStack(alignment: .leading) {
-                                            Text(person)
+                                            Text(person.name)
                                                 .bold()
                                                 .font(.title3)
                                             HStack(alignment: .center, spacing: 0) {
-                                                Text(transaction.status == .overdue ? "Due " : "Due in ")
+                                                Text(transaction.transactionStatus == .overdue ? "Due " : "Due in ")
                                                 Text(transaction.dueDate, style: .relative)
                                                 
-                                                if transaction.status == .overdue {
+                                                if transaction.transactionStatus == .overdue {
                                                     Text(" ago")
                                                 }
                                             }
@@ -45,7 +45,7 @@ struct TransactionDetailSheet: View {
                                         }
                                         Spacer()
                                         Text("$" + String(format: "%.2f", transaction.money))
-                                            .foregroundColor(transaction.status == .overdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
+                                            .foregroundColor(transaction.transactionStatus == .overdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
                                             .font(.title2)
                                     }
                                     .padding(.top, 10)

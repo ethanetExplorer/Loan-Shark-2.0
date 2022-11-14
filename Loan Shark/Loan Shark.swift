@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 
-enum TransactionTypes{
+enum TransactionTypes: Codable {
     case billSplit
     case loan
 }
@@ -21,7 +21,7 @@ enum TransactionStatus: Int, Codable {
     case paidOff
 }
 
-struct Person: Identifiable {
+struct Person: Identifiable, Codable {
     var id = UUID()
     var name: String
     var money: Double?
@@ -32,11 +32,11 @@ struct Person: Identifiable {
 class Transaction: Identifiable, Codable {
     var id = UUID()
     var name: String
-    var people: [String]
+    var people: [Person]
     var dueDate: Date = Date.now
     var isPaid: Bool = false
     
-    var status: TransactionStatus {
+    var transactionStatus: TransactionStatus {
         if isPaid {
             return .paidOff
         }
@@ -63,7 +63,7 @@ class Transaction: Identifiable, Codable {
     
     var money: Double = 0
     
-    init(id: UUID = UUID(), name: String, people: [String], dueDate: String, isPaid: Bool, isBillSplitTransaction: Bool, money: Double) {
+    init(id: UUID = UUID(), name: String, people: [Person], dueDate: String, isPaid: Bool, isBillSplitTransaction: Bool, money: Double) {
         self.id = id
         self.name = name
         self.people = people
@@ -76,7 +76,7 @@ class Transaction: Identifiable, Codable {
         self.money = money
     }
 
-    init(id: UUID = UUID(), name: String, people: [String], dueDate: Date, isPaid: Bool, isBillSplitTransaction: Bool, money: Double) {
+    init(id: UUID = UUID(), name: String, people: [Person], dueDate: Date, isPaid: Bool, isBillSplitTransaction: Bool, money: Double) {
         self.id = id
         self.name = name
         self.people = people

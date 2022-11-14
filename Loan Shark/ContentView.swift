@@ -17,7 +17,7 @@ struct ContentView: View {
 				.tabItem {
 					Label("Home", systemImage: "house")
 				}
-			PeopleView(manager: transactionManager, contactsList: [])
+			PeopleView(manager: transactionManager)
 				.tabItem {
 					Label("Contacts", systemImage: "person.circle")
 				}

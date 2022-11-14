@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Contacts
 
 class TransactionManager: ObservableObject {
     @Published var allTransactions: [Transaction] = [] {
@@ -16,11 +17,12 @@ class TransactionManager: ObservableObject {
     }
     
     @Published var searchTerm = ""
+    @Published var contactsList: [Person] = []
     
     var overdueTransactions: [Transaction] {
         get {
             (searchResults.isEmpty ? allTransactions : searchResults).filter {
-                $0.status == .overdue
+                $0.transactionStatus == .overdue
             }
         }
         set {
@@ -34,7 +36,7 @@ class TransactionManager: ObservableObject {
     var dueIn7DaysTransactions: [Transaction] {
         get {
             (searchResults.isEmpty ? allTransactions : searchResults).filter {
-                $0.status == .dueInOneWeek
+                $0.transactionStatus == .dueInOneWeek
             }
         }
         set {
@@ -48,7 +50,7 @@ class TransactionManager: ObservableObject {
     var otherTransactions: [Transaction] {
         get {
             (searchResults.isEmpty ? allTransactions : searchResults).filter {
-                $0.status == .unpaid
+                $0.transactionStatus == .unpaid
             }
         }
         set {
@@ -62,7 +64,7 @@ class TransactionManager: ObservableObject {
     var completedTransactions: [Transaction] {
         get {
             (searchResults.isEmpty ? allTransactions : searchResults).filter {
-                $0.status == .paidOff
+                $0.transactionStatus == .paidOff
             }
         }
         set {
@@ -80,14 +82,15 @@ class TransactionManager: ObservableObject {
     }
     
     let sampleTransactions = [
-        Transaction(name: "Dinner", people: ["Dhoby Ghaut", "Bras Basah"], dueDate: "2023-12-25", isPaid: false, isBillSplitTransaction: true, money: 60.0),
-        Transaction(name: "Loan to Jeremy for books", people: ["Esplanade"], dueDate: "2022-11-13", isPaid: false, isBillSplitTransaction: false, money: 15.0),
-        Transaction(name: "Delivery fees for bomb", people: ["Esplanade"], dueDate: "2022-06-12", isPaid: false, isBillSplitTransaction: false, money: 12.0),
-        Transaction(name: "Rick and Morty Body Pillow", people: ["Promenade"], dueDate: "2022-11-14", isPaid: true, isBillSplitTransaction: false, money: 21.5)
+        Transaction(name: "Dinner", people: [Person(name: "Dhoby Ghaut"), Person(name: "Bras Basah")], dueDate: "2023-12-25", isPaid: false, isBillSplitTransaction: true, money: 60.0),
+        Transaction(name: "Loan to Jeremy for books", people: [Person(name: "Esplanade")], dueDate: "2022-11-13", isPaid: false, isBillSplitTransaction: false, money: 15.0),
+        Transaction(name: "Delivery fees for bomb", people: [Person(name: "Esplanade")], dueDate: "2022-06-12", isPaid: false, isBillSplitTransaction: false, money: 12.0),
+        Transaction(name: "Rick and Morty Body Pillow", people: [Person(name: "Promenade")], dueDate: "2022-11-14", isPaid: true, isBillSplitTransaction: false, money: 21.5)
     ]
     
     init() {
         load()
+        loadContacts()
     }
     
     func getArchiveURL() -> URL {
@@ -118,6 +121,39 @@ class TransactionManager: ObservableObject {
         }
         
         allTransactions = finalTransactions
+    }
+    
+    func loadContacts() {
+        let store = CNContactStore()
+        
+        store.requestAccess(for: .contacts) { (granted, error) in
+            if let error = error {
+                print("failed to request access", error)
+                return
+            }
+            if granted {
+                let keys = [CNContactGivenNameKey, CNContactFamilyNameKey]
+                let request = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
+                
+                DispatchQueue.global(qos: .userInitiated).async {
+                    do {
+                        var contacts: [Person] = []
+                        
+                        try store.enumerateContacts(with: request) { (contact, stopPointer) in
+                            contacts.append(Person(name: contact.givenName + " " + contact.familyName))
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.contactsList = contacts
+                        }
+                    } catch let error {
+                        print("Failed to enumerate contact", error)
+                    }
+                }
+            } else {
+                print("access denied")
+            }
+        }
     }
 }
 
