@@ -52,6 +52,7 @@ struct NewTransactionSheet: View {
                                 Text($0)
                             }
                         }
+//                        newTransaction.people.append(peopleInvolved)
                         HStack{
                             Text("Amount of money:")
                             TextField("Amount", value: $newTransaction.money, formatter: NumberFormatter())
@@ -68,7 +69,7 @@ struct NewTransactionSheet: View {
                     //TODO: Make this option only appear when bill split is selected
                 }
                 Button {
-                    manager.allTransactions.append(newTransaction)
+                    transactions.append(newTransaction)
                     dismiss()
                 } label: {
                     Text("Save")
@@ -79,6 +80,7 @@ struct NewTransactionSheet: View {
                         .foregroundColor(.white)
                 }
                 .padding(.horizontal)
+                
             }
             .navigationTitle("New transaction")
         }

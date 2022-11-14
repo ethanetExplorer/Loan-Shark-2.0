@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+
 enum TransactionTypes{
     case billSplit
     case loan
