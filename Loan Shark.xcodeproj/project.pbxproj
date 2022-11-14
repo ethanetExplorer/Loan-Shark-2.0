@@ -10,6 +10,8 @@
 		09E16BC729160437003090BB /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E16BC629160437003090BB /* TransactionManager.swift */; };
 		55000AC9291F433600779BBA /* HomeTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55000AC8291F433600779BBA /* HomeTransactionView.swift */; };
 		55000ACB291F43BE00779BBA /* TransactionDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55000ACA291F43BE00779BBA /* TransactionDetailSheet.swift */; };
+		55000AD12921E9B900779BBA /* PeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55000AD02921E9B900779BBA /* PeopleView.swift */; };
+		55000AD32921EB4500779BBA /* PersonDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55000AD22921EB4500779BBA /* PersonDetailView.swift */; };
 		55DBFA18291377FB008AFA32 /* NewTransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DBFA17291377FB008AFA32 /* NewTransactionSheet.swift */; };
 		74BDE57C28CD868C00D1DA25 /* Loan_SharkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */; };
 		74BDE57E28CD868C00D1DA25 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE57D28CD868C00D1DA25 /* ContentView.swift */; };
@@ -48,6 +50,8 @@
 		09E16BC629160437003090BB /* TransactionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
 		55000AC8291F433600779BBA /* HomeTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTransactionView.swift; sourceTree = "<group>"; };
 		55000ACA291F43BE00779BBA /* TransactionDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailSheet.swift; sourceTree = "<group>"; };
+		55000AD02921E9B900779BBA /* PeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleView.swift; sourceTree = "<group>"; };
+		55000AD22921EB4500779BBA /* PersonDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailView.swift; sourceTree = "<group>"; };
 		55DBFA17291377FB008AFA32 /* NewTransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransactionSheet.swift; sourceTree = "<group>"; };
 		74BDE57828CD868C00D1DA25 /* Loan Shark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Loan Shark.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loan_SharkApp.swift; sourceTree = "<group>"; };
@@ -115,6 +119,8 @@
 				55000AC8291F433600779BBA /* HomeTransactionView.swift */,
 				74FB48282903892200F23E32 /* Loan Shark.swift */,
 				74BDE57D28CD868C00D1DA25 /* ContentView.swift */,
+				55000AD02921E9B900779BBA /* PeopleView.swift */,
+				55000AD22921EB4500779BBA /* PersonDetailView.swift */,
 				55000ACA291F43BE00779BBA /* TransactionDetailSheet.swift */,
 				55DBFA17291377FB008AFA32 /* NewTransactionSheet.swift */,
 				09E16BC629160437003090BB /* TransactionManager.swift */,
@@ -289,6 +295,8 @@
 			files = (
 				74BDE57E28CD868C00D1DA25 /* ContentView.swift in Sources */,
 				55000ACB291F43BE00779BBA /* TransactionDetailSheet.swift in Sources */,
+				55000AD32921EB4500779BBA /* PersonDetailView.swift in Sources */,
+				55000AD12921E9B900779BBA /* PeopleView.swift in Sources */,
 				74BDE57C28CD868C00D1DA25 /* Loan_SharkApp.swift in Sources */,
 				74FB4821290388CC00F23E32 /* HomeView.swift in Sources */,
 				55DBFA18291377FB008AFA32 /* NewTransactionSheet.swift in Sources */,
@@ -460,6 +468,7 @@
 				DEVELOPMENT_TEAM = SMB4V4XL5Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSContactsUsageDescription = "To import contacts for easier creation of transactions";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -490,6 +499,7 @@
 				DEVELOPMENT_TEAM = SMB4V4XL5Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSContactsUsageDescription = "To import contacts for easier creation of transactions";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

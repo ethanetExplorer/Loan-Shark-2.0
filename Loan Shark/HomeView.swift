@@ -20,7 +20,7 @@ struct HomeView: View {
 //        self._transaction = State(initialValue: transaction)
 //    }
     
-    @StateObject var manager = TransactionManager()
+    @ObservedObject var manager: TransactionManager
     
     @State var selectedTransactionIndex: Int?
     @State var selectedTransaction: Transaction? = nil
@@ -110,6 +110,6 @@ struct HomeView: View {
 }
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(manager: .init())
     }
 }

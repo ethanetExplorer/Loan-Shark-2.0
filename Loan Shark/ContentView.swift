@@ -12,7 +12,16 @@ struct ContentView: View {
     @StateObject var transactionManager = TransactionManager()
     
     var body: some View {
-        HomeView()
+		TabView {
+			HomeView(manager: transactionManager)
+				.tabItem {
+					Label("Home", systemImage: "house")
+				}
+			PeopleView(manager: transactionManager, contactsList: [])
+				.tabItem {
+					Label("Contacts", systemImage: "person.circle")
+				}
+		}
     }
 }
 
