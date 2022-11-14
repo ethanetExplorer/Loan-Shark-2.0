@@ -25,11 +25,8 @@ struct NewTransactionSheet: View {
         return numberFormatter
     }
     
-    @State var newTransaction = Transaction(name: "", people: [""], dueDate: Date.now, isPaid: false, isBillSplitTransaction: false, money: 0)
+    @State var newTransaction = Transaction(name: "", people: [], totalMoney: 0, transactionType: .unselected)
     @Binding var transactions: [Transaction]
-
-    @State var peopleInvolved = ""
-    var contacts = ["Contact", "Dhoby Ghaut", "Bras Basah", "Esplanade", "Promenade", "Nicoll Highway", "Stadium", "Mountbatten", "Dakota", "Paya Lebar", "MacPherson", "Tai Seng", "Bartley", "Serangoon", "Lorong Chuan", "Bishan", "Marymount", "Caldecott", "Botanic Gardens", "Farrer Road", "Holland Village", "Buona Vista", "one-north", "Kent Ridge", "Haw Par Villa", "Pasir Panjang", "Labrador Park", "Telok Blangah", "HarbourFront", "Keppel", "Cantonment", "Prince Edward Road", "Marina Bay", "Bayfront"]
     
     var body: some View {
         NavigationView {
@@ -54,8 +51,8 @@ struct NewTransactionSheet: View {
                         }
                     }
                     if transactionType == "Loan" {
-                        Picker("People", selection: $peopleInvolved){
-                            ForEach(contacts, id: \.self){
+                        Picker("People", selection: $newTransaction.people){
+                            ForEach(contacts){
                                 Text($0)
                             }
                         }
@@ -65,16 +62,40 @@ struct NewTransactionSheet: View {
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)
                         }
-                    } else if transactionType == "Bill split" && isDetailSyncronised {
+                    } else if transactionType == "Bill split" && !isDetailSyncronised {
                         Section {
-                            Picker("People", selection: $peopleInvolved){
-                                ForEach(contacts, id: \.self){
+                            Picker("People", selection: $newTransaction.people){
+                                ForEach(contacts){
                                     Text($0)
                                 }
                             }
+                            HStack {
+                                Text("Amount of money")
+                                TextField("Amount", value: Person.money, formatter: NumberFormatter())
+                                    .foregroundColor(.gray)
+                                    .multilineTextAlignment(.trailing)
+                            }
+                            DatePicker("Due by", selection: Person.dueDate, in: Date.now..., displayedComponents: .date)
+                        }
+                    }
+                    else if transactionType == "Bill split" && isDetailSyncronised {
+                        HStack {
+                            Text("Amount of money")
+                            TextField("Amount", value: Person.money, formatter: NumberFormatter())
+                                .foregroundColor(.gray)
+                                .multilineTextAlignment(.trailing)
+                        }
+                        Section {
+                            Picker("People", selection: $newTransaction.people){
+                                ForEach(contacts){
+                                    Text($0)
+                                }
+                            }
+                            DatePicker("Due by", selection: Person.dueDate, in: Date.now..., displayedComponents: .date)
                         }
                     }
                 }
+                Spacer()
                 Button {
                     transactions.append(newTransaction)
                     dismiss()
@@ -100,3 +121,4 @@ struct NewTransactionSheet_Previews: PreviewProvider {
         NewTransactionSheet(transactions: .constant([])) 
     }
 }
+
