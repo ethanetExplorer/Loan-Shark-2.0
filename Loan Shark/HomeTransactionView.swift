@@ -4,6 +4,8 @@ struct HomeTransactionView: View {
     @Binding var transaction: Transaction
     @State var showTransactionDetailsSheet = false
     
+    var onDelete: ((Transaction) -> Void)
+    
     var body: some View {
         Button {
             showTransactionDetailsSheet = true
@@ -23,7 +25,10 @@ struct HomeTransactionView: View {
             }
         }
         .sheet(isPresented: $showTransactionDetailsSheet) {
-            TransactionDetailSheet(transaction: $transaction)
+            TransactionDetailSheet(transaction: $transaction) { deletedTransaction in
+                onDelete(deletedTransaction)
+            }
+            .presentationDetents([.fraction(6/7), .fraction(1)])
         }
     }
 }

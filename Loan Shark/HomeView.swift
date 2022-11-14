@@ -21,22 +21,30 @@ struct HomeView: View {
             List {
                 Section(header: Text("Outstanding")) {
                     ForEach($manager.overdueTransactions) { $transaction in
-                        HomeTransactionView(transaction: $transaction)
+                        HomeTransactionView(transaction: $transaction) { transactionToDelete in
+                            deleteTransaction(transactionToDelete)
+                        }
                     }
                 }
                 Section(header: Text("Due in 1 week")) {
                     ForEach($manager.dueIn7DaysTransactions) { $transaction in
-                        HomeTransactionView(transaction: $transaction)
+                        HomeTransactionView(transaction: $transaction) { transactionToDelete in
+                            deleteTransaction(transactionToDelete)
+                        }
                     }
                 }
                 Section(header: Text("Others")) {
                     ForEach($manager.otherTransactions) { $transaction in
-                        HomeTransactionView(transaction: $transaction)
+                        HomeTransactionView(transaction: $transaction) { transactionToDelete in
+                            deleteTransaction(transactionToDelete)
+                        }
                     }
                 }
                 Section(header: Text("Completed")) {
                     ForEach($manager.completedTransactions) { $transaction in
-                        HomeTransactionView(transaction: $transaction)
+                        HomeTransactionView(transaction: $transaction) { transactionToDelete in
+                            deleteTransaction(transactionToDelete)
+                        }
                     }
                 }
                 }
@@ -50,6 +58,7 @@ struct HomeView: View {
                     }
                     .sheet(isPresented: $showNewTransactionSheet) {
                         NewTransactionSheet(transactions: $manager.allTransactions)
+                            .presentationDetents([.fraction(6/7), .fraction(1)])
                     }
                     
                     Menu {
@@ -72,6 +81,16 @@ struct HomeView: View {
                         Image(systemName: "line.3.horizontal.decrease.circle")
                     }
             }
+        }
+    }
+    
+    func deleteTransaction(_ transactionToDelete: Transaction) {
+        guard let transactionIndex = manager.allTransactions.firstIndex(where: {
+            $0.id == transactionToDelete.id
+        }) else { return }
+        
+        withAnimation {
+            manager.allTransactions.remove(at: transactionIndex)
         }
     }
 }
