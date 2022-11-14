@@ -48,7 +48,8 @@ struct TransactionDetailSheet: View {
                                             .foregroundColor(transaction.status == .overdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
                                             .font(.title2)
                                     }
-                                    HStack {
+                                    .padding(.top, 10)
+                                    HStack(alignment: .top){
                                         Button {
                                             
                                         } label: {
@@ -57,6 +58,7 @@ struct TransactionDetailSheet: View {
                                                 Text("Send reminder")
                                             }
                                         }
+                                        Spacer()
                                         Button {
                                             
                                         } label: {
@@ -67,6 +69,9 @@ struct TransactionDetailSheet: View {
                                         }
                                         //TODO: People structs, import contacts, figure out how to send reminders!!!! 
                                     }
+                                    .buttonStyle(.plain)
+                                    .foregroundColor(.blue)
+                                    .padding(10)
                                 }
                             }
                         }
