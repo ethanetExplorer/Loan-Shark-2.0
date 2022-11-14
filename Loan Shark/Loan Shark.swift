@@ -21,6 +21,13 @@ enum TransactionStatus: Int, Codable {
     case paidOff
 }
 
+struct Person: Identifiable {
+    var id = UUID()
+    var name: String
+    var money: Double?
+    var dueDate: Date?
+    var selected = false
+}
 
 class Transaction: Identifiable, Codable {
     var id = UUID()

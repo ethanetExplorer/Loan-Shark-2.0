@@ -47,26 +47,33 @@ struct NewTransactionSheet: View {
                                 Text($0)
                             }
                         }
+                        if transactionType == "Bill split" {
+                            Toggle(isOn: $isDetailSyncronised){
+                                Text("Syncronise details")
+                            }
+                        }
+                    }
+                    if transactionType == "Loan" {
                         Picker("People", selection: $peopleInvolved){
                             ForEach(contacts, id: \.self){
                                 Text($0)
                             }
                         }
-//                        newTransaction.people.append(peopleInvolved)
-                        HStack{
-                            Text("Amount of money:")
+                        HStack {
+                            Text("Amount of money")
                             TextField("Amount", value: $newTransaction.money, formatter: NumberFormatter())
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)
                         }
-                        DatePicker("Due by", selection: $newTransaction.dueDate, in: Date.now..., displayedComponents: .date)
+                    } else if transactionType == "Bill split" && isDetailSyncronised {
+                        Section {
+                            Picker("People", selection: $peopleInvolved){
+                                ForEach(contacts, id: \.self){
+                                    Text($0)
+                                }
+                            }
+                        }
                     }
-//                    Section(header: Text("Options")){
-//                        Toggle(isOn: $isDetailSyncronised){
-//                            Text("Syncronise details")
-//                        }
-//                    }
-                    //TODO: Make this option only appear when bill split is selected
                 }
                 Button {
                     transactions.append(newTransaction)
