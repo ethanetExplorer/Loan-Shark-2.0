@@ -23,6 +23,7 @@ enum TransactionStatus: Int, Codable {
     case paidOff
 }
 
+
 struct Contact: Codable, Identifiable {
     var id = UUID()
     var name: String
@@ -47,6 +48,16 @@ class Person: Identifiable, Codable {
         self.hasPaid = hasPaid
         self.selected = selected
     }
+    
+    init(id: UUID = UUID(), name: String, money: Double, dueDate: Date, hasPaid: Bool = false, selected: Bool = false) {
+        self.id = id
+        self.name = name
+        self.money = money
+        self.dueDate = dueDate
+        self.hasPaid = hasPaid
+        self.selected = selected
+    }
+    
 }
 
 class Transaction: Identifiable, Codable {
@@ -80,17 +91,14 @@ class Transaction: Identifiable, Codable {
     }
     var transactionType: TransactionTypes
     
-    var totalMoney: Double {
-        if people.count == 1{
-            return people[0].money!
-        } else { return 0}
-    }
-    
-    init(id: UUID = UUID(), name: String, people: [Person], transactionType: TransactionTypes) {
+    var totalMoney: Double?
+        
+    init(id: UUID = UUID(), name: String, people: [Person], transactionType: TransactionTypes, totalMoney: Double? = 0) {
         self.id = id
         self.name = name
         self.people = people
         self.transactionType = transactionType
+        self.totalMoney = totalMoney
     }
 }
 

@@ -25,10 +25,11 @@ struct NewTransactionSheet: View {
         return numberFormatter
     }
     
-    @State var newTransaction = Transaction(name: "Transaction name", people: [Person(name: "Person", money: 69, dueDate: "2023-12-25"), Person(name: "Person 2", money: 96, dueDate: "2023-12-25")], transactionType: .unselected)
+    @State var newTransaction = Transaction(name: "", people: [Person(name: "", money: 0, dueDate: Date.now)], transactionType: .unselected)
     @Binding var transactions: [Transaction]
     
-    @State var peopleInvolved = ""
+    @State var numberOfPeople = 0
+    @State var addAnotherPerson = false
     
     var body: some View {
         NavigationView {
@@ -46,39 +47,83 @@ struct NewTransactionSheet: View {
                                 Text($0)
                             }
                         }
+                        
                         if transactionType == "Bill split" {
                             Toggle(isOn: $isDetailSyncronised){
-                                Text("Syncronise details")
-                            }
+                                Text("Syncronise details")}
                         }
                     }
                     if transactionType == "Loan" {
                         NavigationLink {
                             PeopleSelectorView()
                         } label: {
-                            Text("People")
+                            Text("Person")
                         }
                         HStack {
                             Text("Amount of money")
-//                            TextField("Amount", value: $newTransaction.money, formatter: NumberFormatter())
-//                                .foregroundColor(.gray)
-//                                .multilineTextAlignment(.trailing)
+                            TextField("Amount", value: $newTransaction.people[0].money, formatter: NumberFormatter())
+                                .foregroundColor(.gray)
+                                .multilineTextAlignment(.trailing)
+                                .keyboardType(.decimalPad)
                         }
                         DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
-                    } else if transactionType == "Bill split" {
+                    }
+                    else if transactionType == "Bill split" && !isDetailSyncronised {
+                        Section(header: Text("Person \(numberOfPeople + 1)")){
+                            NavigationLink {
+                                PeopleSelectorView()
+                            } label: {
+                                Text("Person")
+                            }
+                            HStack {
+                                Text("Total amount")
+                                TextField("Amount", value: $newTransaction.people[0].money, formatter: NumberFormatter())
+                                    .foregroundColor(.gray)
+                                    .multilineTextAlignment(.trailing)
+                                    .keyboardType(.decimalPad)
+                            }
+                            DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
+                        }
+                        if addAnotherPerson == true {
+                            ForEach(0...numberOfPeople, id: \.self) { person in
+                                Section (header: Text("Person 2")){
+                                    NavigationLink {
+                                        PeopleSelectorView()
+                                    } label: {
+                                        Text("Person")
+                                    }
+                                    HStack {
+                                        Text("Total amount")
+                                        TextField("Amount", value: $newTransaction.people[1].money, formatter: NumberFormatter())
+                                            .foregroundColor(.gray)
+                                            .multilineTextAlignment(.trailing)
+                                            .keyboardType(.decimalPad)
+                                    }
+                                    DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
+                                }
+                            }
+                        }
+                        Button {
+                            addAnotherPerson = true
+                        } label: {
+                            Text("Add")
+                        }
+                    } else if transactionType == "Bill split" && isDetailSyncronised {
                         NavigationLink {
                             PeopleSelectorView()
                         } label: {
                             Text("People")
                         }
                         HStack {
-                            Text("Amount of money")
-//                            TextField("Amount", value: $newTransaction.money, formatter: NumberFormatter())
-//                                .foregroundColor(.gray)
-//                                .multilineTextAlignment(.trailing)
+                            Text("Amount")
+                            TextField("Total amount", value: $newTransaction.totalMoney, formatter: NumberFormatter())
+                                .foregroundColor(.gray)
+                                .multilineTextAlignment(.trailing)
+                                .keyboardType(.decimalPad)
                         }
                         DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
                     }
+                    
                 }
                 Button {
                     transactions.append(newTransaction)
@@ -92,12 +137,13 @@ struct NewTransactionSheet: View {
                         .foregroundColor(.white)
                 }
                 .padding(.horizontal)
-                
             }
             .navigationTitle("New transaction")
-        }
+            }
     }
 }
+
+
 
 
 struct NewTransactionSheet_Previews: PreviewProvider {

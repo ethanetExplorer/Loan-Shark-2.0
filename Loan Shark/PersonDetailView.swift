@@ -24,7 +24,7 @@ struct PersonDetailView: View {
             List {
                 Section(header: Text("ONGOING TRANSACTIONS")) {
                     
-                    ForEach(userTransactions.filter { $0.transactionStatus == .unpaid }) { transaction in
+                    ForEach(userTransactions.filter { $0.transactionStatus == .unpaid || $0.transactionStatus == .overdue || $0.transactionStatus == .dueInOneWeek}) { transaction in
                         Button {
                             showTransactionDetailSheet = true
                         } label: {
@@ -35,7 +35,7 @@ struct PersonDetailView: View {
 
                                 }
                                 Spacer()
-                                Text("$\(transaction.totalMoney)")
+                                Text("$\(transaction.totalMoney!)")
                                     .foregroundColor(.secondary)
                                     .font(.title2)
                             }
@@ -54,7 +54,7 @@ struct PersonDetailView: View {
                                     Text("Due in \(Date.now...transaction.dueDate) days")
                                 }
                                 Spacer()
-                                Text("$\(transaction.totalMoney)")
+                                Text("$\(transaction.totalMoney!)")
                                     .foregroundColor(Color(red: 0.8, green: 0, blue: 0))
                                     .font(.title2)
                             }

@@ -26,14 +26,14 @@ struct TransactionDetailView: View {
                     Text("Bill split, unsyncronised")
                 }
                 List {
-                    ForEach(transaction.people) { person in
+                    ForEach(transaction.people) { i in
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
                                 .foregroundColor(.white)
                             VStack{
                                 HStack {
                                     VStack(alignment: .leading) {
-                                        Text(person.name)
+                                        Text(i.name)
                                             .bold()
                                             .font(.title3)
                                         HStack(alignment: .center, spacing: 0) {
@@ -48,7 +48,7 @@ struct TransactionDetailView: View {
                                         .foregroundStyle(.secondary)
                                     }
                                     Spacer()
-                                    Text("$" + String(format: "%.2f", transaction.totalMoney))
+                                    Text("$ + \(String(format: "%.2f", i.money!))")
                                         .foregroundColor(transaction.transactionStatus == .overdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
                                         .font(.title2)
                                 }
@@ -64,7 +64,7 @@ struct TransactionDetailView: View {
                                     }
                                     Spacer()
                                     Button {
-                                        person.hasPaid = true
+                                        i.hasPaid = true
                                     } label: {
                                         HStack {
                                             Image(systemName: "banknote")
