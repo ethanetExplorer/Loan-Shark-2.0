@@ -18,7 +18,7 @@ class TransactionManager: ObservableObject {
     
     @Published var searchTerm = ""
     @Published var personToSearch = ""
-    @Published var contactsList: [Contact] = []
+    @Published var contactsList: [Person] = []
     var isSearchTermEmpty: Bool { personToSearch == "" }
     
     var overdueTransactions: [Transaction] {
@@ -145,15 +145,11 @@ class TransactionManager: ObservableObject {
                 
                 DispatchQueue.global(qos: .userInitiated).async {
                     do {
-                        var contacts: [Contact] = []
+                        var contacts: [Person] = []
                         
                         try store.enumerateContacts(with: request) { (contact, stopPointer) in
-                            contacts.append(Contact(name: contact.givenName + " " + contact.familyName))
-//                            var name = Contact(name: contact.givenName + " " + contact.familyName)
-//                            var money: Double
-//                            var dueDate: Date
-//                            var hasPaid = false
-//                            var selected = false
+                            contacts.append(Person(name: contact.givenName + " " + contact.familyName, money: 0, dueDate: "1970-01-01"))
+                            #warning("OPTIONALS STILL NEED PARAMETERS WTF")
                         }
                         
                         DispatchQueue.main.async {
@@ -168,7 +164,7 @@ class TransactionManager: ObservableObject {
             }
         }
     }
-    var filteredContacts: [Contact] {
+    var filteredContacts: [Person] {
         contactsList.filter { dude in
             dude.name.lowercased().contains(personToSearch.lowercased())
         }

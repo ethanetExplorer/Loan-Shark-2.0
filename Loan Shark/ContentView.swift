@@ -17,10 +17,10 @@ struct ContentView: View {
 				.tabItem {
 					Label("Home", systemImage: "house")
 				}
-//			PeopleView(manager: transactionManager)
-//				.tabItem {
-//					Label("Contacts", systemImage: "person.circle")
-//				}
+			PeopleView(manager: transactionManager)
+				.tabItem {
+					Label("Contacts", systemImage: "person.circle")
+				}
 			}
 		}
 	}

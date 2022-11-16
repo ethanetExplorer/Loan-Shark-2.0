@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		09E16BC729160437003090BB /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E16BC629160437003090BB /* TransactionManager.swift */; };
-		55000AC9291F433600779BBA /* HomeTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55000AC8291F433600779BBA /* HomeTransactionView.swift */; };
 		55000ACB291F43BE00779BBA /* TransactionDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55000ACA291F43BE00779BBA /* TransactionDetailSheet.swift */; };
 		55000AD12921E9B900779BBA /* PeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55000AD02921E9B900779BBA /* PeopleView.swift */; };
 		55000AD32921EB4500779BBA /* PersonDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55000AD22921EB4500779BBA /* PersonDetailView.swift */; };
@@ -50,7 +49,6 @@
 
 /* Begin PBXFileReference section */
 		09E16BC629160437003090BB /* TransactionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
-		55000AC8291F433600779BBA /* HomeTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTransactionView.swift; sourceTree = "<group>"; };
 		55000ACA291F43BE00779BBA /* TransactionDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailSheet.swift; sourceTree = "<group>"; };
 		55000AD02921E9B900779BBA /* PeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleView.swift; sourceTree = "<group>"; };
 		55000AD22921EB4500779BBA /* PersonDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailView.swift; sourceTree = "<group>"; };
@@ -121,7 +119,6 @@
 			isa = PBXGroup;
 			children = (
 				74F9B076292489D2008087E9 /* PeopleSelectorView.swift */,
-				55000AC8291F433600779BBA /* HomeTransactionView.swift */,
 				74FB48282903892200F23E32 /* Loan Shark.swift */,
 				74BDE57D28CD868C00D1DA25 /* ContentView.swift */,
 				55000AD02921E9B900779BBA /* PeopleView.swift */,
@@ -309,7 +306,6 @@
 				55DBFA18291377FB008AFA32 /* NewTransactionSheet.swift in Sources */,
 				74F9B077292489D2008087E9 /* PeopleSelectorView.swift in Sources */,
 				74FB48292903892200F23E32 /* Loan Shark.swift in Sources */,
-				55000AC9291F433600779BBA /* HomeTransactionView.swift in Sources */,
 				09E16BC729160437003090BB /* TransactionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

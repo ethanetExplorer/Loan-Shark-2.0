@@ -27,11 +27,12 @@ struct Contact: Codable, Identifiable {
     var id = UUID()
     var name: String
 }
+
 class Person: Identifiable, Codable {
     var id = UUID()
     var name: String
-    var money: Double
-    var dueDate: Date
+    var money: Double?
+    var dueDate: Date?
     var hasPaid = false
     var selected = false
     
@@ -54,7 +55,7 @@ class Transaction: Identifiable, Codable {
     var people: [Person]
     var dueDate: Date {
         if people.count == 1{
-            return people[0].dueDate
+            return people[0].dueDate!
         } else { return Date.now }
     }
     var isPaid: Bool {
@@ -81,7 +82,7 @@ class Transaction: Identifiable, Codable {
     
     var totalMoney: Double {
         if people.count == 1{
-            return people[0].money
+            return people[0].money!
         } else { return 0}
     }
     

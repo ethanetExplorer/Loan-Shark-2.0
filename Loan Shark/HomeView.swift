@@ -118,7 +118,7 @@ struct HomeView: View {
                     Image(systemName: "plus.app")
                 }
                 .sheet(isPresented: $showNewTransactionSheet) {
-                    NewTransactionSheet(transactions: $manager.allTransactions)
+                    NewTransactionSheet(manager: TransactionManager(), transactions: $manager.allTransactions)
                 }
                 Menu {
                     Button {
