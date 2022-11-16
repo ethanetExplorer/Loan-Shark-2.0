@@ -16,7 +16,7 @@ struct NewTransactionSheet: View {
     @State var transactionType = ""
     var transactionTypes = ["Select","Loan","Bill split"]
     @Environment(\.dismiss) var dismiss
-
+    
     var decimalNumberFormat: NumberFormatter {
         let numberFormatter = NumberFormatter()
         numberFormatter.allowsFloats = true
@@ -27,7 +27,7 @@ struct NewTransactionSheet: View {
     
     @State var newTransaction = Transaction(name: "Transaction name", people: [Person(name: "Person", money: 69, dueDate: "2023-12-25"), Person(name: "Person 2", money: 96, dueDate: "2023-12-25")], transactionType: .unselected)
     @Binding var transactions: [Transaction]
-
+    
     @State var peopleInvolved = ""
     
     var body: some View {
@@ -58,7 +58,13 @@ struct NewTransactionSheet: View {
                         } label: {
                             Text("People")
                         }
-                        
+                        HStack {
+                            Text("Amount of money")
+//                            TextField("Amount", value: $newTransaction.money, formatter: NumberFormatter())
+//                                .foregroundColor(.gray)
+//                                .multilineTextAlignment(.trailing)
+                        }
+                        DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
                     }
                 }
                 Button {
@@ -73,7 +79,7 @@ struct NewTransactionSheet: View {
                         .foregroundColor(.white)
                 }
                 .padding(.horizontal)
-
+                
             }
             .navigationTitle("New transaction")
         }
