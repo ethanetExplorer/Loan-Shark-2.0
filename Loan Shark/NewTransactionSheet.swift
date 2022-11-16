@@ -65,6 +65,19 @@ struct NewTransactionSheet: View {
 //                                .multilineTextAlignment(.trailing)
                         }
                         DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
+                    } else if transactionType == "Bill split" {
+                        NavigationLink {
+                            PeopleSelectorView()
+                        } label: {
+                            Text("People")
+                        }
+                        HStack {
+                            Text("Amount of money")
+//                            TextField("Amount", value: $newTransaction.money, formatter: NumberFormatter())
+//                                .foregroundColor(.gray)
+//                                .multilineTextAlignment(.trailing)
+                        }
+                        DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
                     }
                 }
                 Button {
