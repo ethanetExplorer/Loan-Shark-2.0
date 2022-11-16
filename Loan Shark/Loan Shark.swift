@@ -10,7 +10,9 @@ import SwiftUI
 
 
 enum TransactionTypes: Codable {
-    case billSplit
+    case unselected
+    case billSplitSync
+    case billSplitNoSync
     case loan
 }
 
@@ -21,20 +23,45 @@ enum TransactionStatus: Int, Codable {
     case paidOff
 }
 
-struct Person: Identifiable, Codable {
+struct Contact: Codable, Identifiable {
     var id = UUID()
     var name: String
-    var money: Double?
-    var dueDate: Date?
+}
+class Person: Identifiable, Codable {
+    var id = UUID()
+    var name: String
+    var money: Double
+    var dueDate: Date
+    var hasPaid = false
     var selected = false
+    
+    init(id: UUID = UUID(), name: String, money: Double, dueDate: String, hasPaid: Bool = false, selected: Bool = false) {
+        self.id = id
+        self.name = name
+        self.money = money
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-DD"
+
+        self.dueDate = dateFormatter.date(from: dueDate)!
+        self.hasPaid = hasPaid
+        self.selected = selected
+    }
 }
 
 class Transaction: Identifiable, Codable {
     var id = UUID()
     var name: String
     var people: [Person]
-    var dueDate: Date = Date.now
-    var isPaid: Bool = false
+    var dueDate: Date {
+        if people.count == 1{
+            return people[0].dueDate
+        } else { return Date.now }
+    }
+    var isPaid: Bool {
+        if people.count == 1 {
+            return people[0].hasPaid
+        } else { return false }
+    }
     
     var transactionStatus: TransactionStatus {
         if isPaid {
@@ -50,41 +77,19 @@ class Transaction: Identifiable, Codable {
             return .unpaid
         }
     }
+    var transactionType: TransactionTypes
     
-    var isBillSplitTransaction: Bool = false
-    var transactionType: TransactionTypes {
-        if isBillSplitTransaction {
-            return .billSplit
-        }
-        else {
-            return .loan
-        }
+    var totalMoney: Double {
+        if people.count == 1{
+            return people[0].money
+        } else { return 0}
     }
     
-    var money: Double = 0
-    
-    init(id: UUID = UUID(), name: String, people: [Person], dueDate: String, isPaid: Bool, isBillSplitTransaction: Bool, money: Double) {
+    init(id: UUID = UUID(), name: String, people: [Person], transactionType: TransactionTypes) {
         self.id = id
         self.name = name
         self.people = people
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-DD"
-
-        self.dueDate = dateFormatter.date(from: dueDate)!
-        self.isPaid = isPaid
-        self.isBillSplitTransaction = isBillSplitTransaction
-        self.money = money
-    }
-
-    init(id: UUID = UUID(), name: String, people: [Person], dueDate: Date, isPaid: Bool, isBillSplitTransaction: Bool, money: Double) {
-        self.id = id
-        self.name = name
-        self.people = people
-        self.dueDate = dueDate
-        self.isPaid = isPaid
-        self.isBillSplitTransaction = isBillSplitTransaction
-        self.money = money
+        self.transactionType = transactionType
     }
 }
-
 

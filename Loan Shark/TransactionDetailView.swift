@@ -1,105 +1,101 @@
 //
-//  TransactionDetailSheet.swift
+//  TransactionDetailView.swift
 //  Loan Shark
 //
-//  Created by Ethan Lim on 30/10/22.
+//  Created by Ethan Lim on 15/11/22.
 //
+
 import SwiftUI
 
 struct TransactionDetailView: View {
     
-    
     @StateObject var manager = TransactionManager()
     @Binding var transaction: Transaction
-    @State var isDetailSyncronised: Bool = false
-    @State var dueDate = Date()
-    @State var showBillSplit: Bool
-    var transactionTypes = ["Bill split", "Loan"]
-    @State var transactionType = "Loan"
-    @State var peopleInvolved = ""
-    @Environment(\.dismiss) var dismiss
-
-    var decimalNumberFormat: NumberFormatter {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.allowsFloats = true
-        numberFormatter.numberStyle = .currency
-        numberFormatter.currencySymbol = "$"
-        return numberFormatter
-    }
-    
-    var contacts = ["Dhoby Ghaut", "Bras Basah", "Esplanade", "Promenade", "Nicoll Highway", "Stadium", "Mountbatten", "Dakota", "Paya Lebar", "MacPherson", "Tai Seng", "Bartley", "Serangoon", "Lorong Chuan", "Bishan", "Marymount", "Caldecott", "Botanic Gardens", "Farrer Road", "Holland Village", "Buona Vista", "one-north", "Kent Ridge", "Haw Par Villa", "Pasir Panjang", "Labrador Park", "Telok Blangah", "HarbourFront", "Keppel", "Cantonment", "Prince Edward Road", "Marina Bay", "Bayfront"]
+    @State var presentEditTransactionSheet = false
     
     var body: some View {
         NavigationView {
-            VStack {
-                Form {
-                    Section(header: Text("Transaction details")) {
-                        HStack {
-                            Text("Title")
-                            TextField("Add title", text: $transaction.name)
-                                .foregroundColor(.gray)
-                                .multilineTextAlignment(.trailing)
-                        }
-                        Picker("Transaction type", selection: $transactionType) {
-                            ForEach(transactionTypes, id: \.self) {
-                                Text($0)
-                            }
-                        }
-                        Picker("People", selection: $peopleInvolved){
-                            ForEach(contacts, id: \.self){
-                                Text($0)
-                            }
-                        }
-                        HStack{
-                            Text("Amount of money:")
-                            TextField("Amount", value: $transaction.money, formatter: NumberFormatter())
-                                .foregroundColor(.gray)
-                                .multilineTextAlignment(.trailing)
-                        }
-                        DatePicker("Due by", selection: $transaction.dueDate, in: Date.now..., displayedComponents: .date)
-                    }
-                    if transactionType == "Bill Split"{
-                        Section(header: Text("Options")){
-                            Toggle(isOn: $isDetailSyncronised){
-                                Text("Syncronise details")
-                            }
-                        }
-                    } else {
-                        Text("")
-                    }
+            VStack(alignment: .leading){
+                if transaction.transactionType == .loan {
+                    Text("Loan")
+                        .font(.title2)
+                        .padding(.horizontal)
+                } else if transaction.transactionType == .billSplitSync {
+                    Text("Bill split, syncronised")
+                } else if transaction.transactionType == .billSplitNoSync {
+                    Text("Bill split, unsyncronised")
                 }
-                HStack {
-                    Button{
-                        dismiss()
-                    } label: {
-                        Text("Save")
-                            .frame(height: 50)
-                            .frame(maxWidth: .infinity)
-                            .background(.blue)
-                            .cornerRadius(10)
-                            .foregroundColor(.white)
+                List {
+                    ForEach(transaction.people) { person in
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundColor(.white)
+                            VStack{
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(person.name)
+                                            .bold()
+                                            .font(.title3)
+                                        HStack(alignment: .center, spacing: 0) {
+                                            Text(transaction.transactionStatus == .overdue ? "Due " : "Due in ")
+                                            Text(transaction.dueDate, style: .relative)
+                                            
+                                            if transaction.transactionStatus == .overdue {
+                                                Text(" ago")
+                                            }
+                                        }
+                                        .font(.subheadline)
+                                        .foregroundStyle(.secondary)
+                                    }
+                                    Spacer()
+                                    Text("$" + String(format: "%.2f", transaction.totalMoney))
+                                        .foregroundColor(transaction.transactionStatus == .overdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
+                                        .font(.title2)
+                                }
+                                .padding(.top, 10)
+                                HStack(alignment: .top){
+                                    Button {
+                                        
+                                    } label: {
+                                        HStack {
+                                            Image(systemName: "message")
+                                            Text("Send reminder")
+                                        }
+                                    }
+                                    Spacer()
+                                    Button {
+                                        person.hasPaid = true
+                                    } label: {
+                                        HStack {
+                                            Image(systemName: "banknote")
+                                            Text("Mark as paid")
+                                        }
+                                    }
+                                    //TODO: People structs, import contacts, figure out how to send reminders!!!!
+                                }
+                                .buttonStyle(.plain)
+                                .foregroundColor(.blue)
+                                .padding(10)
+                            }
+                        }
                     }
-                    .padding(.horizontal)
-                    Button{
-                        transaction.isPaid = true
-                        dismiss()
-                    } label: {
-                        Text("Mark as complete")
-                            .frame(height: 50)
-                            .frame(maxWidth: .infinity)
-                            .background(.blue)
-                            .cornerRadius(10)
-                            .foregroundColor(.white)
-                    }
-                    .padding(.horizontal)
                 }
             }
-            .navigationTitle("Details")
+            .navigationTitle(transaction.name)
+            .toolbar {
+                Button {
+                    presentEditTransactionSheet.toggle()
+                } label: { Image(systemName: "pencil")}
+                    .sheet(isPresented: $presentEditTransactionSheet) {
+                        NewTransactionSheet(transactions: $manager.allTransactions)
+                    }
+            }
         }
     }
 }
+
 struct TransactionDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionDetailView(transaction: .constant(Transaction(name: "", people: [""], dueDate: "", isPaid: false, isBillSplitTransaction: false, money: 0)), showBillSplit: false)
+        TransactionDetailView(transaction: .constant(Transaction(name: "Transaction name", people: [Person(name: "Person", money: 69, dueDate: "2023-12-25"), Person(name: "Person 2", money: 96, dueDate: "2023-12-25")], transactionType: .loan)))
     }
 }

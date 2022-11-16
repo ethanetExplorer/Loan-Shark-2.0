@@ -17,7 +17,9 @@ class TransactionManager: ObservableObject {
     }
     
     @Published var searchTerm = ""
-    @Published var contactsList: [Person] = []
+    @Published var personToSearch = ""
+    @Published var contactsList: [Contact] = []
+    var isSearchTermEmpty: Bool { personToSearch == "" }
     
     var overdueTransactions: [Transaction] {
         get {
@@ -82,10 +84,16 @@ class TransactionManager: ObservableObject {
     }
     
     let sampleTransactions = [
-        Transaction(name: "Dinner", people: [Person(name: "Dhoby Ghaut"), Person(name: "Bras Basah")], dueDate: "2023-12-25", isPaid: false, isBillSplitTransaction: true, money: 60.0),
-        Transaction(name: "Loan to Jeremy for books", people: [Person(name: "Esplanade")], dueDate: "2022-11-13", isPaid: false, isBillSplitTransaction: false, money: 15.0),
-        Transaction(name: "Delivery fees for bomb", people: [Person(name: "Esplanade")], dueDate: "2022-06-12", isPaid: false, isBillSplitTransaction: false, money: 12.0),
-        Transaction(name: "Rick and Morty Body Pillow", people: [Person(name: "Promenade")], dueDate: "2022-11-14", isPaid: true, isBillSplitTransaction: false, money: 21.5)
+        // Bill split unsyncronised, 1 paid, 2 due
+        Transaction(name: "Christmas dinner", people: [Person(name: "Woodlands", money: 30, dueDate: "2022-11-20"), Person(name: "Springleaf", money: 40, dueDate: "2022-11-12"), Person(name: "Mayflower", money: 45, dueDate: "2022-11-20", hasPaid: true)], transactionType: .billSplitNoSync),
+        // Bill split syncronised, 1 paid 1 due
+        Transaction(name: "Gift for Marina Bay", people: [Person(name: "Shenton Way", money: 30, dueDate: "2023-01-11", hasPaid: true), Person(name: "Gardens by the Bay", money: 30, dueDate: "2023-01-11")], transactionType: .billSplitSync),
+        // Loan, unpaid
+        Transaction(name: "Loan for buying new equipment", people: [Person(name: "Stadium", money: 14.90, dueDate: "2022-11-11")], transactionType: .loan),
+        // Paid transaction
+        Transaction(name: "Birthday cake", people: [Person(name: "Steven", money: 21, dueDate: "2022-12-14", hasPaid: true)], transactionType: .loan),
+        // Transaction due in the very very fat future
+        Transaction(name: "Explosives for terrorist attack", people: [Person(name: "Bartley", money: 10, dueDate: "2024-11-11")], transactionType: .loan)
     ]
     
     init() {
@@ -137,10 +145,15 @@ class TransactionManager: ObservableObject {
                 
                 DispatchQueue.global(qos: .userInitiated).async {
                     do {
-                        var contacts: [Person] = []
+                        var contacts: [Contact] = []
                         
                         try store.enumerateContacts(with: request) { (contact, stopPointer) in
-                            contacts.append(Person(name: contact.givenName + " " + contact.familyName))
+                            contacts.append(Contact(name: contact.givenName + " " + contact.familyName))
+//                            var name = Contact(name: contact.givenName + " " + contact.familyName)
+//                            var money: Double
+//                            var dueDate: Date
+//                            var hasPaid = false
+//                            var selected = false
                         }
                         
                         DispatchQueue.main.async {
@@ -153,6 +166,11 @@ class TransactionManager: ObservableObject {
             } else {
                 print("access denied")
             }
+        }
+    }
+    var filteredContacts: [Contact] {
+        contactsList.filter { dude in
+            dude.name.lowercased().contains(personToSearch.lowercased())
         }
     }
 }

@@ -17,13 +17,13 @@ struct ContentView: View {
 				.tabItem {
 					Label("Home", systemImage: "house")
 				}
-			PeopleView(manager: transactionManager)
-				.tabItem {
-					Label("Contacts", systemImage: "person.circle")
-				}
+//			PeopleView(manager: transactionManager)
+//				.tabItem {
+//					Label("Contacts", systemImage: "person.circle")
+//				}
+			}
 		}
-    }
-}
+	}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
