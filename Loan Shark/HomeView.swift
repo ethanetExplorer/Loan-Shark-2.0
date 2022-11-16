@@ -141,7 +141,6 @@ struct HomeView: View {
                     Image(systemName: "line.3.horizontal.decrease.circle")
                 }
             }
-            }
         }
     }
 }
