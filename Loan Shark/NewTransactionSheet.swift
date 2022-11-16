@@ -25,7 +25,7 @@ struct NewTransactionSheet: View {
         return numberFormatter
     }
     
-    @State var newTransaction = Transaction(name: "", people: [], dueDate: Date.now, isPaid: false, isBillSplitTransaction: false, money: 0)
+    @State var newTransaction = Transaction(name: "Transaction name", people: [Person(name: "Person", money: 69, dueDate: "2023-12-25"), Person(name: "Person 2", money: 96, dueDate: "2023-12-25")], transactionType: .unselected)
     @Binding var transactions: [Transaction]
 
     @State var peopleInvolved = ""
@@ -53,27 +53,12 @@ struct NewTransactionSheet: View {
                         }
                     }
                     if transactionType == "Loan" {
-                        Picker("People", selection: $peopleInvolved){
-                            ForEach(manager.contactsList) {
-                                Text($0.name)
-                                    .tag($0.name)
-                            }
+                        NavigationLink {
+                            PeopleSelectorView()
+                        } label: {
+                            Text("People")
                         }
-                        HStack {
-                            Text("Amount of money")
-                            TextField("Amount", value: $newTransaction.money, formatter: NumberFormatter())
-                                .foregroundColor(.gray)
-                                .multilineTextAlignment(.trailing)
-                        }
-                    } else if transactionType == "Bill split" && isDetailSyncronised {
-                        Section {
-                            Picker("People", selection: $peopleInvolved){
-                                ForEach(manager.contactsList) {
-                                    Text($0.name)
-                                        .tag($0.name)
-                                }
-                            }
-                        }
+                        
                     }
                 }
                 Button {
@@ -88,7 +73,7 @@ struct NewTransactionSheet: View {
                         .foregroundColor(.white)
                 }
                 .padding(.horizontal)
-                
+
             }
             .navigationTitle("New transaction")
         }
@@ -98,6 +83,6 @@ struct NewTransactionSheet: View {
 
 struct NewTransactionSheet_Previews: PreviewProvider {
     static var previews: some View {
-        NewTransactionSheet(transactions: .constant([])) 
+        NewTransactionSheet(transactions: .constant([]))
     }
 }

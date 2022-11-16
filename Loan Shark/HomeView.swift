@@ -15,54 +15,102 @@ enum EditButtons {
 
 struct HomeView: View {
     
-//    init(transaction: Transaction, dismiss: @escaping (EditButtons) -> Void) {
-//        self.dismiss = .dismiss
-//        self._transaction = State(initialValue: transaction)
-//    }
+    @StateObject var manager = TransactionManager()
     
-    @ObservedObject var manager: TransactionManager
-    
-    @State var selectedTransactionIndex: Int?
-    @State var selectedTransaction: Transaction? = nil
-    @State var showTransactionDetailsSheet = false
+    //    @State var selectedTransactionIndex: Int?
+    //    @State var selectedTransaction: Transaction? = nil
+    //    @State var showTransactionDetailView = false
     @State var showNewTransactionSheet = false
-//    var dismiss: (EditButtons) -> Void
     
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("Outstanding")) {
+                Section(header: Text("Overdue")) {
                     ForEach($manager.overdueTransactions) { $transaction in
-                        HomeTransactionView(transaction: $transaction) { transactionToDelete in
-                            deleteTransaction(transactionToDelete)
+                        NavigationLink {
+                            TransactionDetailView(transaction: $transaction)
+                        } label: {
+                            HStack {
+                                VStack (alignment: .leading) {
+                                    Text(transaction.name)
+                                    ForEach(transaction.people) { person in
+                                        Text(person.name)
+                                            .foregroundColor(.gray)
+                                            .font(.caption)
+                                    }
+                                }
+                                Spacer()
+                                Text("$" + String(format: "%.2f", transaction.totalMoney))
+                                    .foregroundColor(transaction.transactionStatus == .overdue ? .red : .black)
+                            }
                         }
                     }
                 }
-                Section(header: Text("Due in 1 week")) {
+                Section(header: Text("Due in 7 days")) {
                     ForEach($manager.dueIn7DaysTransactions) { $transaction in
-                        HomeTransactionView(transaction: $transaction) { transactionToDelete in
-                            deleteTransaction(transactionToDelete)
+                        NavigationLink {
+                            TransactionDetailView(transaction: $transaction)
+                        } label: {
+                            HStack {
+                                VStack (alignment: .leading) {
+                                    Text(transaction.name)
+                                    ForEach(transaction.people) { person in
+                                        Text(person.name)
+                                            .foregroundColor(.gray)
+                                            .font(.caption)
+                                    }
+                                }
+                                Spacer()
+                                Text("$" + String(format: "%.2f", transaction.totalMoney))
+                                    .foregroundColor(transaction.transactionStatus == .overdue ? .red : .black)
+                            }
                         }
                     }
                 }
                 Section(header: Text("Others")) {
                     ForEach($manager.otherTransactions) { $transaction in
-                        HomeTransactionView(transaction: $transaction) { transactionToDelete in
-                            deleteTransaction(transactionToDelete)
+                        NavigationLink {
+                            TransactionDetailView(transaction: $transaction)
+                        } label: {
+                            HStack {
+                                VStack (alignment: .leading) {
+                                    Text(transaction.name)
+                                    ForEach(transaction.people) { person in
+                                        Text(person.name)
+                                            .foregroundColor(.gray)
+                                            .font(.caption)
+                                    }
+                                }
+                                Spacer()
+                                Text("$" + String(format: "%.2f", transaction.totalMoney))
+                                    .foregroundColor(transaction.transactionStatus == .overdue ? .red : .black)
+                            }
                         }
                     }
                 }
                 Section(header: Text("Completed")) {
                     ForEach($manager.completedTransactions) { $transaction in
-                        HomeTransactionView(transaction: $transaction) { transactionToDelete in
-                            deleteTransaction(transactionToDelete)
+                        NavigationLink {
+                            TransactionDetailView(transaction: $transaction)
+                        } label: {
+                            HStack {
+                                VStack (alignment: .leading) {
+                                    Text(transaction.name)
+                                    ForEach(transaction.people) { person in
+                                        Text(person.name)
+                                            .font(.caption)
+                                    }
+                                }
+                                Spacer()
+                                Text("$" + String(format: "%.2f", transaction.totalMoney))
+                            }
+                            .foregroundColor(.gray)
                         }
                     }
                 }
             }
-            
-            .searchable(text: $manager.searchTerm, prompt: Text("Search for a transaction"))
             .navigationTitle("Home")
+            .searchable(text: $manager.searchTerm, prompt: Text("Search for a transaction"))
             .toolbar {
                 Button {
                     showNewTransactionSheet = true
@@ -72,7 +120,6 @@ struct HomeView: View {
                 .sheet(isPresented: $showNewTransactionSheet) {
                     NewTransactionSheet(transactions: $manager.allTransactions)
                 }
-                
                 Menu {
                     Button {
                         print("Filter by time")
@@ -94,22 +141,13 @@ struct HomeView: View {
                     Image(systemName: "line.3.horizontal.decrease.circle")
                 }
             }
-            //Toolbar
+            }
         }
     }
+}
     
-    func deleteTransaction(_ transactionToDelete: Transaction) {
-        guard let transactionIndex = manager.allTransactions.firstIndex(where: {
-            $0.id == transactionToDelete.id
-        }) else { return }
-        
-        withAnimation {
-            manager.allTransactions.remove(at: transactionIndex)
+    struct HomeView_Previews: PreviewProvider {
+        static var previews: some View {
+            HomeView()
         }
     }
-}
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView(manager: .init())
-    }
-}
