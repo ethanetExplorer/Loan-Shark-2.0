@@ -25,7 +25,7 @@ struct NewTransactionSheet: View {
         return numberFormatter
     }
     
-    @State var newTransaction = Transaction(name: "Transaction name", people: [Person(name: "Person", money: 69, dueDate: "2023-12-25"), Person(name: "Person 2", money: 96, dueDate: "2023-12-25")], transactionType: .unselected)
+    @State var newTransaction = Transaction(name: "", people: [Person(name: "Person", money: 69, dueDate: "2023-12-25"), Person(name: "Person 2", money: 96, dueDate: "2023-12-25")], transactionType: .unselected)
     @Binding var transactions: [Transaction]
     
     @State var peopleInvolved = ""
@@ -105,3 +105,6 @@ struct NewTransactionSheet_Previews: PreviewProvider {
         NewTransactionSheet(transactions: .constant([]))
     }
 }
+
+//TODO: App freezes if title field is filled in, and sheet is dismissed
+
