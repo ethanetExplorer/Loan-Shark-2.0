@@ -29,8 +29,9 @@ struct NewTransactionSheet: View {
     @State var newTransaction = Transaction(name: "", people: [Person(name: "", money: 0, dueDate: Date.now)], transactionType: .unselected)
     @Binding var transactions: [Transaction]
     
-    @State var numberOfPeople = 0
-    @State var addAnotherPerson = false
+    @State private var numberOfPeople = 1
+    @State var hasOtherPeople = false
+    @State private var refreshScreen = false
     
     var body: some View {
         NavigationView {
@@ -70,24 +71,9 @@ struct NewTransactionSheet: View {
                         DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
                     }
                     else if transactionType == "Bill split" && !isDetailSyncronised {
-                        Section(header: Text("Person \(numberOfPeople + 1)")){
-                            NavigationLink {
-                                PeopleSelectorView()
-                            } label: {
-                                Text("Person")
-                            }
-                            HStack {
-                                Text("Total amount")
-                                TextField("Amount", value: $newTransaction.people[0].money, formatter: NumberFormatter())
-                                    .foregroundColor(.gray)
-                                    .multilineTextAlignment(.trailing)
-                                    .keyboardType(.decimalPad)
-                            }
-                            DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
-                        }
-                        if addAnotherPerson == true {
-                            ForEach(0...numberOfPeople, id: \.self) { person in
-                                Section (header: Text("Person 2")){
+                        if hasOtherPeople == true {
+                            ForEach(0...numberOfPeople-1, id: \.self) { i in
+                                Section(header: Text("Person \(i+1)")) {
                                     NavigationLink {
                                         PeopleSelectorView()
                                     } label: {
@@ -95,7 +81,7 @@ struct NewTransactionSheet: View {
                                     }
                                     HStack {
                                         Text("Total amount")
-                                        TextField("Amount", value: $newTransaction.people[1].money, formatter: NumberFormatter())
+                                        TextField("Amount", value: $newTransaction.people[i].money, formatter: NumberFormatter())
                                             .foregroundColor(.gray)
                                             .multilineTextAlignment(.trailing)
                                             .keyboardType(.decimalPad)
@@ -105,7 +91,9 @@ struct NewTransactionSheet: View {
                             }
                         }
                         Button {
-                            addAnotherPerson = true
+                            numberOfPeople += 1
+                            hasOtherPeople = true
+                            newTransaction.people.append(Person(name: "", money: 0.0, dueDate: Date()))
                         } label: {
                             Text("Add")
                         }
@@ -124,8 +112,8 @@ struct NewTransactionSheet: View {
                         }
                         DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
                     }
-                    
                 }
+                
                 Button {
                     transactions.append(newTransaction)
                     dismiss()
@@ -140,7 +128,13 @@ struct NewTransactionSheet: View {
                 .padding(.horizontal)
             }
             .navigationTitle("New transaction")
+            .onChange(of: numberOfPeople) { _ in
+                refreshScreen.toggle()
             }
+            .onAppear() {
+                print(numberOfPeople)
+            }
+        }
     }
 }
 
