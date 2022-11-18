@@ -85,7 +85,7 @@ class TransactionManager: ObservableObject {
     
     let sampleTransactions = [
         // Bill split unsyncronised, 1 paid, 2 due
-        Transaction(name: "Christmas dinner", people: [Person(name: "Woodlands", money: 30, dueDate: "2022-11-20"), Person(name: "Springleaf", money: 40, dueDate: "2022-11-12"), Person(name: "Mayflower", money: 45, dueDate: "2022-11-20", hasPaid: true)], transactionType: .billSplitNoSync),
+        Transaction(name: "Christmas dinner", people: [Person(name: "Woodlands", money: 30, dueDate: "2022-11-29"), Person(name: "Springleaf", money: 40, dueDate: "2022-11-30"), Person(name: "Mayflower", money: 45, dueDate: "2022-11-20", hasPaid: true)], transactionType: .billSplitNoSync),
         // Bill split syncronised, 1 paid 1 due
         Transaction(name: "Gift for Marina Bay", people: [Person(name: "Shenton Way", money: 30, dueDate: "2023-01-11", hasPaid: true), Person(name: "Gardens by the Bay", money: 30, dueDate: "2023-01-11")], transactionType: .billSplitSync),
         // Loan, unpaid

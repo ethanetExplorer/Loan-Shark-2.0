@@ -24,7 +24,7 @@ struct PersonDetailView: View {
             List {
                 Section(header: Text("ONGOING TRANSACTIONS")) {
                     
-                    ForEach(userTransactions.filter { $0.transactionStatus == .unpaid }) { transaction in
+                    ForEach(userTransactions.filter { $0.transactionStatus == .unpaid || $0.transactionStatus == .overdue || $0.transactionStatus == .dueInOneWeek}) { transaction in
                         Button {
                             showTransactionDetailSheet = true
                         } label: {
