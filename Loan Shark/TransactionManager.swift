@@ -17,9 +17,7 @@ class TransactionManager: ObservableObject {
     }
     
     @Published var searchTerm = ""
-    @Published var personToSearch = ""
     @Published var contactsList: [Person] = []
-    var isSearchTermEmpty: Bool { personToSearch == "" }
     
     var overdueTransactions: [Transaction] {
         get {
@@ -163,11 +161,6 @@ class TransactionManager: ObservableObject {
             } else {
                 print("access denied")
             }
-        }
-    }
-    var filteredContacts: [Person] {
-        contactsList.filter { dude in
-            dude.name.lowercased().contains(personToSearch.lowercased())
         }
     }
 }

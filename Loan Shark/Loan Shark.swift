@@ -34,9 +34,8 @@ class Person: Identifiable, Codable {
     var money: Double?
     var dueDate: Date?
     var hasPaid = false
-    var selected = false
     
-    init(id: UUID = UUID(), name: String, money: Double, dueDate: String, hasPaid: Bool = false, selected: Bool = false) {
+    init(id: UUID = UUID(), name: String, money: Double, dueDate: String, hasPaid: Bool = false) {
         self.id = id
         self.name = name
         self.money = money
@@ -45,7 +44,6 @@ class Person: Identifiable, Codable {
 
         self.dueDate = dateFormatter.date(from: dueDate)!
         self.hasPaid = hasPaid
-        self.selected = selected
     }
     
     init(id: UUID = UUID(), name: String, money: Double, dueDate: Date, hasPaid: Bool = false, selected: Bool = false) {
@@ -54,7 +52,6 @@ class Person: Identifiable, Codable {
         self.money = money
         self.dueDate = dueDate
         self.hasPaid = hasPaid
-        self.selected = selected
     }
     
 }

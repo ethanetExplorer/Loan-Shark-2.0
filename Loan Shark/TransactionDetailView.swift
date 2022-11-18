@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct TransactionDetailView: View {
     
     @StateObject var manager = TransactionManager()
     @Binding var transaction: Transaction
     @State var presentEditTransactionSheet = false
+    let pasteboard = UIPasteboard.general
+
     
     var body: some View {
         VStack(alignment: .leading){
@@ -25,14 +28,14 @@ struct TransactionDetailView: View {
                 Text("Bill split, unsyncronised")
             }
             List {
-                ForEach(transaction.people) { i in
+                ForEach(transaction.people) { person in
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
                             .foregroundColor(.white)
                         VStack{
                             HStack {
                                 VStack(alignment: .leading) {
-                                    Text(i.name)
+                                    Text(person.name)
                                         .bold()
                                         .font(.title3)
                                     HStack(alignment: .center, spacing: 0) {
@@ -47,14 +50,14 @@ struct TransactionDetailView: View {
                                     .foregroundStyle(.secondary)
                                 }
                                 Spacer()
-                                Text("$ + \(String(format: "%.2f", i.money!))")
+                                Text("$ \(String(format: "%.2f", person.money!))")
                                     .foregroundColor(transaction.transactionStatus == .overdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
                                     .font(.title2)
                             }
                             .padding(.top, 10)
                             HStack(alignment: .top){
                                 Button {
-                                    
+                                    pasteboard.string = "Hello, world!"
                                 } label: {
                                     HStack {
                                         Image(systemName: "message")
@@ -63,14 +66,13 @@ struct TransactionDetailView: View {
                                 }
                                 Spacer()
                                 Button {
-                                    i.hasPaid = true
+                                    person.hasPaid = true
                                 } label: {
                                     HStack {
                                         Image(systemName: "banknote")
                                         Text("Mark as paid")
                                     }
                                 }
-                                //TODO: People structs, import contacts, figure out how to send reminders!!!!
                             }
                             .buttonStyle(.plain)
                             .foregroundColor(.blue)

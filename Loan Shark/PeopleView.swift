@@ -27,7 +27,7 @@ struct PeopleView: View {
                     }
                 }
             }
-            .navigationTitle("All people!")
+            .navigationTitle("All people")
             .toolbar {
                 Button {
                     
