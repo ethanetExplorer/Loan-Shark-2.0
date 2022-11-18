@@ -4,6 +4,7 @@
 //
 //  Created by Yuhan Du Du Du Du on 6/11/22.
 //
+// Duhan Du Du Du
 
 import SwiftUI
 
@@ -116,7 +117,7 @@ struct NewTransactionSheet: View {
                         }
                         HStack {
                             Text("Amount")
-                            TextField("Total amount", value: $newTransaction.totalMoney, formatter: NumberFormatter())
+                            TextField("Amount each", value: $newTransaction.people[0].money, formatter: NumberFormatter())
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)
                                 .keyboardType(.decimalPad)

@@ -6,8 +6,7 @@
 //
 
 import Foundation
-import SwiftUI
-
+//import SwiftUI /* Why the fuck do you need to import SwiftUI???*/
 
 enum TransactionTypes: Codable {
     case unselected
@@ -65,7 +64,7 @@ class Transaction: Identifiable, Codable {
     var name: String
     var people: [Person]
     var dueDate: Date {
-        if people.count == 1{
+        if people.count == 1 {
             return people[0].dueDate!
         } else { return Date.now }
     }
@@ -74,7 +73,6 @@ class Transaction: Identifiable, Codable {
             return people[0].hasPaid
         } else { return false }
     }
-    
     var transactionStatus: TransactionStatus {
         if isPaid {
             return .paidOff
@@ -89,11 +87,16 @@ class Transaction: Identifiable, Codable {
             return .unpaid
         }
     }
+    
+//    var sumOfMoney = people.reduce(into: 0.00) {
+//        $0.person.money + $0.money
+//    }
     var transactionType: TransactionTypes
     
-    var totalMoney: Double?
-        
-    init(id: UUID = UUID(), name: String, people: [Person], transactionType: TransactionTypes, totalMoney: Double? = 0) {
+    
+    var totalMoney: Double
+
+    init(id: UUID = UUID(), name: String, people: [Person], transactionType: TransactionTypes, totalMoney: Double = 0.00) {
         self.id = id
         self.name = name
         self.people = people

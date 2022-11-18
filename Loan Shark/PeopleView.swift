@@ -38,11 +38,11 @@ struct PeopleView: View {
             .searchable(text: $searchTerm)
         }
     }
-    
-    
-//    struct ContactView_Previews: PreviewProvider {
-//        static var previews: some View {
-//            PeopleView()
-//        }
-//    }
 }
+    
+    struct ContactView_Previews: PreviewProvider {
+        static var previews: some View {
+            PeopleView(manager: TransactionManager(), isContactSheetPresented: true, searchTerm: "")
+        }
+    }
+

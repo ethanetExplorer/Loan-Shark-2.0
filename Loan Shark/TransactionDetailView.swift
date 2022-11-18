@@ -14,81 +14,79 @@ struct TransactionDetailView: View {
     @State var presentEditTransactionSheet = false
     
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading){
-                if transaction.transactionType == .loan {
-                    Text("Loan")
-                        .font(.title2)
-                        .padding(.horizontal)
-                } else if transaction.transactionType == .billSplitSync {
-                    Text("Bill split, syncronised")
-                } else if transaction.transactionType == .billSplitNoSync {
-                    Text("Bill split, unsyncronised")
-                }
-                List {
-                    ForEach(transaction.people) { i in
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundColor(.white)
-                            VStack{
-                                HStack {
-                                    VStack(alignment: .leading) {
-                                        Text(i.name)
-                                            .bold()
-                                            .font(.title3)
-                                        HStack(alignment: .center, spacing: 0) {
-                                            Text(transaction.transactionStatus == .overdue ? "Due " : "Due in ")
-                                            Text(transaction.dueDate, style: .relative)
-                                            
-                                            if transaction.transactionStatus == .overdue {
-                                                Text(" ago")
-                                            }
-                                        }
-                                        .font(.subheadline)
-                                        .foregroundStyle(.secondary)
-                                    }
-                                    Spacer()
-                                    Text("$ + \(String(format: "%.2f", i.money!))")
-                                        .foregroundColor(transaction.transactionStatus == .overdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
-                                        .font(.title2)
-                                }
-                                .padding(.top, 10)
-                                HStack(alignment: .top){
-                                    Button {
+        VStack(alignment: .leading){
+            if transaction.transactionType == .loan {
+                Text("Loan")
+                    .font(.title2)
+                    .padding(.horizontal)
+            } else if transaction.transactionType == .billSplitSync {
+                Text("Bill split, syncronised")
+            } else if transaction.transactionType == .billSplitNoSync {
+                Text("Bill split, unsyncronised")
+            }
+            List {
+                ForEach(transaction.people) { i in
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .foregroundColor(.white)
+                        VStack{
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(i.name)
+                                        .bold()
+                                        .font(.title3)
+                                    HStack(alignment: .center, spacing: 0) {
+                                        Text(transaction.transactionStatus == .overdue ? "Due " : "Due in ")
+                                        Text(transaction.dueDate, style: .relative)
                                         
-                                    } label: {
-                                        HStack {
-                                            Image(systemName: "message")
-                                            Text("Send reminder")
+                                        if transaction.transactionStatus == .overdue {
+                                            Text(" ago")
                                         }
                                     }
-                                    Spacer()
-                                    Button {
-                                        i.hasPaid = true
-                                    } label: {
-                                        HStack {
-                                            Image(systemName: "banknote")
-                                            Text("Mark as paid")
-                                        }
-                                    }
-                                    //TODO: People structs, import contacts, figure out how to send reminders!!!!
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
                                 }
-                                .buttonStyle(.plain)
-                                .foregroundColor(.blue)
-                                .padding(10)
+                                Spacer()
+                                Text("$ + \(String(format: "%.2f", i.money!))")
+                                    .foregroundColor(transaction.transactionStatus == .overdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
+                                    .font(.title2)
                             }
+                            .padding(.top, 10)
+                            HStack(alignment: .top){
+                                Button {
+                                    
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "message")
+                                        Text("Send reminder")
+                                    }
+                                }
+                                Spacer()
+                                Button {
+                                    i.hasPaid = true
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "banknote")
+                                        Text("Mark as paid")
+                                    }
+                                }
+                                //TODO: People structs, import contacts, figure out how to send reminders!!!!
+                            }
+                            .buttonStyle(.plain)
+                            .foregroundColor(.blue)
+                            .padding(10)
                         }
                     }
                 }
             }
-            .navigationTitle(transaction.name)
-            .toolbar {
-                Button {
-                    presentEditTransactionSheet.toggle()
-                } label: { Image(systemName: "pencil")}
-                    .sheet(isPresented: $presentEditTransactionSheet) {
-                        NewTransactionSheet(transactions: $manager.allTransactions)
-                    }
+        .navigationTitle(transaction.name)
+        .toolbar {
+            Button {
+                presentEditTransactionSheet.toggle()
+            } label: { Image(systemName: "pencil")}
+                .sheet(isPresented: $presentEditTransactionSheet) {
+                    NewTransactionSheet(transactions: $manager.allTransactions)
+                }
             }
         }
     }
