@@ -118,8 +118,8 @@
 			children = (
 				74F9B076292489D2008087E9 /* PeopleSelectorView.swift */,
 				74FB48282903892200F23E32 /* Loan Shark.swift */,
-				74BDE57D28CD868C00D1DA25 /* ContentView.swift */,
 				55000AD02921E9B900779BBA /* PeopleView.swift */,
+				74BDE57D28CD868C00D1DA25 /* ContentView.swift */,
 				55000AD22921EB4500779BBA /* PersonDetailView.swift */,
 				55DBFA17291377FB008AFA32 /* NewTransactionSheet.swift */,
 				09E16BC629160437003090BB /* TransactionManager.swift */,

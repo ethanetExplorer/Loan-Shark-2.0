@@ -99,6 +99,7 @@ class TransactionManager: ObservableObject {
     init() {
         load()
         loadContacts()
+        print(getArchiveURL())
     }
     
     func getArchiveURL() -> URL {

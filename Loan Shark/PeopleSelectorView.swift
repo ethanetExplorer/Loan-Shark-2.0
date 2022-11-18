@@ -11,17 +11,20 @@ struct PeopleSelectorView: View {
     
     @StateObject var manager = TransactionManager()
     @State var peopleSelected = []
+    @State var isSelected = false
     
     var body: some View {
         List {
             if manager.isSearchTermEmpty {
-                ForEach(manager.contactsList) { car in
+                ForEach(manager.contactsList) { contact in
                     HStack {
                         Button {
-                            print("HAHAHA")
-                        } label: { Image(systemName: "circle")}
-                        Text(car.name)
-                            .tag(car.name)
+                            contact.selected.toggle()
+                        } label: {
+                            contact.selected ? Image(systemName: "checkmark.circle.fill") : Image(systemName: "circle")
+                        }
+                        Text(contact.name)
+                            .tag(contact.name)
                     }
                 }
             } else {
