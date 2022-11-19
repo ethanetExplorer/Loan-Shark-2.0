@@ -148,7 +148,6 @@ class TransactionManager: ObservableObject {
                         
                         try store.enumerateContacts(with: request) { (contact, stopPointer) in
                             contacts.append(Person(name: contact.givenName + " " + contact.familyName, money: 0, dueDate: "1970-01-01"))
-                            #warning("OPTIONALS STILL NEED PARAMETERS WTF")
                         }
                         
                         DispatchQueue.main.async {

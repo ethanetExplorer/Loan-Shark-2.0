@@ -90,13 +90,32 @@ struct NewTransactionSheet: View {
                                 }
                             }
                         }
-                        Button {
-                            numberOfPeople += 1
-                            hasOtherPeople = true
-                            newTransaction.people.append(Person(name: "", money: 0.0, dueDate: Date()))
-                        } label: {
-                            Text("Add")
+                        
+                        Section {
+                            Button {
+                                withAnimation {
+                                    numberOfPeople += 1
+                                }
+                                hasOtherPeople = true
+                                newTransaction.people.append(Person(name: "", money: 0.0, dueDate: Date()))
+                            } label: {
+                                Text("Add contacts")
+                            }
+                            if hasOtherPeople {
+                                Button {
+                                    withAnimation{
+                                        numberOfPeople -= 1
+                                    }
+                                    if numberOfPeople < 2 {
+                                        hasOtherPeople = false
+                                    }
+                                    newTransaction.people.remove(at: newTransaction.people.count - 1)
+                                } label: {
+                                    Text("Remove contact")
+                                }
+                            }
                         }
+                        
                     } else if transactionType == "Bill split" && isDetailSyncronised {
                         NavigationLink {
                             PeopleSelectorView(manager: manager, peopleSelected: $newTransaction.people, isMultiSelect: true)
