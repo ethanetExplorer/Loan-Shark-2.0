@@ -9,34 +9,56 @@ import SwiftUI
 
 struct PeopleSelectorView: View {
     
-    @StateObject var manager = TransactionManager()
-    @State var personSelected: Person?
+    @ObservedObject var manager: TransactionManager
+    
+    @Binding var peopleSelected: [Person]
+    
+    var isMultiSelect: Bool
+    
     @State var searchTerm = ""
-        
+    @State var reload = false
+    
     var body: some View {
         List {
-            ForEach(manager.contactsList) { contact in
-                HStack {
-                    Button {
-                        personSelected = contact
-                    } label: {
-                        Image(systemName: personSelected?.id == contact.id ? "checkmark.circle.fill" : "circle")
+            ForEach(manager.contactsList.filter({ contact in
+                contact.name.lowercased().contains(searchTerm.lowercased()) || searchTerm.isEmpty
+            })) { contact in
+                Button {
+                    withAnimation {
+                        if isMultiSelect {
+                            if let personIndex = peopleSelected.firstIndex(where: {
+                                $0.id == contact.id
+                            }) {
+                                peopleSelected.remove(at: personIndex)
+                            } else {
+                                peopleSelected.append(contact)
+                            }
+                        } else {
+                            if !peopleSelected.contains(where: {
+                                $0.id == contact.id
+                            }) {
+                                peopleSelected = [contact]
+                            }
+                        }
+                        
+                        reload.toggle()
                     }
-                    Text(contact.name)
-                        .tag(contact.name)
+                } label: {
+                    Label(contact.name, systemImage: peopleSelected.contains(where: {
+                        $0.id == contact.id
+                    }) ? "checkmark.circle.fill" : "circle")
+                    .opacity(reload ? 1 : 1)
                 }
+                .foregroundColor(.primary)
             }
         }
-        .searchable(text: .constant(""), prompt: Text("Search for a person"))
+        .searchable(text: $searchTerm, prompt: Text("Search for a person"))
         .navigationTitle("Select people")
-        .onAppear {
-            personSelected = manager.contactsList.first
-        }
     }
 }
 
-struct PeopleSelectorView_Previews: PreviewProvider {
-    static var previews: some View {
-        PeopleSelectorView()
-    }
-}
+//struct PeopleSelectorView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PeopleSelectorView()
+//    }
+//}

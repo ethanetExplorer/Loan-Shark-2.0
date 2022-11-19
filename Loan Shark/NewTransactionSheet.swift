@@ -13,9 +13,9 @@ struct NewTransactionSheet: View {
     @StateObject var manager = TransactionManager()
     @State var isDetailSyncronised: Bool = false
     @State var dueDate = Date()
-    
     @State var transactionType = ""
-    var transactionTypes = ["Select","Loan","Bill split"]
+    @State var fieldsUnfilled = true
+    var transactionTypes = ["Select", "Loan", "Bill split"]
     @Environment(\.dismiss) var dismiss
     
     var decimalNumberFormat: NumberFormatter {
@@ -57,7 +57,7 @@ struct NewTransactionSheet: View {
                     }
                     if transactionType == "Loan" {
                         NavigationLink {
-                            PeopleSelectorView()
+                            PeopleSelectorView(manager: manager, peopleSelected: $newTransaction.people, isMultiSelect: false)
                         } label: {
                             Text("Person")
                         }
@@ -75,7 +75,7 @@ struct NewTransactionSheet: View {
                             ForEach(0...numberOfPeople-1, id: \.self) { i in
                                 Section(header: Text("Person \(i+1)")) {
                                     NavigationLink {
-                                        PeopleSelectorView()
+                                        PeopleSelectorView(manager: manager, peopleSelected: $newTransaction.people, isMultiSelect: false)
                                     } label: {
                                         Text("Person")
                                     }
@@ -99,7 +99,7 @@ struct NewTransactionSheet: View {
                         }
                     } else if transactionType == "Bill split" && isDetailSyncronised {
                         NavigationLink {
-                            PeopleSelectorView()
+                            PeopleSelectorView(manager: manager, peopleSelected: $newTransaction.people, isMultiSelect: true)
                         } label: {
                             Text("People")
                         }
@@ -124,7 +124,9 @@ struct NewTransactionSheet: View {
                         .background(.blue)
                         .cornerRadius(10)
                         .foregroundColor(.white)
+                        .opacity(fieldsUnfilled ? 0.5 : 1)
                 }
+                .disabled(fieldsUnfilled)
                 .padding(.horizontal)
             }
             .navigationTitle("New transaction")
