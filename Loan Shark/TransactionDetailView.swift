@@ -23,9 +23,9 @@ struct TransactionDetailView: View {
                     .font(.title2)
                     .padding(.horizontal)
             } else if transaction.transactionType == .billSplitSync {
-                Text("Bill split, syncronised")
+                Text("Bill split, synchronised")
             } else if transaction.transactionType == .billSplitNoSync {
-                Text("Bill split, unsyncronised")
+                Text("Bill split, unsynchronised")
             }
             List {
                 ForEach(transaction.people) { person in
@@ -35,7 +35,7 @@ struct TransactionDetailView: View {
                         VStack{
                             HStack {
                                 VStack(alignment: .leading) {
-                                    Text(person.name)
+                                    Text(person.name ?? "Noone Selected")
                                         .bold()
                                         .font(.title3)
                                     HStack(alignment: .center, spacing: 0) {
@@ -66,7 +66,8 @@ struct TransactionDetailView: View {
                                 }
                                 Spacer()
                                 Button {
-                                    person.hasPaid = true
+                                    #warning("Implement this")
+//                                    person.hasPaid = true
                                 } label: {
                                     HStack {
                                         Image(systemName: "banknote")
@@ -91,11 +92,5 @@ struct TransactionDetailView: View {
                 }
             }
         }
-    }
-}
-
-struct TransactionDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        TransactionDetailView(transaction: .constant(Transaction(name: "Transaction name", people: [Person(name: "Person", money: 69, dueDate: "2023-12-25"), Person(name: "Person 2", money: 96, dueDate: "2023-12-25")], transactionType: .loan)))
     }
 }

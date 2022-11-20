@@ -11,10 +11,13 @@ import SwiftUI
 struct NewTransactionSheet: View {
     
     @StateObject var manager = TransactionManager()
-    @State var isDetailSyncronised: Bool = false
+    @State var isDetailSynchronised: Bool = false
     @State var dueDate = Date()
     @State var transactionType = ""
-    @State var fieldsUnfilled = true
+    
+    var fieldsUnfilled: Bool {
+        name.isEmpty || transactionType == "Select"
+    }
     var transactionTypes = ["Select", "Loan", "Bill split"]
     @Environment(\.dismiss) var dismiss
     
@@ -26,12 +29,10 @@ struct NewTransactionSheet: View {
         return numberFormatter
     }
     
-    @State var newTransaction = Transaction(name: "", people: [Person(name: "", money: 0, dueDate: Date.now)], transactionType: .unselected)
-    @Binding var transactions: [Transaction]
+    @State var name = ""
+    @State var people: [Person] = [Person(contact: nil, money: 10, dueDate: .now, hasPaid: false)]
     
-    @State private var numberOfPeople = 1
-    @State var hasOtherPeople = false
-    @State private var refreshScreen = false
+    @Binding var transactions: [Transaction]
     
     var body: some View {
         NavigationView {
@@ -40,7 +41,7 @@ struct NewTransactionSheet: View {
                     Section(header: Text("Transaction details")) {
                         HStack {
                             Text("Title")
-                            TextField("Title", text: $newTransaction.name)
+                            TextField("Title", text: $name)
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)
                         }
@@ -49,82 +50,147 @@ struct NewTransactionSheet: View {
                                 Text($0)
                             }
                         }
-                        
-                        if transactionType == "Bill split" {
-                            Toggle(isOn: $isDetailSyncronised){
-                                Text("Syncronise details")}
+                    }
+                    
+                    if transactionType == "Bill split" {
+                        Section {
+                            Toggle(isOn: $isDetailSynchronised) {
+                                Text("Synchronise details")
+                            }
+                        } footer: {
+                            Text("Toggle this to distribute the total amount of the transaction equally between all selected contacts, and for the same due date to apply for all. ")
                         }
                     }
+                    
                     if transactionType == "Loan" {
-                        NavigationLink {
-                            PeopleSelectorView(manager: manager, peopleSelected: $newTransaction.people, isMultiSelect: false)
-                        } label: {
-                            Text("Person")
+                        let contactBinding = Binding {
+                            if let firstPereson = people.first {
+                                return firstPereson.contact
+                            }
+                            return nil
+                        } set: { contact in
+                            people = [Person(contact: contact, money: 10, dueDate: .now, hasPaid: false)]
                         }
+                        
+                        NavigationLink {
+                            PeopleSelectorView(manager: manager, selectedContact: contactBinding)
+                        } label: {
+                            HStack {
+                                Text("Who")
+                                Spacer()
+                                Text(people[0].name ?? "No Contact Selected")
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        
                         HStack {
-                            Text("Amount of money")
-                            TextField("Amount", value: $newTransaction.people[0].money, formatter: NumberFormatter())
+                            Text("Amount")
+                            TextField("Amount", value: $people[0].money, formatter: decimalNumberFormat)
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)
                                 .keyboardType(.decimalPad)
                         }
                         DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
-                    }
-                    else if transactionType == "Bill split" && !isDetailSyncronised {
-                        if hasOtherPeople == true {
-                            ForEach(0...numberOfPeople-1, id: \.self) { i in
-                                Section(header: Text("Person \(i+1)")) {
+                    } else if transactionType == "Bill split" && !isDetailSynchronised {
+                        if !people.isEmpty {
+                            ForEach($people, id: \.name) { $person in
+                                Section(header: Text(person.name ?? "No Contact Selected")) {
                                     NavigationLink {
-                                        PeopleSelectorView(manager: manager, peopleSelected: $newTransaction.people, isMultiSelect: false)
+                                        PeopleSelectorView(manager: manager, selectedContact: $person.contact, excludedContacts: people.compactMap({
+                                            $0.contact
+                                        }))
                                     } label: {
-                                        Text("Person")
+                                        HStack {
+                                            Text("Who")
+                                            Spacer()
+                                            Text(person.name ?? "No Contact Selected")
+                                                .foregroundStyle(.secondary)
+                                        }
                                     }
+                                    
                                     HStack {
-                                        Text("Total amount")
-                                        TextField("Amount", value: $newTransaction.people[i].money, formatter: NumberFormatter())
+                                        Text("Amount")
+                                        TextField("Amount", value: $person.money, formatter: decimalNumberFormat)
                                             .foregroundColor(.gray)
                                             .multilineTextAlignment(.trailing)
                                             .keyboardType(.decimalPad)
                                     }
-                                    DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
+                                    
+                                    let dueDateBinding = Binding {
+                                        person.dueDate!
+                                    } set: { newValue in
+                                        person.dueDate = newValue
+                                    }
+
+                                    DatePicker("Due by", selection: dueDateBinding, in: Date.now..., displayedComponents: .date)
                                 }
                             }
                         }
-                        
+
                         Section {
-                            Button {
-                                withAnimation {
-                                    numberOfPeople += 1
-                                }
-                                hasOtherPeople = true
-                                newTransaction.people.append(Person(name: "", money: 0.0, dueDate: Date()))
-                            } label: {
-                                Text("Add contacts")
-                            }
-                            if hasOtherPeople {
+                            if !people.contains(where: {
+                                $0.name == nil
+                            }) {
                                 Button {
-                                    withAnimation{
-                                        numberOfPeople -= 1
+                                    withAnimation {
+                                        people.append(Person(contact: nil, money: 10, dueDate: .now, hasPaid: false))
                                     }
-                                    if numberOfPeople < 2 {
-                                        hasOtherPeople = false
+                                } label: {
+                                    Text("Add contacts")
+                                }
+                            }
+                            
+                            if !people.isEmpty {
+                                Button {
+                                    withAnimation {
+                                        _ = people.removeLast()
                                     }
-                                    newTransaction.people.remove(at: newTransaction.people.count - 1)
                                 } label: {
                                     Text("Remove contact")
                                 }
                             }
                         }
+
+                    }
+                    else if transactionType == "Bill split" && isDetailSynchronised {
                         
-                    } else if transactionType == "Bill split" && isDetailSyncronised {
+                        let contactsBinding = Binding {
+                            people.compactMap {
+                                $0.contact
+                            }
+                        } set: { newValue in
+                            let money = people[0].money
+                            people = newValue.map({ contact in
+                                Person(contact: contact, money: money!, dueDate: dueDate)
+                            })
+                        }
+
+                        
                         NavigationLink {
-                            PeopleSelectorView(manager: manager, peopleSelected: $newTransaction.people, isMultiSelect: true)
+                            MultiplePeopleSelectorView(manager: manager, selectedContacts: contactsBinding)
+
+                            Text("a")
                         } label: {
-                            Text("People")
+                            VStack(alignment: .leading) {
+                                Text("Who")
+                                
+                                let names = people
+                                    .compactMap {
+                                        $0.name
+                                    }
+                                
+                                if names.isEmpty {
+                                    Text("No one selected")
+                                        .font(.caption)
+                                } else {
+                                    Text(names.joined(separator: ", "))
+                                        .font(.caption)
+                                }
+                            }
                         }
                         HStack {
                             Text("Amount")
-                            TextField("Amount each", value: $newTransaction.people[0].money, formatter: NumberFormatter())
+                            TextField("Amount each", value: $people[0].money, formatter: decimalNumberFormat)
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)
                                 .keyboardType(.decimalPad)
@@ -134,7 +200,19 @@ struct NewTransactionSheet: View {
                 }
                 
                 Button {
-                    transactions.append(newTransaction)
+                    let transactionTypeItem: TransactionTypes = {
+                        switch transactionType {
+                        case "Loan":
+                            return .loan
+                        case "Bill split":
+                            return isDetailSynchronised ? .billSplitSync : .billSplitNoSync
+                        default: return .unselected
+                        }
+                    }()
+                    let transaction = Transaction(name: name,
+                                                  people: people.compactMap({ $0 }), transactionType: transactionTypeItem)
+                    
+                    transactions.append(transaction)
                     dismiss()
                 } label: {
                     Text("Save")
@@ -149,11 +227,11 @@ struct NewTransactionSheet: View {
                 .padding(.horizontal)
             }
             .navigationTitle("New transaction")
-            .onChange(of: numberOfPeople) { _ in
-                refreshScreen.toggle()
+            .onChange(of: transactionType) { newValue in
+                people = [Person(contact: nil, money: 10, dueDate: .now, hasPaid: false)]
             }
-            .onAppear() {
-                print(numberOfPeople)
+            .onChange(of: isDetailSynchronised) { newValue in
+                people = [Person(contact: nil, money: 10, dueDate: .now, hasPaid: false)]
             }
         }
     }

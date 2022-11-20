@@ -34,7 +34,7 @@ struct HomeView: View {
                                 VStack (alignment: .leading) {
                                     Text(transaction.name)
                                     ForEach(transaction.people) { person in
-                                        Text(person.name)
+                                        Text(person.name ?? "")
                                             .foregroundColor(.gray)
                                             .font(.caption)
                                     }
@@ -55,7 +55,7 @@ struct HomeView: View {
                                 VStack (alignment: .leading) {
                                     Text(transaction.name)
                                     ForEach(transaction.people) { person in
-                                        Text(person.name)
+                                        Text(person.name ?? "")
                                             .foregroundColor(.gray)
                                             .font(.caption)
                                     }
@@ -76,7 +76,7 @@ struct HomeView: View {
                                 VStack (alignment: .leading) {
                                     Text(transaction.name)
                                     ForEach(transaction.people) { person in
-                                        Text(person.name)
+                                        Text(person.name ?? "")
                                             .foregroundColor(.gray)
                                             .font(.caption)
                                     }
@@ -97,7 +97,7 @@ struct HomeView: View {
                                 VStack (alignment: .leading) {
                                     Text(transaction.name)
                                     ForEach(transaction.people) { person in
-                                        Text(person.name)
+                                        Text(person.name ?? "")
                                             .font(.caption)
                                     }
                                 }

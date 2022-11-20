@@ -10,7 +10,7 @@ struct PersonDetailView: View {
     
     @ObservedObject var manager: TransactionManager
     @State var showTransactionDetailSheet = false
-    var person : Person
+    var person: Contact
     var userTransactions: [Transaction] {
         manager.allTransactions.filter {
             $0.people.contains(where: { people in

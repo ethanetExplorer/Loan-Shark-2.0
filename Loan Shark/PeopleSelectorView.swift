@@ -11,43 +11,43 @@ struct PeopleSelectorView: View {
     
     @ObservedObject var manager: TransactionManager
     
-    @Binding var peopleSelected: [Person]
+    @Binding var selectedContact: Contact?
     
-    var isMultiSelect: Bool
+    var excludedContacts: [Contact] = []
     
     @State var searchTerm = ""
     @State var reload = false
     
     var body: some View {
         List {
-            ForEach(manager.contactsList.filter({ contact in
-                contact.name.lowercased().contains(searchTerm.lowercased()) || searchTerm.isEmpty
-            })) { contact in
+            ForEach(manager.contactsList
+                .filter { contact in
+                    contact.name.lowercased().contains(searchTerm.lowercased()) || searchTerm.isEmpty
+                }
+                .filter { contact in
+                    if (selectedContact?.id == contact.id) {
+                        return true
+                    } else {
+                        return !excludedContacts.contains(where: {
+                            $0.id == contact.id
+                        })
+                    }
+                }
+            ) { contact in
                 Button {
                     withAnimation {
-                        if isMultiSelect {
-                            if let personIndex = peopleSelected.firstIndex(where: {
-                                $0.id == contact.id
-                            }) {
-                                peopleSelected.remove(at: personIndex)
-                            } else {
-                                peopleSelected.append(contact)
-                            }
+                        if selectedContact?.id == contact.id {
+                            selectedContact = nil
                         } else {
-                            if !peopleSelected.contains(where: {
-                                $0.id == contact.id
-                            }) {
-                                peopleSelected = [contact]
-                            }
+                            selectedContact = contact
                         }
                         
                         reload.toggle()
                     }
                 } label: {
-                    Label(contact.name, systemImage: peopleSelected.contains(where: {
-                        $0.id == contact.id
-                    }) ? "checkmark.circle.fill" : "circle")
-                    .opacity(reload ? 1 : 1)
+                    Label(contact.name,
+                          systemImage: selectedContact?.id == contact.id ? "checkmark.circle.fill" : "circle")
+                        .opacity(reload ? 1 : 1)
                 }
                 .foregroundColor(.primary)
             }
@@ -56,9 +56,3 @@ struct PeopleSelectorView: View {
         .navigationTitle("Select people")
     }
 }
-
-//struct PeopleSelectorView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PeopleSelectorView()
-//    }
-//}

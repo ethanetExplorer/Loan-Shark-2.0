@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Contacts
 //import SwiftUI /* Why the fuck do you need to import SwiftUI???*/
 
 enum TransactionTypes: Codable {
@@ -24,20 +25,36 @@ enum TransactionStatus: Int, Codable {
 
 
 struct Contact: Codable, Identifiable {
-    var id = UUID()
-    var name: String
+    var id: String
+    
+    var name: String {
+        let predicate = CNContact.predicateForContacts(withIdentifiers: [id])
+        let store = CNContactStore()
+        
+        let keysToFetch = [CNContactGivenNameKey, CNContactFamilyNameKey] as [CNKeyDescriptor]
+        
+        if let contact = try? store.unifiedContacts(matching: predicate, keysToFetch: keysToFetch).first {
+            return contact.givenName + " " + contact.familyName
+        }
+        
+        return ""
+    }
 }
 
-class Person: Identifiable, Codable {
-    var id = UUID()
-    var name: String
+struct Person: Identifiable, Codable {
+    var id: UUID = UUID()
+    
+    var contact: Contact?
+    var name: String? {
+        contact?.name
+    }
+    
     var money: Double?
     var dueDate: Date?
     var hasPaid = false
     
-    init(id: UUID = UUID(), name: String, money: Double, dueDate: String, hasPaid: Bool = false) {
-        self.id = id
-        self.name = name
+    init(contact: Contact? = nil, money: Double, dueDate: String, hasPaid: Bool = false) {
+        self.contact = contact
         self.money = money
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY-MM-DD"
@@ -46,9 +63,8 @@ class Person: Identifiable, Codable {
         self.hasPaid = hasPaid
     }
     
-    init(id: UUID = UUID(), name: String, money: Double, dueDate: Date, hasPaid: Bool = false, selected: Bool = false) {
-        self.id = id
-        self.name = name
+    init(contact: Contact? = nil, money: Double, dueDate: Date, hasPaid: Bool = false, selected: Bool = false) {
+        self.contact = contact
         self.money = money
         self.dueDate = dueDate
         self.hasPaid = hasPaid
