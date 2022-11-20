@@ -16,14 +16,16 @@ class TransactionManager: ObservableObject {
         }
     }
     
+    @Published var selectedSortMethod = SortingMethods.alphabetically
+    
     @Published var searchTerm = ""
     @Published var contactsList: [Contact] = []
     
     var overdueTransactions: [Transaction] {
         get {
-            (searchResults.isEmpty ? allTransactions : searchResults).filter {
+            sort(transactions: (searchResults.isEmpty ? allTransactions : searchResults).filter {
                 $0.transactionStatus == .overdue
-            }
+            }, by: selectedSortMethod)
         }
         set {
             for transaction in newValue {
@@ -35,9 +37,9 @@ class TransactionManager: ObservableObject {
     
     var dueIn7DaysTransactions: [Transaction] {
         get {
-            (searchResults.isEmpty ? allTransactions : searchResults).filter {
+            sort(transactions: (searchResults.isEmpty ? allTransactions : searchResults).filter {
                 $0.transactionStatus == .dueInOneWeek
-            }
+            }, by: selectedSortMethod)
         }
         set {
             for transaction in newValue {
@@ -49,9 +51,9 @@ class TransactionManager: ObservableObject {
     
     var otherTransactions: [Transaction] {
         get {
-            (searchResults.isEmpty ? allTransactions : searchResults).filter {
+            sort(transactions: (searchResults.isEmpty ? allTransactions : searchResults).filter {
                 $0.transactionStatus == .unpaid
-            }
+            }, by: selectedSortMethod)
         }
         set {
             for transaction in newValue {
@@ -63,9 +65,9 @@ class TransactionManager: ObservableObject {
     
     var completedTransactions: [Transaction] {
         get {
-            (searchResults.isEmpty ? allTransactions : searchResults).filter {
+            sort(transactions: (searchResults.isEmpty ? allTransactions : searchResults).filter {
                 $0.transactionStatus == .paidOff
-            }
+            }, by: selectedSortMethod)
         }
         set {
             for transaction in newValue {
@@ -81,18 +83,7 @@ class TransactionManager: ObservableObject {
         })
     }
     
-    let sampleTransactions: [Transaction] = [
-        // Bill split unsynchronised, 1 paid, 2 due
-//        Transaction(name: "Christmas dinner", people: [Person(name: "Woodlands", money: 30, dueDate: "2022-11-29"), Person(name: "Springleaf", money: 40, dueDate: "2022-11-30"), Person(name: "Mayflower", money: 45, dueDate: "2022-11-20", hasPaid: true)], transactionType: .billSplitNoSync),
-//        // Bill split synchronised, 1 paid 1 due
-//        Transaction(name: "Gift for Marina Bay", people: [Person(name: "Shenton Way", money: 30, dueDate: "2023-01-11", hasPaid: true), Person(name: "Gardens by the Bay", money: 30, dueDate: "2023-01-11")], transactionType: .billSplitSync),
-//        // Loan, unpaid
-//        Transaction(name: "Loan for buying new equipment", people: [Person(name: "Stadium", money: 14.90, dueDate: "2022-11-11")], transactionType: .loan),
-//        // Paid transaction
-//        Transaction(name: "Birthday cake", people: [Person(name: "Steven", money: 21, dueDate: "2022-12-14", hasPaid: true)], transactionType: .loan),
-//        // Transaction due in the very very fat future
-//        Transaction(name: "Explosives for terrorist attack", people: [Person(name: "Bartley", money: 10, dueDate: "2024-11-11")], transactionType: .loan)
-    ]
+    let sampleTransactions: [Transaction] = []
     
     init() {
         load()
@@ -162,7 +153,21 @@ class TransactionManager: ObservableObject {
             }
         }
     }
+    
+    func sort(transactions: [Transaction], by sortingMethod: SortingMethods) -> [Transaction] {
+        switch sortingMethod {
+        case .timeDue:
+            return transactions.sorted { firstTransaction, secondTransaction in
+                firstTransaction.dueDate < secondTransaction.dueDate
+            }
+        case .amount:
+            return transactions.sorted { firstTransaction, secondTransaction in
+                firstTransaction.totalMoney < secondTransaction.totalMoney
+            }
+        case .alphabetically:
+            return transactions.sorted { firstTransaction, secondTransaction in
+                firstTransaction.name < secondTransaction.name
+            }
+        }
+    }
 }
-
-
-

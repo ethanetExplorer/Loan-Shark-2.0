@@ -25,17 +25,22 @@ struct PersonDetailView: View {
                 Section(header: Text("ONGOING TRANSACTIONS")) {
                     
                     ForEach(userTransactions.filter { $0.transactionStatus == .unpaid || $0.transactionStatus == .overdue || $0.transactionStatus == .dueInOneWeek}) { transaction in
+                        
+                        let transactionPerson: Person = transaction.people.first(where: { $0.contact!.id == person.id })!
+                        
                         Button {
                             showTransactionDetailSheet = true
                         } label: {
                             HStack{
-                                VStack{
+                                VStack(alignment: .leading) {
                                     Text(transaction.name)
-                                    Text("Due in \(Date.now...transaction.dueDate) days")
-
+                                    Text(getTransactionDueDate(for: transaction))
+                                        .font(.caption)
                                 }
+                                .foregroundColor(.primary)
                                 Spacer()
-                                Text("$\(transaction.totalMoney)")
+                                
+                                Text("\(decimalNumberFormat.string(for: transactionPerson.money ?? 0)!)")
                                     .foregroundColor(.secondary)
                                     .font(.title2)
                             }
@@ -51,10 +56,10 @@ struct PersonDetailView: View {
                             HStack{
                                 VStack{
                                     Text(transaction.name)
-                                    Text("Due in \(Date.now...transaction.dueDate) days")
+                                    Text("Due in \(getTransactionDueDate(for: transaction)) days")
                                 }
                                 Spacer()
-                                Text("$\(transaction.totalMoney)")
+                                Text("\(decimalNumberFormat.string(for: transaction.totalMoney)!)")
                                     .foregroundColor(Color(red: 0.8, green: 0, blue: 0))
                                     .font(.title2)
                             }
@@ -65,6 +70,19 @@ struct PersonDetailView: View {
             }
         }
         .navigationTitle(person.name)
+    }
+    
+    func getTransactionDueDate(for transaction: Transaction) -> String {
+        let dateDiff = Date.now.timeIntervalSince1970 - transaction.dueDate.timeIntervalSince1970
+        let daysAgo = abs(Int(dateDiff / (60*60*24)))
+        
+        if daysAgo == 0 {
+            return "Due today"
+        } else if dateDiff > 0 {
+            return "Due in \(daysAgo) days"
+        } else {
+            return "Due \(daysAgo) days ago"
+        }
     }
 }
 

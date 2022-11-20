@@ -39,6 +39,20 @@ struct Contact: Codable, Identifiable {
         
         return ""
     }
+    
+    var phoneNumber: String? {
+        let predicate = CNContact.predicateForContacts(withIdentifiers: [id])
+        let store = CNContactStore()
+        
+        let keysToFetch = [CNContactPhoneNumbersKey] as [CNKeyDescriptor]
+        
+        if let contact = try? store.unifiedContacts(matching: predicate, keysToFetch: keysToFetch).first {
+            let phoneNumber: CNPhoneNumber? = contact.phoneNumbers.first?.value
+            return phoneNumber?.stringValue
+        }
+        
+        return nil
+    }
 }
 
 struct Person: Identifiable, Codable {
@@ -76,15 +90,21 @@ class Transaction: Identifiable, Codable {
     var id = UUID()
     var name: String
     var people: [Person]
+    
     var dueDate: Date {
-        if people.count == 1 {
-            return people[0].dueDate!
-        } else { return Date.now }
+        let maxDueDate = people.max { firstPerson, secondPerson in
+            firstPerson.dueDate! < secondPerson.dueDate!
+        }!.dueDate
+        
+        return maxDueDate!
     }
+    
     var isPaid: Bool {
         if people.count == 1 {
             return people[0].hasPaid
-        } else { return false }
+        } else {
+            return people.allSatisfy { $0.hasPaid }
+        }
     }
     var transactionStatus: TransactionStatus {
         if isPaid {
@@ -106,15 +126,22 @@ class Transaction: Identifiable, Codable {
 //    }
     var transactionType: TransactionTypes
     
-    
-    var totalMoney: Double
+    var totalMoney: Double {
+        people.reduce(0) { partialResult, person in
+            partialResult + (person.money ?? 0)
+        }
+    }
 
-    init(id: UUID = UUID(), name: String, people: [Person], transactionType: TransactionTypes, totalMoney: Double = 0.00) {
+    init(id: UUID = UUID(), name: String, people: [Person], transactionType: TransactionTypes) {
         self.id = id
         self.name = name
         self.people = people
         self.transactionType = transactionType
-        self.totalMoney = totalMoney
     }
 }
 
+enum SortingMethods: Hashable {
+    case timeDue
+    case amount
+    case alphabetically
+}

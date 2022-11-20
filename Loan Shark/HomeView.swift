@@ -15,7 +15,7 @@ enum EditButtons {
 
 struct HomeView: View {
     
-    @StateObject var manager = TransactionManager()
+    @ObservedObject var manager: TransactionManager
     
     //    @State var selectedTransactionIndex: Int?
     //    @State var selectedTransaction: Transaction? = nil
@@ -27,85 +27,22 @@ struct HomeView: View {
             List {
                 Section(header: Text("Overdue")) {
                     ForEach($manager.overdueTransactions) { $transaction in
-                        NavigationLink {
-                            TransactionDetailView(transaction: $transaction)
-                        } label: {
-                            HStack {
-                                VStack (alignment: .leading) {
-                                    Text(transaction.name)
-                                    ForEach(transaction.people) { person in
-                                        Text(person.name ?? "")
-                                            .foregroundColor(.gray)
-                                            .font(.caption)
-                                    }
-                                }
-                                Spacer()
-                                Text("$" + String(format: "%.2f", transaction.totalMoney))
-                                    .foregroundColor(transaction.transactionStatus == .overdue ? .red : .black)
-                            }
-                        }
+                        TransactionRowView(manager: manager, transaction: $transaction)
                     }
                 }
                 Section(header: Text("Due in 7 days")) {
                     ForEach($manager.dueIn7DaysTransactions) { $transaction in
-                        NavigationLink {
-                            TransactionDetailView(transaction: $transaction)
-                        } label: {
-                            HStack {
-                                VStack (alignment: .leading) {
-                                    Text(transaction.name)
-                                    ForEach(transaction.people) { person in
-                                        Text(person.name ?? "")
-                                            .foregroundColor(.gray)
-                                            .font(.caption)
-                                    }
-                                }
-                                Spacer()
-                                Text("$" + String(format: "%.2f", transaction.totalMoney))
-                                    .foregroundColor(transaction.transactionStatus == .overdue ? .red : .black)
-                            }
-                        }
+                        TransactionRowView(manager: manager, transaction: $transaction)
                     }
                 }
                 Section(header: Text("Others")) {
                     ForEach($manager.otherTransactions) { $transaction in
-                        NavigationLink {
-                            TransactionDetailView(transaction: $transaction)
-                        } label: {
-                            HStack {
-                                VStack (alignment: .leading) {
-                                    Text(transaction.name)
-                                    ForEach(transaction.people) { person in
-                                        Text(person.name ?? "")
-                                            .foregroundColor(.gray)
-                                            .font(.caption)
-                                    }
-                                }
-                                Spacer()
-                                Text("$" + String(format: "%.2f", transaction.totalMoney))
-                                    .foregroundColor(transaction.transactionStatus == .overdue ? .red : .black)
-                            }
-                        }
+                        TransactionRowView(manager: manager, transaction: $transaction)
                     }
                 }
                 Section(header: Text("Completed")) {
                     ForEach($manager.completedTransactions) { $transaction in
-                        NavigationLink {
-                            TransactionDetailView(transaction: $transaction)
-                        } label: {
-                            HStack {
-                                VStack (alignment: .leading) {
-                                    Text(transaction.name)
-                                    ForEach(transaction.people) { person in
-                                        Text(person.name ?? "")
-                                            .font(.caption)
-                                    }
-                                }
-                                Spacer()
-                                Text("$" + String(format: "%.2f", transaction.totalMoney))
-                            }
-                            .foregroundColor(.gray)
-                        }
+                        TransactionRowView(manager: manager, transaction: $transaction)
                     }
                 }
             }
@@ -118,25 +55,16 @@ struct HomeView: View {
                     Image(systemName: "plus.app")
                 }
                 .sheet(isPresented: $showNewTransactionSheet) {
-                    NewTransactionSheet(manager: TransactionManager(), transactions: $manager.allTransactions)
+                    NewTransactionSheet(manager: manager, transactions: $manager.allTransactions)
                 }
-                Menu {
-                    Button {
-                        print("Filter by time")
-                    } label: {
-                        Label("Time Due", systemImage: "clock")
-                    }
-                    
-                    Button {
-                        print("Filter by amount due")
-                    } label: {
-                        Label("Amount Due", systemImage: "dollarsign.circle")
-                    }
-                    Button {
-                        print("Filter by date added")
-                    } label: {
-                        Label("Date Added", systemImage: "calendar")
-                    }
+                
+                Picker(selection: $manager.selectedSortMethod) {
+                    Label("Time Due", systemImage: "clock")
+                        .tag(SortingMethods.timeDue)
+                    Label("Amount Due", systemImage: "dollarsign.circle")
+                        .tag(SortingMethods.amount)
+                    Label("Alphabetically", systemImage: "line.3.horizontal.decrease.circle")
+                        .tag(SortingMethods.alphabetically)
                 } label: {
                     Image(systemName: "line.3.horizontal.decrease.circle")
                 }
@@ -144,9 +72,3 @@ struct HomeView: View {
         }
     }
 }
-    
-    struct HomeView_Previews: PreviewProvider {
-        static var previews: some View {
-            HomeView()
-        }
-    }

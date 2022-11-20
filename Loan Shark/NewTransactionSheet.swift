@@ -8,26 +8,26 @@
 
 import SwiftUI
 
+var decimalNumberFormat: NumberFormatter {
+    let numberFormatter = NumberFormatter()
+    numberFormatter.allowsFloats = true
+    numberFormatter.numberStyle = .currency
+    numberFormatter.currencySymbol = "$"
+    return numberFormatter
+}
+
 struct NewTransactionSheet: View {
     
-    @StateObject var manager = TransactionManager()
+    var manager: TransactionManager
     @State var isDetailSynchronised: Bool = false
     @State var dueDate = Date()
-    @State var transactionType = ""
+    @State var transactionType = "Select"
     
     var fieldsUnfilled: Bool {
-        name.isEmpty || transactionType == "Select"
+        name.isEmpty || transactionType == "Select" || people.filter({ $0.contact != nil }).count < 1
     }
     var transactionTypes = ["Select", "Loan", "Bill split"]
     @Environment(\.dismiss) var dismiss
-    
-    var decimalNumberFormat: NumberFormatter {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.allowsFloats = true
-        numberFormatter.numberStyle = .currency
-        numberFormatter.currencySymbol = "$"
-        return numberFormatter
-    }
     
     @State var name = ""
     @State var people: [Person] = [Person(contact: nil, money: 10, dueDate: .now, hasPaid: false)]
@@ -69,7 +69,7 @@ struct NewTransactionSheet: View {
                             }
                             return nil
                         } set: { contact in
-                            people = [Person(contact: contact, money: 10, dueDate: .now, hasPaid: false)]
+                            people = [Person(contact: contact, money: people[0].money!, dueDate: people[0].dueDate!, hasPaid: false)]
                         }
                         
                         NavigationLink {
@@ -90,15 +90,24 @@ struct NewTransactionSheet: View {
                                 .multilineTextAlignment(.trailing)
                                 .keyboardType(.decimalPad)
                         }
-                        DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
+                        
+                        let bindingDate = Binding {
+                            people[0].dueDate ?? .now
+                        } set: { newValue in
+                            people[0].dueDate = newValue
+                        }
+                        
+                        DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
                     } else if transactionType == "Bill split" && !isDetailSynchronised {
                         if !people.isEmpty {
+                            let excludedContacts = people.compactMap({
+                                $0.contact
+                            })
+                            
                             ForEach($people, id: \.name) { $person in
                                 Section(header: Text(person.name ?? "No Contact Selected")) {
                                     NavigationLink {
-                                        PeopleSelectorView(manager: manager, selectedContact: $person.contact, excludedContacts: people.compactMap({
-                                            $0.contact
-                                        }))
+                                        PeopleSelectorView(manager: manager, selectedContact: $person.contact, excludedContacts: excludedContacts)
                                     } label: {
                                         HStack {
                                             Text("Who")
@@ -129,7 +138,7 @@ struct NewTransactionSheet: View {
 
                         Section {
                             if !people.contains(where: {
-                                $0.name == nil
+                                $0.contact == nil
                             }) {
                                 Button {
                                     withAnimation {
@@ -164,12 +173,9 @@ struct NewTransactionSheet: View {
                                 Person(contact: contact, money: money!, dueDate: dueDate)
                             })
                         }
-
                         
                         NavigationLink {
                             MultiplePeopleSelectorView(manager: manager, selectedContacts: contactsBinding)
-
-                            Text("a")
                         } label: {
                             VStack(alignment: .leading) {
                                 Text("Who")
@@ -210,7 +216,9 @@ struct NewTransactionSheet: View {
                         }
                     }()
                     let transaction = Transaction(name: name,
-                                                  people: people.compactMap({ $0 }), transactionType: transactionTypeItem)
+                                                  people: people.filter({
+                        $0.contact != nil
+                    }), transactionType: transactionTypeItem)
                     
                     transactions.append(transaction)
                     dismiss()
@@ -234,15 +242,6 @@ struct NewTransactionSheet: View {
                 people = [Person(contact: nil, money: 10, dueDate: .now, hasPaid: false)]
             }
         }
-    }
-}
-
-
-
-
-struct NewTransactionSheet_Previews: PreviewProvider {
-    static var previews: some View {
-        NewTransactionSheet(transactions: .constant([]))
     }
 }
 
