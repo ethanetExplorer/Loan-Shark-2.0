@@ -26,51 +26,95 @@ struct TransactionDetailView: View {
                 }
             }
             .font(.title2)
-            .padding(.horizontal)
+            .padding(.horizontal, 21)
             
             List {
-                ForEach($transaction.people) { $person in
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .foregroundColor(.white)
-                        VStack{
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(person.name ?? "No one Selected")
-                                        .bold()
-                                        .font(.title3)
-                                    HStack(alignment: .center, spacing: 0) {
-                                        Text(transaction.transactionStatus == .overdue ? "Due " : "Due in ")
-                                        Text(person.dueDate!, style: .relative)
-                                        
-                                        if transaction.transactionStatus == .overdue {
-                                            Text(" ago")
+                Section("UNPAID") {
+                    ForEach($transaction.people) { $person in
+                        if !person.hasPaid {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(.white)
+                                VStack{
+                                    HStack {
+                                        VStack(alignment: .leading) {
+                                            Text(person.name ?? "No one Selected")
+                                                .bold()
+                                                .font(.title3)
+                                            HStack(alignment: .center, spacing: 0) {
+                                                Text(transaction.transactionStatus == .overdue ? "Due " : "Due in ")
+                                                Text(person.dueDate!, style: .relative)
+                                                
+                                                if transaction.transactionStatus == .overdue {
+                                                    Text(" ago")
+                                                }
+                                            }
+                                            .font(.subheadline)
+                                            .foregroundStyle(.secondary)
+                                        }
+                                        Spacer()
+                                        Text("$ \(String(format: "%.2f", person.money!))")
+                                            .foregroundColor(transaction.transactionStatus == .overdue ? .red : .primary)
+                                            .font(.title2)
+                                    }
+                                    .padding(.top, 10)
+                                    HStack(alignment: .top){
+                                        SendMessageButton(person: person)
+                                        Spacer()
+                                        Button {
+                                            withAnimation {
+                                                person.hasPaid.toggle()
+                                            }
+                                        } label: {
+                                            HStack {
+                                                Image(systemName: "banknote")
+                                                Text("Mark as paid")
+                                            }
                                         }
                                     }
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondary)
+                                    .buttonStyle(.plain)
+                                    .foregroundColor(.blue)
+                                    .padding(10)
                                 }
-                                Spacer()
-                                Text("$ \(String(format: "%.2f", person.money!))")
-                                    .foregroundColor(transaction.transactionStatus == .overdue ? Color(red: 0.8, green: 0, blue: 0) : Color(.black))
-                                    .font(.title2)
                             }
-                            .padding(.top, 10)
-                            HStack(alignment: .top){
-                                SendMessageButton(person: person)
-                                Spacer()
-                                Button {
-                                    person.hasPaid = true
-                                } label: {
+                        }
+                    }
+                }
+                Section("PAID") {
+                    ForEach($transaction.people) { $person in
+                        if person.hasPaid {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(.white)
+                                VStack{
                                     HStack {
-                                        Image(systemName: "banknote")
-                                        Text("Mark as paid")
+                                        VStack(alignment: .leading) {
+                                            Text(person.name ?? "No one Selected")
+                                                .bold()
+                                                .font(.title3)
+                                        }
+                                        Spacer()
+                                        Text("$ \(String(format: "%.2f", person.money!))")
+                                            .foregroundStyle(.secondary)
+                                            .font(.title2)
                                     }
+                                    .padding(.top, 10)
+                                    
+                                    Button {
+                                        withAnimation {
+                                            person.hasPaid.toggle()
+                                        }
+                                    } label: {
+                                        HStack {
+                                            Image(systemName: "banknote")
+                                            Text("Mark as unpaid")
+                                        }
+                                    }
+                                    .buttonStyle(.plain)
+                                    .foregroundColor(.blue)
+                                    .padding(10)
                                 }
                             }
-                            .buttonStyle(.plain)
-                            .foregroundColor(.blue)
-                            .padding(10)
                         }
                     }
                 }

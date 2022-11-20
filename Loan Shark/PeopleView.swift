@@ -27,14 +27,7 @@ struct PeopleView: View {
                     }
                 }
             }
-            .navigationTitle("All people")
-            .toolbar {
-                Button {
-                    
-                } label: {
-                    Image(systemName: "plus.app")
-                }
-            }
+            .navigationTitle("All People")
             .searchable(text: $searchTerm)
         }
     }
