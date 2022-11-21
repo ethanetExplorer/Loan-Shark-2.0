@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SendMessageButton: View {
     
+    var transaction: Transaction
     var person: Person
     
     @State var isSheetPresented = false
@@ -24,8 +25,7 @@ struct SendMessageButton: View {
                 }
             }
             .sheet(isPresented: $isSheetPresented) {
-                #warning("Please change this.")
-                MessageView(message: "I DEMAND PAYMENT OF \(decimalNumberFormat.string(for: person.money)!) IMMEDIATELY.", recipient: phoneNumber)
+                MessageView(message: "Hi \(person.name), could you repay me \(decimalNumberFormat.string(for: person.money)!) for \(transaction.name) as soon as possible please?\nThank you!", recipient: phoneNumber)
             }
         }
     }

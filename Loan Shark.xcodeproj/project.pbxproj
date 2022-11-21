@@ -11,10 +11,14 @@
 		55000AD12921E9B900779BBA /* PeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55000AD02921E9B900779BBA /* PeopleView.swift */; };
 		55000AD32921EB4500779BBA /* PersonDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55000AD22921EB4500779BBA /* PersonDetailView.swift */; };
 		55DBFA18291377FB008AFA32 /* NewTransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DBFA17291377FB008AFA32 /* NewTransactionSheet.swift */; };
-		55EFC5F32929C5CD002F8A2D /* MultiplePeopleSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EFC5F22929C5CD002F8A2D /* MultiplePeopleSelectorView.swift */; };
 		55EFC5F5292A0E3A002F8A2D /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EFC5F4292A0E3A002F8A2D /* MessagesView.swift */; };
 		55EFC5F7292A0F80002F8A2D /* SendMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EFC5F6292A0F80002F8A2D /* SendMessageButton.swift */; };
 		55EFC5F9292A4080002F8A2D /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EFC5F8292A4080002F8A2D /* TransactionRowView.swift */; };
+		55EFC5FB292A5503002F8A2D /* PersonTransactionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EFC5FA292A5502002F8A2D /* PersonTransactionRow.swift */; };
+		55EFC5FD292BC56C002F8A2D /* EditTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EFC5FC292BC56C002F8A2D /* EditTransactionView.swift */; };
+		55EFC602292BC6BE002F8A2D /* MultiplePeopleSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EFC601292BC6BE002F8A2D /* MultiplePeopleSelectorView.swift */; };
+		55EFC604292BC7EB002F8A2D /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EFC5F8292A4080002F8A2D /* TransactionRowView.swift */; };
+		55EFC605292BC7EB002F8A2D /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EFC5F8292A4080002F8A2D /* TransactionRowView.swift */; };
 		7480867A29231A190091C8A9 /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7480867929231A190091C8A9 /* TransactionDetailView.swift */; };
 		74BDE57C28CD868C00D1DA25 /* Loan_SharkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */; };
 		74BDE57E28CD868C00D1DA25 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE57D28CD868C00D1DA25 /* ContentView.swift */; };
@@ -28,8 +32,6 @@
 		74FB4822290388CC00F23E32 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB4820290388CC00F23E32 /* HomeView.swift */; };
 		74FB4823290388CC00F23E32 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB4820290388CC00F23E32 /* HomeView.swift */; };
 		74FB48292903892200F23E32 /* Loan Shark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB48282903892200F23E32 /* Loan Shark.swift */; };
-		74FB482A2903892200F23E32 /* Loan Shark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB48282903892200F23E32 /* Loan Shark.swift */; };
-		74FB482B2903892200F23E32 /* Loan Shark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB48282903892200F23E32 /* Loan Shark.swift */; };
 		74FB482E290391AA00F23E32 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 74FB482D290391AA00F23E32 /* WrappingHStack */; };
 /* End PBXBuildFile section */
 
@@ -55,10 +57,12 @@
 		55000AD02921E9B900779BBA /* PeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleView.swift; sourceTree = "<group>"; };
 		55000AD22921EB4500779BBA /* PersonDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailView.swift; sourceTree = "<group>"; };
 		55DBFA17291377FB008AFA32 /* NewTransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransactionSheet.swift; sourceTree = "<group>"; };
-		55EFC5F22929C5CD002F8A2D /* MultiplePeopleSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultiplePeopleSelectorView.swift; path = ../../../../Downloads/MultiplePeopleSelectorView.swift; sourceTree = "<group>"; };
 		55EFC5F4292A0E3A002F8A2D /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		55EFC5F6292A0F80002F8A2D /* SendMessageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageButton.swift; sourceTree = "<group>"; };
 		55EFC5F8292A4080002F8A2D /* TransactionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRowView.swift; sourceTree = "<group>"; };
+		55EFC5FA292A5502002F8A2D /* PersonTransactionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTransactionRow.swift; sourceTree = "<group>"; };
+		55EFC5FC292BC56C002F8A2D /* EditTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionView.swift; sourceTree = "<group>"; };
+		55EFC601292BC6BE002F8A2D /* MultiplePeopleSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplePeopleSelectorView.swift; sourceTree = "<group>"; };
 		7480867929231A190091C8A9 /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 		74BDE57828CD868C00D1DA25 /* Loan Shark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Loan Shark.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loan_SharkApp.swift; sourceTree = "<group>"; };
@@ -101,6 +105,55 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		55EFC5FE292BC650002F8A2D /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				74FB48282903892200F23E32 /* Loan Shark.swift */,
+				09E16BC629160437003090BB /* TransactionManager.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		55EFC5FF292BC676002F8A2D /* People & Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				55000AD02921E9B900779BBA /* PeopleView.swift */,
+				55EFC5FA292A5502002F8A2D /* PersonTransactionRow.swift */,
+				55000AD22921EB4500779BBA /* PersonDetailView.swift */,
+			);
+			path = "People & Contacts";
+			sourceTree = "<group>";
+		};
+		55EFC600292BC6A9002F8A2D /* New Transaction */ = {
+			isa = PBXGroup;
+			children = (
+				55DBFA17291377FB008AFA32 /* NewTransactionSheet.swift */,
+				74F9B076292489D2008087E9 /* PeopleSelectorView.swift */,
+				55EFC601292BC6BE002F8A2D /* MultiplePeopleSelectorView.swift */,
+			);
+			path = "New Transaction";
+			sourceTree = "<group>";
+		};
+		55EFC603292BC7E1002F8A2D /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				74FB4820290388CC00F23E32 /* HomeView.swift */,
+				55EFC5F8292A4080002F8A2D /* TransactionRowView.swift */,
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
+		55EFC606292BC886002F8A2D /* TransactionDetail */ = {
+			isa = PBXGroup;
+			children = (
+				7480867929231A190091C8A9 /* TransactionDetailView.swift */,
+				55EFC5FC292BC56C002F8A2D /* EditTransactionView.swift */,
+				55EFC5F6292A0F80002F8A2D /* SendMessageButton.swift */,
+				55EFC5F4292A0E3A002F8A2D /* MessagesView.swift */,
+			);
+			path = TransactionDetail;
+			sourceTree = "<group>";
+		};
 		74BDE56F28CD868C00D1DA25 = {
 			isa = PBXGroup;
 			children = (
@@ -124,20 +177,13 @@
 		74BDE57A28CD868C00D1DA25 /* Loan Shark */ = {
 			isa = PBXGroup;
 			children = (
-				74F9B076292489D2008087E9 /* PeopleSelectorView.swift */,
-				74FB48282903892200F23E32 /* Loan Shark.swift */,
-				55000AD02921E9B900779BBA /* PeopleView.swift */,
-				74BDE57D28CD868C00D1DA25 /* ContentView.swift */,
-				55000AD22921EB4500779BBA /* PersonDetailView.swift */,
-				55EFC5F22929C5CD002F8A2D /* MultiplePeopleSelectorView.swift */,
-				55DBFA17291377FB008AFA32 /* NewTransactionSheet.swift */,
-				09E16BC629160437003090BB /* TransactionManager.swift */,
 				74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */,
-				74FB4820290388CC00F23E32 /* HomeView.swift */,
-				55EFC5F8292A4080002F8A2D /* TransactionRowView.swift */,
-				7480867929231A190091C8A9 /* TransactionDetailView.swift */,
-				55EFC5F6292A0F80002F8A2D /* SendMessageButton.swift */,
-				55EFC5F4292A0E3A002F8A2D /* MessagesView.swift */,
+				74BDE57D28CD868C00D1DA25 /* ContentView.swift */,
+				55EFC5FE292BC650002F8A2D /* Data */,
+				55EFC5FF292BC676002F8A2D /* People & Contacts */,
+				55EFC600292BC6A9002F8A2D /* New Transaction */,
+				55EFC603292BC7E1002F8A2D /* HomeView */,
+				55EFC606292BC886002F8A2D /* TransactionDetail */,
 				74BDE57F28CD868E00D1DA25 /* Assets.xcassets */,
 				74BDE58128CD868E00D1DA25 /* Preview Content */,
 			);
@@ -305,8 +351,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55EFC602292BC6BE002F8A2D /* MultiplePeopleSelectorView.swift in Sources */,
 				74BDE57E28CD868C00D1DA25 /* ContentView.swift in Sources */,
-				55EFC5F32929C5CD002F8A2D /* MultiplePeopleSelectorView.swift in Sources */,
+				55EFC5FB292A5503002F8A2D /* PersonTransactionRow.swift in Sources */,
 				7480867A29231A190091C8A9 /* TransactionDetailView.swift in Sources */,
 				55000AD32921EB4500779BBA /* PersonDetailView.swift in Sources */,
 				55000AD12921E9B900779BBA /* PeopleView.swift in Sources */,
@@ -315,6 +362,7 @@
 				55EFC5F7292A0F80002F8A2D /* SendMessageButton.swift in Sources */,
 				55DBFA18291377FB008AFA32 /* NewTransactionSheet.swift in Sources */,
 				55EFC5F5292A0E3A002F8A2D /* MessagesView.swift in Sources */,
+				55EFC5FD292BC56C002F8A2D /* EditTransactionView.swift in Sources */,
 				74F9B077292489D2008087E9 /* PeopleSelectorView.swift in Sources */,
 				74FB48292903892200F23E32 /* Loan Shark.swift in Sources */,
 				55EFC5F9292A4080002F8A2D /* TransactionRowView.swift in Sources */,
@@ -326,9 +374,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74FB482A2903892200F23E32 /* Loan Shark.swift in Sources */,
 				74BDE58D28CD868E00D1DA25 /* Loan_SharkTests.swift in Sources */,
 				74FB4822290388CC00F23E32 /* HomeView.swift in Sources */,
+				55EFC604292BC7EB002F8A2D /* TransactionRowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,9 +384,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55EFC605292BC7EB002F8A2D /* TransactionRowView.swift in Sources */,
 				74FB4823290388CC00F23E32 /* HomeView.swift in Sources */,
 				74BDE59928CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift in Sources */,
-				74FB482B2903892200F23E32 /* Loan Shark.swift in Sources */,
 				74BDE59728CD868E00D1DA25 /* Loan_SharkUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,6 +13,7 @@ struct TransactionDetailView: View {
     @ObservedObject var manager: TransactionManager
     @Binding var transaction: Transaction
     @State var presentEditTransactionSheet = false
+    @State var showDeleteAlert = false
     
     var body: some View {
         VStack(alignment: .leading){
@@ -59,7 +60,7 @@ struct TransactionDetailView: View {
                                     }
                                     .padding(.top, 10)
                                     HStack(alignment: .top){
-                                        SendMessageButton(person: person)
+                                        SendMessageButton(transaction: transaction, person: person)
                                         Spacer()
                                         Button {
                                             withAnimation {
@@ -119,15 +120,54 @@ struct TransactionDetailView: View {
                     }
                 }
             }
-        .navigationTitle(transaction.name)
-        .toolbar {
-            Button {
-                presentEditTransactionSheet.toggle()
-            } label: { Image(systemName: "pencil")}
+            .navigationTitle(transaction.name)
+            HStack {
+                Button {
+                    presentEditTransactionSheet.toggle()
+                } label: {
+                    HStack {
+                        Image(systemName: "pencil")
+                        Text("Edit transaction")
+                    }
+                    .frame(height: 50)
+                    .frame(maxWidth: .infinity)
+                    .background(.blue)
+                    .cornerRadius(10)
+                    .foregroundColor(.white)
+                }
                 .sheet(isPresented: $presentEditTransactionSheet) {
-                    NewTransactionSheet(manager: manager, transactions: $manager.allTransactions)
+                    EditTransactionView(transaction: $transaction)
+                }
+                Spacer()
+                Button {
+                    showDeleteAlert = true
+                } label: {
+                    HStack{
+                        Image(systemName: "trash.fill")
+                        Text("Delete transaction")
+                    }
+                    .foregroundColor(.white)
+                    .frame(height: 50)
+                    .frame(maxWidth: .infinity)
+                    .background(.red)
+                    .cornerRadius(10)
+                    .alert(isPresented: $showDeleteAlert) {
+                        Alert(
+                            title: Text("Are you sure you want to delete this transaction?"),
+                            message: Text("This action cannot be undone."),
+                            primaryButton: .cancel(
+                                Text("Cancel")
+                            ),
+                            secondaryButton: .destructive(
+                                Text("Delete")
+                                //HERE!!!
+                            ))
+                    }
                 }
             }
+            .padding()
+            Divider()
         }
+        
     }
 }

@@ -30,7 +30,7 @@ struct NewTransactionSheet: View {
     @Environment(\.dismiss) var dismiss
     
     @State var name = ""
-    @State var people: [Person] = [Person(contact: nil, money: 10, dueDate: .now, hasPaid: false)]
+    @State var people: [Person] = [Person(contact: nil, money: 0, dueDate: .now, hasPaid: false)]
     
     @Binding var transactions: [Transaction]
     
@@ -142,7 +142,7 @@ struct NewTransactionSheet: View {
                             }) {
                                 Button {
                                     withAnimation {
-                                        people.append(Person(contact: nil, money: 10, dueDate: .now, hasPaid: false))
+                                        people.append(Person(contact: nil, money: 0, dueDate: .now, hasPaid: false))
                                     }
                                 } label: {
                                     Text("Add contacts")
@@ -236,14 +236,12 @@ struct NewTransactionSheet: View {
             }
             .navigationTitle("New transaction")
             .onChange(of: transactionType) { newValue in
-                people = [Person(contact: nil, money: 10, dueDate: .now, hasPaid: false)]
+                people = [Person(contact: nil, money: 0, dueDate: .now, hasPaid: false)]
             }
             .onChange(of: isDetailSynchronised) { newValue in
-                people = [Person(contact: nil, money: 10, dueDate: .now, hasPaid: false)]
+                people = [Person(contact: nil, money: 0, dueDate: .now, hasPaid: false)]
             }
         }
     }
 }
-
-//TODO: App freezes if title field is filled in, and sheet is dismissed
 
