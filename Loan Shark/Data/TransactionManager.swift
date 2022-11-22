@@ -21,57 +21,14 @@ class TransactionManager: ObservableObject {
     @Published var searchTerm = ""
     @Published var contactsList: [Contact] = []
     
-    var overdueTransactions: [Transaction] {
+    var sortedTransactions: [Transaction] {
         get {
-            sort(transactions: (searchResults.isEmpty ? allTransactions : searchResults).filter {
-                $0.transactionStatus == .overdue
-            }, by: selectedSortMethod)
+            sort(transactions: (searchResults.isEmpty ? allTransactions : searchResults), by: selectedSortMethod)
         }
+        
         set {
             for transaction in newValue {
                 let transactionIndex = allTransactions.firstIndex(where: { $0.id == transaction.id })!
-                allTransactions[transactionIndex] = transaction
-            }
-        }
-    }
-    
-    var dueIn7DaysTransactions: [Transaction] {
-        get {
-            sort(transactions: (searchResults.isEmpty ? allTransactions : searchResults).filter {
-                $0.transactionStatus == .dueInOneWeek
-            }, by: selectedSortMethod)
-        }
-        set {
-            for transaction in newValue {
-                let transactionIndex = allTransactions.firstIndex(where: { $0.id == transaction.id })!
-                allTransactions[transactionIndex] = transaction
-            }
-        }
-    }
-    
-    var otherTransactions: [Transaction] {
-        get {
-            sort(transactions: (searchResults.isEmpty ? allTransactions : searchResults).filter {
-                $0.transactionStatus == .unpaid
-            }, by: selectedSortMethod)
-        }
-        set {
-            for transaction in newValue {
-                let transactionIndex = allTransactions.firstIndex(where: { $0.id == transaction.id })!
-                allTransactions[transactionIndex] = transaction
-            }
-        }
-    }
-    
-    var completedTransactions: [Transaction] {
-        get {
-            sort(transactions: (searchResults.isEmpty ? allTransactions : searchResults).filter {
-                $0.transactionStatus == .paidOff
-            }, by: selectedSortMethod)
-        }
-        set {
-            for transaction in newValue {
-                let transactionIndex = allTransactions.firstIndex(where: {$0.id == transaction.id})!
                 allTransactions[transactionIndex] = transaction
             }
         }

@@ -26,23 +26,31 @@ struct HomeView: View {
         NavigationView {
             List {
                 Section(header: Text("Overdue")) {
-                    ForEach($manager.overdueTransactions) { $transaction in
-                        TransactionRowView(manager: manager, transaction: $transaction)
+                    ForEach($manager.sortedTransactions) { $transaction in
+                        if transaction.transactionStatus == .overdue {
+                            TransactionRowView(manager: manager, transaction: $transaction)
+                        }
                     }
                 }
                 Section(header: Text("Due in 7 days")) {
-                    ForEach($manager.dueIn7DaysTransactions) { $transaction in
-                        TransactionRowView(manager: manager, transaction: $transaction)
+                    ForEach($manager.sortedTransactions) { $transaction in
+                        if transaction.transactionStatus == .dueInOneWeek {
+                            TransactionRowView(manager: manager, transaction: $transaction)
+                        }
                     }
                 }
                 Section(header: Text("Others")) {
-                    ForEach($manager.otherTransactions) { $transaction in
-                        TransactionRowView(manager: manager, transaction: $transaction)
+                    ForEach($manager.sortedTransactions) { $transaction in
+                        if transaction.transactionStatus == .unpaid {
+                            TransactionRowView(manager: manager, transaction: $transaction)
+                        }
                     }
                 }
                 Section(header: Text("Completed")) {
-                    ForEach($manager.completedTransactions) { $transaction in
-                        TransactionRowView(manager: manager, transaction: $transaction)
+                    ForEach($manager.sortedTransactions) { $transaction in
+                        if transaction.transactionStatus == .paidOff {
+                            TransactionRowView(manager: manager, transaction: $transaction)
+                        }
                     }
                 }
             }

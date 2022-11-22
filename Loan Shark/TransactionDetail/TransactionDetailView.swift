@@ -151,18 +151,25 @@ struct TransactionDetailView: View {
                     .frame(maxWidth: .infinity)
                     .background(.red)
                     .cornerRadius(10)
-                    .alert(isPresented: $showDeleteAlert) {
-                        Alert(
-                            title: Text("Are you sure you want to delete this transaction?"),
-                            message: Text("This action cannot be undone."),
-                            primaryButton: .cancel(
-                                Text("Cancel")
-                            ),
-                            secondaryButton: .destructive(
-                                Text("Delete")
-                                //HERE!!!
-                            ))
-                    }
+                    .alert("Are you sure you want to delete this transaction?", isPresented: $showDeleteAlert, actions: {
+                        Button(role: .cancel) {
+                            
+                        } label: {
+                            Text("Cancel")
+                        }
+                        
+                        Button(role: .destructive) {
+                            if let transactionIndex = manager.allTransactions.firstIndex(where: {
+                                $0.id == transaction.id
+                            }) {
+                                manager.allTransactions.remove(at: transactionIndex)
+                            }
+                        } label: {
+                            Text("Delete")
+                        }
+                    }, message: {
+                        Text("This action cannot be undone.")
+                    })
                 }
             }
             .padding()
