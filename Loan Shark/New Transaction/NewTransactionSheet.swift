@@ -195,7 +195,7 @@ struct NewTransactionSheet: View {
                             }
                         }
                         HStack {
-                            Text("Amount")
+                            Text("Amount each")
                             TextField("Amount each", value: $people[0].money, formatter: decimalNumberFormat)
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)

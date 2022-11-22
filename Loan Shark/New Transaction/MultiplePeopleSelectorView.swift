@@ -2,7 +2,7 @@
 //  MultiplePeopleSelectorView.swift
 //  Loan Shark
 //
-//  Created by Du Yuhan on 19/11/22.
+//  Created by Yu Duhan on 19/11/22.
 //
 
 import SwiftUI
