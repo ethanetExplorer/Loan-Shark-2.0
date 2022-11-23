@@ -24,9 +24,11 @@ struct PeopleView: View {
                 } label: {
                     HStack {
                         Text(contact.name)
+                            .foregroundColor(Color("PrimaryTextColor"))
                     }
                 }
             }
+            .listRowBackground(Color("BGColor"))
             .navigationTitle("All People")
             .searchable(text: $searchTerm)
         }

@@ -49,7 +49,7 @@ struct PeopleSelectorView: View {
                           systemImage: selectedContact?.id == contact.id ? "checkmark.circle.fill" : "circle")
                         .opacity(reload ? 1 : 1)
                 }
-                .foregroundColor(.primary)
+                .foregroundColor(Color("PrimaryTextColor"))
             }
         }
         .searchable(text: $searchTerm, prompt: Text("Search for a person"))

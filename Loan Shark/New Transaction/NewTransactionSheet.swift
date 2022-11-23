@@ -21,6 +21,7 @@ struct NewTransactionSheet: View {
     var manager: TransactionManager
     @State var isDetailSynchronised: Bool = false
     @State var dueDate = Date()
+    @State var money = 0.0
     @State var transactionType = "Select"
     
     var fieldsUnfilled: Bool {
@@ -41,8 +42,9 @@ struct NewTransactionSheet: View {
                     Section(header: Text("Transaction details")) {
                         HStack {
                             Text("Title")
+                                .foregroundColor(Color("PrimaryTextColor"))
                             TextField("Title", text: $name)
-                                .foregroundColor(.gray)
+                                .foregroundColor(Color("SecondaryTextColor"))
                                 .multilineTextAlignment(.trailing)
                         }
                         Picker("Transaction type", selection: $transactionType) {
@@ -50,15 +52,18 @@ struct NewTransactionSheet: View {
                                 Text($0)
                             }
                         }
+                        .foregroundColor(Color("PrimaryTextColor"))
                     }
                     
                     if transactionType == "Bill split" {
                         Section {
                             Toggle(isOn: $isDetailSynchronised) {
                                 Text("Synchronise details")
+                                    .foregroundColor(Color("PrimaryTextColor"))
                             }
                         } footer: {
                             Text("Toggle this to distribute the total amount of the transaction equally between all selected contacts, and for the same due date to apply for all. ")
+                                .foregroundColor(Color("SecondaryTextColor"))
                         }
                     }
                     
@@ -76,18 +81,19 @@ struct NewTransactionSheet: View {
                             PeopleSelectorView(manager: manager, selectedContact: contactBinding)
                         } label: {
                             HStack {
-                                Text("Who")
+                                Text("People")
+                                    .foregroundColor(Color("PrimaryTextColor"))
                                 Spacer()
-                                Text(people[0].name ?? "No Contact Selected")
-                                    .foregroundStyle(.secondary)
+                                Text(people[0].name ?? "No contact selected")
+                                    .foregroundColor(Color("SecondaryTextColor"))
                             }
                         }
                         
                         HStack {
                             Text("Amount")
+                                .foregroundColor(Color("PrimaryTextColor"))
                             TextField("Amount", value: $people[0].money, formatter: decimalNumberFormat)
-                                .foregroundColor(.gray)
-                                .multilineTextAlignment(.trailing)
+                                .foregroundColor(Color("SecondaryTextColor"))                       .multilineTextAlignment(.trailing)
                                 .keyboardType(.decimalPad)
                         }
                         
@@ -98,6 +104,7 @@ struct NewTransactionSheet: View {
                         }
                         
                         DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
+                            .foregroundColor(Color("PrimaryTextColor"))
                     } else if transactionType == "Bill split" && !isDetailSynchronised {
                         if !people.isEmpty {
                             let excludedContacts = people.compactMap({
@@ -105,37 +112,31 @@ struct NewTransactionSheet: View {
                             })
                             
                             ForEach($people, id: \.name) { $person in
-                                Section(header: Text(person.name ?? "No Contact Selected")) {
+                                Section(header: Text(person.name ?? "No contact selected")) {
                                     NavigationLink {
                                         PeopleSelectorView(manager: manager, selectedContact: $person.contact, excludedContacts: excludedContacts)
                                     } label: {
                                         HStack {
-                                            Text("Who")
+                                            Text("Person")
+                                                .foregroundColor(Color("PrimaryTextColor"))
                                             Spacer()
-                                            Text(person.name ?? "No Contact Selected")
-                                                .foregroundStyle(.secondary)
+                                            Text(person.name ?? "No contact selected")
+                                                .foregroundColor(Color("SecondaryTextColor"))
                                         }
                                     }
                                     
                                     HStack {
                                         Text("Amount")
-                                        TextField("Amount", value: $person.money, formatter: decimalNumberFormat)
-                                            .foregroundColor(.gray)
-                                            .multilineTextAlignment(.trailing)
+                                            .foregroundColor(Color("PrimaryTextColor"))
+                                        TextField("Amount", value: $money, formatter: decimalNumberFormat)
+                                            .foregroundColor(Color("SecondaryTextColor"))                                            .multilineTextAlignment(.trailing)
                                             .keyboardType(.decimalPad)
                                     }
-                                    
-                                    let dueDateBinding = Binding {
-                                        person.dueDate!
-                                    } set: { newValue in
-                                        person.dueDate = newValue
-                                    }
-
-                                    DatePicker("Due by", selection: dueDateBinding, in: Date.now..., displayedComponents: .date)
+                                    DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
+                                        .foregroundColor(Color("PrimaryTextColor"))
                                 }
                             }
                         }
-
                         Section {
                             if !people.contains(where: {
                                 $0.contact == nil
@@ -159,7 +160,6 @@ struct NewTransactionSheet: View {
                                 }
                             }
                         }
-
                     }
                     else if transactionType == "Bill split" && isDetailSynchronised {
                         
@@ -169,8 +169,9 @@ struct NewTransactionSheet: View {
                             }
                         } set: { newValue in
                             let money = people[0].money
+                            let dueDate = people[0].dueDate
                             people = newValue.map({ contact in
-                                Person(contact: contact, money: money!, dueDate: dueDate)
+                                Person(contact: contact, money: money!, dueDate: dueDate!)
                             })
                         }
                         
@@ -178,33 +179,44 @@ struct NewTransactionSheet: View {
                             MultiplePeopleSelectorView(manager: manager, selectedContacts: contactsBinding)
                         } label: {
                             VStack(alignment: .leading) {
-                                Text("Who")
-                                
+                                Text("People")
                                 let names = people
                                     .compactMap {
                                         $0.name
                                     }
-                                
-                                if names.isEmpty {
-                                    Text("No one selected")
-                                        .font(.caption)
-                                } else {
+                                if !names.isEmpty {
                                     Text(names.joined(separator: ", "))
                                         .font(.caption)
+                                        .foregroundColor(Color("SecondaryTextColor"))
+                                } else {
+                                    Text("No contact selected")
+                                        .font(.caption)
+                                        .foregroundColor(Color("SecondaryTextColor"))
                                 }
                             }
                         }
+                        let bindingMoney = Binding {
+                            people[0].money ?? 0
+                        } set: { newValue in
+                            people[0].money = newValue
+                        }
                         HStack {
                             Text("Amount each")
-                            TextField("Amount each", value: $people[0].money, formatter: decimalNumberFormat)
-                                .foregroundColor(.gray)
+                                .foregroundColor(Color("PrimaryTextColor"))
+                            TextField("Amount each", value: bindingMoney, formatter: decimalNumberFormat)
+                                .foregroundColor(Color("SecondaryTextColor"))
                                 .multilineTextAlignment(.trailing)
                                 .keyboardType(.decimalPad)
                         }
-                        DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
+                        let bindingDate = Binding {
+                            people[0].dueDate ?? .now
+                        } set: { newValue in
+                            people[0].dueDate = newValue
+                        }
+                        DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
+                            .foregroundColor(Color("PrimaryTextColor"))
                     }
                 }
-                
                 Button {
                     let transactionTypeItem: TransactionTypes = {
                         switch transactionType {
@@ -226,7 +238,7 @@ struct NewTransactionSheet: View {
                     Text("Save")
                         .frame(height: 50)
                         .frame(maxWidth: .infinity)
-                        .background(.blue)
+                        .background(Color("AccentColor"))
                         .cornerRadius(10)
                         .foregroundColor(.white)
                         .opacity(fieldsUnfilled ? 0.5 : 1)
