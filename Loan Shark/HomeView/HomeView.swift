@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import UserNotifications
 
 enum EditButtons {
     case delete
@@ -18,10 +19,10 @@ struct HomeView: View {
     
     @ObservedObject var manager: TransactionManager
     
-    //    @State var selectedTransactionIndex: Int?
-    //    @State var selectedTransaction: Transaction? = nil
-    //    @State var showTransactionDetailView = false
     @State var showNewTransactionSheet = false
+    
+    @State var showDeleteAlert = false
+    @State var addTransactionNotification = false
     
     var body: some View {
         ZStack {
@@ -31,9 +32,52 @@ struct HomeView: View {
                         ForEach($manager.sortedTransactions) { $transaction in
                             if transaction.transactionStatus == .overdue {
                                 TransactionRowView(manager: manager, transaction: $transaction)
+                                    .swipeActions {
+                                        Button {
+                                            addTransactionNotification.toggle()
+                                            transaction.isNotificationEnabled = addTransactionNotification
+                                            if transaction.isNotificationEnabled == true {
+                                                addNotification(for: transaction)
+                                                print("Notification enabled")
+                                            } else if transaction.isNotificationEnabled == false {
+                                                removeNotification(for: transaction)
+                                                print("Notification disabled")
+                                            }
+                                        } label: {
+                                            Image(systemName: addTransactionNotification ? "bell.slash" : "bell")
+                                        }
+                                        .tint(Color("AccentColor"))
+                                        Button {
+                                            showDeleteAlert = true
+                                        } label: {
+                                            HStack{
+                                                Image(systemName: "trash")
+                                            }
+                                        }
+                                        .tint(Color("RadRed"))
+                                    }
+                                    .alert("Are you sure you want to delete this transaction?", isPresented: $showDeleteAlert, actions: {
+                                        Button(role: .cancel) {
+                                            print("CanCeLLeD")
+                                        } label: {
+                                            Text("Cancel")
+                                        }
+                                        Button(role: .destructive) {
+                                            if let transactionIndex = manager.allTransactions.firstIndex(where: {
+                                                $0.id == transaction.id
+                                            }) {
+                                                manager.allTransactions.remove(at: transactionIndex)
+                                            }
+                                        } label: {
+                                            Text("Delete")
+                                        }
+                                    }, message: {
+                                        Text("This action cannot be undone.")
+                                    })
                             }
                         }
                     }
+                    
                     Section(header: Text("Due in 7 days")) {
                         ForEach($manager.sortedTransactions) { $transaction in
                             if transaction.transactionStatus == .dueInOneWeek {
@@ -76,6 +120,64 @@ struct HomeView: View {
                             .tag(SortingMethods.alphabetically)
                     } label: {
                         Image(systemName: "line.3.horizontal.decrease.circle")
+                    }
+                }
+            }
+        }
+    }
+    
+    func removeNotification(for transaction: Transaction) {
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: [transaction.id.uuidString])
+    }
+    
+    func addNotification(for transaction: Transaction) {
+        let center = UNUserNotificationCenter.current()
+        let addRequest = {
+            let content = UNMutableNotificationContent()
+            let overdueTransactions = manager.allTransactions.filter{$0.transactionStatus == .overdue}
+            let unpaidPeople = transaction.people.filter { $0.hasPaid == false }
+            let peopleWhoPaid = transaction.people.filter{$0.hasPaid}
+            var amountOfMoneyPaid: Double {
+                peopleWhoPaid.reduce(0) { partialResult, person in
+                    partialResult + (person.money)
+                }
+            }
+            let amountOfMoneyUnpaid = transaction.totalMoney - amountOfMoneyPaid
+
+            if overdueTransactions.count > 1 {
+                content.title = "Overdue transactions"
+                content.subtitle = "You have \(String(overdueTransactions.count)) overdue transactions"
+            }
+            else if overdueTransactions.count == 1 && transaction.transactionType == .billSplitNoSync || transaction.transactionType == .billSplitSync {
+                content.title = "Overdue loans"
+                content.subtitle = "Remind \(unpaidPeople.map { $0.name! }.joined(separator: ", ")) to return you \(amountOfMoneyUnpaid)"
+            }
+            else if overdueTransactions.count == 1 && transaction.transactionType == .loan {
+                content.title = "Overdue loan"
+                content.subtitle = "Remind \(overdueTransactions[0].people[0].name ?? "") to return you $\(String(format: ".%2f", overdueTransactions[0].people[0].money))"
+            }
+            content.sound = UNNotificationSound.default
+
+            var dateComponents = DateComponents()
+            dateComponents.hour = 7
+
+//            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents , repeats: true)
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
+
+            let request = UNNotificationRequest(identifier: transaction.id.uuidString, content: content, trigger: trigger)
+
+            center.add(request)
+        }
+        center.getNotificationSettings{ settings in
+            if settings.authorizationStatus == .authorized {
+                addRequest()
+            } else {
+                center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                    if success {
+                        addRequest()
+                    } else {
+                        print("Skill issue")
                     }
                 }
             }
