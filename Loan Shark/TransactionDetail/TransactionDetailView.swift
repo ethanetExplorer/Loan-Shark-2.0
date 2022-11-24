@@ -65,7 +65,8 @@ struct TransactionDetailView: View {
                                             Text(person.dueDate!, style: .relative)
                                                 .foregroundColor(Color("SecondaryTextColor"))
                                             if transaction.transactionStatus == .overdue {
-                                                Text(" ago")                                                .foregroundColor(Color("SecondaryTextColor"))
+                                                Text(" ago")
+                                                    .foregroundColor(Color("SecondaryTextColor"))
                                             }
                                         }
                                         .font(.subheadline)
@@ -138,46 +139,46 @@ struct TransactionDetailView: View {
                 }
             }
             .navigationTitle(transaction.name)
-            .toolbar {
-                Button {
-                    presentEditTransactionSheet.toggle()
-                } label: {
-                    HStack {
-                        Image(systemName: "pencil")
-                    }
-                }
-                .foregroundColor(Color("AccentColor"))
-                .sheet(isPresented: $presentEditTransactionSheet) {
-                    EditTransactionView(transaction: $transaction)
-                }
-                Button {
-                    showDeleteAlert = true
-                } label: {
-                    HStack{
-                        Image(systemName: "trash.fill")
-                    }
-                    .foregroundColor(Color("RadRed"))
-                    .alert("Are you sure you want to delete this transaction?", isPresented: $showDeleteAlert, actions: {
-                        Button(role: .cancel) {
-                            
-                        } label: {
-                            Text("Cancel")
-                        }
-                        
-                        Button(role: .destructive) {
-                            if let transactionIndex = manager.allTransactions.firstIndex(where: {
-                                $0.id == transaction.id
-                            }) {
-                                manager.allTransactions.remove(at: transactionIndex)
-                            }
-                        } label: {
-                            Text("Delete")
-                        }
-                    }, message: {
-                        Text("This action cannot be undone.")
-                    })
-                }
-            }
+//            .toolbar {
+//                Button {
+//                    presentEditTransactionSheet.toggle()
+//                } label: {
+//                    HStack {
+//                        Image(systemName: "pencil")
+//                    }
+//                }
+//                .foregroundColor(Color("AccentColor"))
+//                .sheet(isPresented: $presentEditTransactionSheet) {
+//                    EditTransactionView(transaction: $transaction)
+//                }
+//                Button {
+//                    showDeleteAlert = true
+//                } label: {
+//                    HStack{
+//                        Image(systemName: "trash.fill")
+//                    }
+//                    .foregroundColor(Color("RadRed"))
+//                    .alert("Are you sure you want to delete this transaction?", isPresented: $showDeleteAlert, actions: {
+//                        Button(role: .cancel) {
+//
+//                        } label: {
+//                            Text("Cancel")
+//                        }
+//
+//                        Button(role: .destructive) {
+//                            if let transactionIndex = manager.allTransactions.firstIndex(where: {
+//                                $0.id == transaction.id
+//                            }) {
+//                                manager.allTransactions.remove(at: transactionIndex)
+//                            }
+//                        } label: {
+//                            Text("Delete")
+//                        }
+//                    }, message: {
+//                        Text("This action cannot be undone.")
+//                    })
+//                }
+//            }
             HStack {
                 Button {
                     presentEditTransactionSheet.toggle()

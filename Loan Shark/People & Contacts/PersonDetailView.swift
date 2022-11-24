@@ -8,6 +8,11 @@ import SwiftUI
 
 struct PersonDetailView: View {
     
+    func getPersonIndex(array people: [Person]) -> Int? {
+        let index = people.firstIndex(where: { $0.name == person.name })
+        return index
+    }
+    
     @ObservedObject var manager: TransactionManager
     @State var showTransactionDetailSheet = false
     var person: Contact
@@ -18,27 +23,32 @@ struct PersonDetailView: View {
             })
         }
     }
-    @State var transactionIndex: Int?
-    
-    var body: some View {
-        NavigationView{
-            List {
-                Section(header: Text("ONGOING TRANSACTIONS")) {
-                    
-                    ForEach(userTransactions.filter { $0.transactionStatus == .unpaid || $0.transactionStatus == .overdue || $0.transactionStatus == .dueInOneWeek}) { transaction in
-                        PersonTransactionRow(manager: manager, transaction: transaction, person: person)
-                    }
-                }
-                Section(header: Text("TRANSACTION HISTORY")) {
-                    ForEach(userTransactions.filter { $0.transactionStatus == .paidOff }) { transaction in
-                        PersonTransactionRow(manager: manager, transaction: transaction, person: person)
-                    }
-                }
+//    var personIndex: Int? {
+//        for transaction in userTransactions {
+//            transaction.people.firstIndex(where: $0.name == person.name)
+//        }
+//    }
+//}
+
+var body: some View {
+    NavigationView{
+        List {
+            Section(header: Text("ONGOING TRANSACTIONS")) {
                 
+                ForEach(userTransactions.filter { !$0.people[getPersonIndex(array: $0.people)!].hasPaid }) { transaction in
+                    PersonTransactionRow(manager: manager, transaction: transaction, person: person)
+                }
             }
+            Section(header: Text("TRANSACTION HISTORY")) {
+                ForEach(userTransactions.filter { $0.people[getPersonIndex(array: $0.people)!].hasPaid }) { transaction in
+                    PersonTransactionRow(manager: manager, transaction: transaction, person: person)
+                }
+            }
+            
         }
-        .navigationTitle(person.name)
     }
+    .navigationTitle(person.name)
+}
 }
 
 

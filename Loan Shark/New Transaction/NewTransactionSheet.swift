@@ -11,8 +11,7 @@ import SwiftUI
 var decimalNumberFormat: NumberFormatter {
     let numberFormatter = NumberFormatter()
     numberFormatter.allowsFloats = true
-    numberFormatter.numberStyle = .currency
-    numberFormatter.currencySymbol = "$"
+    numberFormatter.numberStyle = .none
     return numberFormatter
 }
 
@@ -92,9 +91,14 @@ struct NewTransactionSheet: View {
                         HStack {
                             Text("Amount")
                                 .foregroundColor(Color("PrimaryTextColor"))
+                            Spacer()
+                            Text("$")
+                                .foregroundColor(Color("SecondaryTextColor"))
                             TextField("Amount", value: $people[0].money, formatter: decimalNumberFormat)
-                                .foregroundColor(Color("SecondaryTextColor"))                       .multilineTextAlignment(.trailing)
+                                .foregroundColor(Color("SecondaryTextColor"))
+                                .multilineTextAlignment(.trailing)
                                 .keyboardType(.decimalPad)
+                                .frame(maxWidth: 70)
                         }
                         
                         let bindingDate = Binding {
@@ -105,6 +109,7 @@ struct NewTransactionSheet: View {
                         
                         DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
                             .foregroundColor(Color("PrimaryTextColor"))
+                        
                     } else if transactionType == "Bill split" && !isDetailSynchronised {
                         if !people.isEmpty {
                             let excludedContacts = people.compactMap({
@@ -128,11 +133,23 @@ struct NewTransactionSheet: View {
                                     HStack {
                                         Text("Amount")
                                             .foregroundColor(Color("PrimaryTextColor"))
-                                        TextField("Amount", value: $money, formatter: decimalNumberFormat)
-                                            .foregroundColor(Color("SecondaryTextColor"))                                            .multilineTextAlignment(.trailing)
+                                        Spacer()
+                                        Text("$")
+                                            .foregroundColor(Color("SecondaryTextColor"))
+                                        TextField("Amount", value: $person.money, formatter: decimalNumberFormat)
+                                            .foregroundColor(Color("SecondaryTextColor"))
+                                            .multilineTextAlignment(.trailing)
                                             .keyboardType(.decimalPad)
+                                            .frame(maxWidth: 70)
                                     }
-                                    DatePicker("Due by", selection: $dueDate, in: Date.now..., displayedComponents: .date)
+                                    
+                                    let BindingDate = Binding {
+                                        person.dueDate ?? Date.now
+                                    } set: { newValue in
+                                        person.dueDate = newValue
+                                    }
+                                    
+                                    DatePicker("Due by", selection: BindingDate, in: Date.now..., displayedComponents: .date)
                                         .foregroundColor(Color("PrimaryTextColor"))
                                 }
                             }
@@ -198,16 +215,24 @@ struct NewTransactionSheet: View {
                         let bindingMoney = Binding {
                             people[0].money ?? 0
                         } set: { newValue in
-                            people[0].money = newValue
+                            for peopleIndex in 0..<people.count {
+                                people[peopleIndex].money = newValue
+                            }
                         }
+                        
                         HStack {
                             Text("Amount each")
                                 .foregroundColor(Color("PrimaryTextColor"))
+                            Spacer()
+                            Text("$")
+                                .foregroundColor(Color("SecondaryTextColor"))
                             TextField("Amount each", value: bindingMoney, formatter: decimalNumberFormat)
                                 .foregroundColor(Color("SecondaryTextColor"))
                                 .multilineTextAlignment(.trailing)
                                 .keyboardType(.decimalPad)
+                                .frame(maxWidth: 70)
                         }
+                        
                         let bindingDate = Binding {
                             people[0].dueDate ?? .now
                         } set: { newValue in
@@ -233,6 +258,7 @@ struct NewTransactionSheet: View {
                     }), transactionType: transactionTypeItem)
                     
                     transactions.append(transaction)
+
                     dismiss()
                 } label: {
                     Text("Save")
