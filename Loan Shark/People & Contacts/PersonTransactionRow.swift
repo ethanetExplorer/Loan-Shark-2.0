@@ -29,20 +29,22 @@ struct PersonTransactionRow: View {
             HStack{
                 VStack(alignment: .leading) {
                     Text(transaction.name)
+                        .foregroundColor(Color("PrimaryTextColor"))
                     
                     if transaction.transactionStatus == .paidOff {
-                        Text("Paid")
-                            .foregroundStyle(.secondary)
+                        Text("Paid off")
+                            .font(.caption)
+                            .foregroundColor(Color("SecondaryTextColor"))
                     } else {
                         Text(getTransactionDueDate(for: transaction))
                             .font(.caption)
+                            .foregroundColor(Color("SecondaryTextColor"))
                     }
                 }
-                .foregroundColor(.primary)
                 Spacer()
                 
                 Text("\(decimalNumberFormat.string(for: transactionPerson.money ?? 0)!)")
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Color("PrimaryTextColor"))
                     .font(.title2)
             }
         }

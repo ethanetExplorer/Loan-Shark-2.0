@@ -23,9 +23,10 @@ struct SendMessageButton: View {
                     Image(systemName: "message")
                     Text("Send reminder")
                 }
+                .foregroundColor(.blue)
             }
             .sheet(isPresented: $isSheetPresented) {
-                MessageView(message: "Hi \(person.name), could you repay me \(decimalNumberFormat.string(for: person.money)!) for \(transaction.name) as soon as possible please?\nThank you!", recipient: phoneNumber)
+                MessageView(message: "Hi \(person.name ?? ""), could you repay me \(decimalNumberFormat.string(for: person.money)!) for \(transaction.name) as soon as possible please?\nThank you!", recipient: phoneNumber)
             }
         }
     }

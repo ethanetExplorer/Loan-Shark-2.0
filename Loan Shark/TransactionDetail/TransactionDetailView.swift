@@ -16,67 +16,85 @@ struct TransactionDetailView: View {
     @State var showDeleteAlert = false
     
     var body: some View {
-        VStack(alignment: .leading){
+        VStack(alignment: .leading) {
             Group {
                 if transaction.transactionType == .loan {
-                    Text("Loan")
+                    HStack {
+                        Text("Loan")
+                        Spacer()
+                        Text("$" + String(format: "%.2f", transaction.totalMoney))
+                    }
+                    .foregroundColor(Color("PrimaryTextColor"))
+                    .font(.title3)
+                    .padding(.horizontal, 20)
                 } else if transaction.transactionType == .billSplitSync {
-                    Text("Bill split, synchronised")
+                    HStack {
+                        Text("Bill split, syncronised")
+                        Spacer()
+                        Text("$" + String(format: "%.2f", transaction.totalMoney))
+                    }
+                    .foregroundColor(Color("PrimaryTextColor"))
+                    .font(.title3)
+                    .padding(.horizontal, 20)
                 } else if transaction.transactionType == .billSplitNoSync {
-                    Text("Bill split, unsynchronised")
+                    HStack {
+                        Text("Bill split, syncronised")
+                        Spacer()
+                        Text("$" + String(format: "%.2f", transaction.totalMoney))
+                    }
+                    .foregroundColor(Color("PrimaryTextColor"))
+                    .font(.title3)
+                    .padding(.horizontal, 20)
                 }
             }
-            .font(.title2)
-            .padding(.horizontal, 21)
             
             List {
                 Section("UNPAID") {
                     ForEach($transaction.people) { $person in
                         if !person.hasPaid {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .foregroundColor(.white)
-                                VStack{
-                                    HStack {
-                                        VStack(alignment: .leading) {
-                                            Text(person.name ?? "No one Selected")
-                                                .bold()
-                                                .font(.title3)
-                                            HStack(alignment: .center, spacing: 0) {
-                                                Text(transaction.transactionStatus == .overdue ? "Due " : "Due in ")
-                                                Text(person.dueDate!, style: .relative)
-                                                
-                                                if transaction.transactionStatus == .overdue {
-                                                    Text(" ago")
-                                                }
-                                            }
-                                            .font(.subheadline)
-                                            .foregroundStyle(.secondary)
-                                        }
-                                        Spacer()
-                                        Text("$ \(String(format: "%.2f", person.money!))")
-                                            .foregroundColor(transaction.transactionStatus == .overdue ? .red : .primary)
-                                            .font(.title2)
-                                    }
-                                    .padding(.top, 10)
-                                    HStack(alignment: .top){
-                                        SendMessageButton(transaction: transaction, person: person)
-                                        Spacer()
-                                        Button {
-                                            withAnimation {
-                                                person.hasPaid.toggle()
-                                            }
-                                        } label: {
-                                            HStack {
-                                                Image(systemName: "banknote")
-                                                Text("Mark as paid")
+                            VStack{
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(person.name ?? "No one Selected")
+                                            .bold()
+                                            .foregroundColor(Color("PrimaryTextColor"))
+                                            .font(.title3)
+                                        HStack(alignment: .center, spacing: 0) {
+                                            Text(transaction.transactionStatus == .overdue ? "Due " : "Due in ")
+                                                .foregroundColor(Color("SecondaryTextColor"))
+                                            Text(person.dueDate!, style: .relative)
+                                                .foregroundColor(Color("SecondaryTextColor"))
+                                            if transaction.transactionStatus == .overdue {
+                                                Text(" ago")                                                .foregroundColor(Color("SecondaryTextColor"))
                                             }
                                         }
+                                        .font(.subheadline)
+                                        .foregroundStyle(.secondary)
                                     }
-                                    .buttonStyle(.plain)
-                                    .foregroundColor(.blue)
-                                    .padding(10)
+                                    Spacer()
+                                    Text("$ \(String(format: "%.2f", person.money!))")
+                                        .foregroundColor(transaction.transactionStatus == .overdue ? Color("RadRed") : Color("PrimaryTextColor"))
+                                        .font(.title2)
+                                        .foregroundColor(Color("PrimaryTextColor"))
                                 }
+                                .padding(.top, 5)
+                                HStack(alignment: .top){
+                                    SendMessageButton(transaction: transaction, person: person)
+                                    Spacer()
+                                    Button {
+                                        withAnimation {
+                                            person.hasPaid.toggle()
+                                        }
+                                    } label: {
+                                        HStack {
+                                            Image(systemName: "banknote")
+                                            Text("Mark as paid")
+                                        }
+                                    }
+                                }
+                                .buttonStyle(.plain)
+                                .foregroundColor(Color("AccentColor"))
+                                .padding(5)
                             }
                         }
                     }
@@ -84,23 +102,22 @@ struct TransactionDetailView: View {
                 Section("PAID") {
                     ForEach($transaction.people) { $person in
                         if person.hasPaid {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .foregroundColor(.white)
-                                VStack{
-                                    HStack {
-                                        VStack(alignment: .leading) {
-                                            Text(person.name ?? "No one Selected")
-                                                .bold()
-                                                .font(.title3)
-                                        }
-                                        Spacer()
-                                        Text("$ \(String(format: "%.2f", person.money!))")
-                                            .foregroundStyle(.secondary)
-                                            .font(.title2)
+                            VStack{
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(person.name ?? "No one Selected")
+                                            .bold()
+                                            .foregroundColor(Color("PrimaryTextColor"))
+                                            .font(.title3)
                                     }
-                                    .padding(.top, 10)
-                                    
+                                    Spacer()
+                                    Text("$ \(String(format: "%.2f", person.money!))")
+                                        .foregroundStyle(.secondary)
+                                        .foregroundColor(Color("PrimaryTextColor"))
+                                        .font(.title2)
+                                }
+                                .padding(.top, 5)
+                                HStack(alignment: .top){
                                     Button {
                                         withAnimation {
                                             person.hasPaid.toggle()
@@ -112,8 +129,8 @@ struct TransactionDetailView: View {
                                         }
                                     }
                                     .buttonStyle(.plain)
-                                    .foregroundColor(.blue)
-                                    .padding(10)
+                                    .foregroundColor(Color("AccentColor"))
+                                    .padding(5)
                                 }
                             }
                         }
@@ -121,6 +138,46 @@ struct TransactionDetailView: View {
                 }
             }
             .navigationTitle(transaction.name)
+            .toolbar {
+                Button {
+                    presentEditTransactionSheet.toggle()
+                } label: {
+                    HStack {
+                        Image(systemName: "pencil")
+                    }
+                }
+                .foregroundColor(Color("AccentColor"))
+                .sheet(isPresented: $presentEditTransactionSheet) {
+                    EditTransactionView(transaction: $transaction)
+                }
+                Button {
+                    showDeleteAlert = true
+                } label: {
+                    HStack{
+                        Image(systemName: "trash.fill")
+                    }
+                    .foregroundColor(Color("RadRed"))
+                    .alert("Are you sure you want to delete this transaction?", isPresented: $showDeleteAlert, actions: {
+                        Button(role: .cancel) {
+                            
+                        } label: {
+                            Text("Cancel")
+                        }
+                        
+                        Button(role: .destructive) {
+                            if let transactionIndex = manager.allTransactions.firstIndex(where: {
+                                $0.id == transaction.id
+                            }) {
+                                manager.allTransactions.remove(at: transactionIndex)
+                            }
+                        } label: {
+                            Text("Delete")
+                        }
+                    }, message: {
+                        Text("This action cannot be undone.")
+                    })
+                }
+            }
             HStack {
                 Button {
                     presentEditTransactionSheet.toggle()
@@ -129,12 +186,12 @@ struct TransactionDetailView: View {
                         Image(systemName: "pencil")
                         Text("Edit transaction")
                     }
-                    .frame(height: 50)
-                    .frame(maxWidth: .infinity)
-                    .background(.blue)
-                    .cornerRadius(10)
-                    .foregroundColor(.white)
                 }
+                .foregroundColor(Color("WhiteOrBlack"))
+                .frame(height: 50)
+                .frame(maxWidth: .infinity)
+                .background(Color("AccentColor"))
+                .cornerRadius(10)
                 .sheet(isPresented: $presentEditTransactionSheet) {
                     EditTransactionView(transaction: $transaction)
                 }
@@ -146,10 +203,10 @@ struct TransactionDetailView: View {
                         Image(systemName: "trash.fill")
                         Text("Delete transaction")
                     }
-                    .foregroundColor(.white)
+                    .foregroundColor(Color("WhiteOrBlack"))
                     .frame(height: 50)
                     .frame(maxWidth: .infinity)
-                    .background(.red)
+                    .background(Color("RadRed"))
                     .cornerRadius(10)
                     .alert("Are you sure you want to delete this transaction?", isPresented: $showDeleteAlert, actions: {
                         Button(role: .cancel) {

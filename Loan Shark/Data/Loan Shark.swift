@@ -60,7 +60,7 @@ struct Person: Identifiable, Codable {
     
     var contact: Contact?
     var name: String? {
-        contact?.name
+        contact?.name ?? ""
     }
     
     var money: Double?
