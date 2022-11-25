@@ -187,9 +187,14 @@ struct NewTransactionSheet: View {
                         } set: { newValue in
                             let money = people[0].money
                             let dueDate = people[0].dueDate
-                            people = newValue.map({ contact in
-                                Person(contact: contact, money: money!, dueDate: dueDate!)
-                            })
+                            
+                            if newValue.isEmpty {
+                                people = [Person(contact: nil, money: money!, dueDate: dueDate!)]
+                            } else {
+                                people = newValue.map({ contact in
+                                    Person(contact: contact, money: money!, dueDate: dueDate!)
+                                })
+                            }
                         }
                         
                         NavigationLink {
@@ -201,8 +206,10 @@ struct NewTransactionSheet: View {
                                     .compactMap {
                                         $0.name
                                     }
+                                    .joined(separator: ", ")
+                                
                                 if !names.isEmpty {
-                                    Text(names.joined(separator: ", "))
+                                    Text(names)
                                         .font(.caption)
                                         .foregroundColor(Color("SecondaryTextColor"))
                                 } else {
