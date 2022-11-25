@@ -20,9 +20,16 @@ struct TransactionRowView: View {
                 VStack (alignment: .leading) {
                     Text(transaction.name)
                         .foregroundColor(Color("PrimaryTextColor"))
-                    Text(transaction.people.map { $0.name! }.joined(separator: ", "))
-                        .font(.caption)
-                        .foregroundColor(Color("SecondaryTextColor"))
+                    let unpaidPeople = transaction.people.filter { $0.hasPaid == false }
+                    if unpaidPeople.isEmpty == false {
+                        Text(unpaidPeople.map { $0.name! }.joined(separator: ", "))
+                            .font(.caption)
+                            .foregroundColor(Color("SecondaryTextColor"))
+                    } else {
+                        Text(transaction.people.map { $0.name! }.joined(separator: ", "))
+                            .font(.caption)
+                            .foregroundColor(Color("SecondaryTextColor"))
+                    }
                 }
                 Spacer()
                 Text("$" + String(format: "%.2f", transaction.totalMoney))
@@ -30,6 +37,5 @@ struct TransactionRowView: View {
                     .bold()
             }
         }
-        .listRowBackground(Color("BGColor"))
     }
 }

@@ -26,9 +26,9 @@ struct PeopleView: View {
                         Text(contact.name)
                             .foregroundColor(Color("PrimaryTextColor"))
                     }
+                    .listRowBackground(Color("BGColor"))
                 }
             }
-            .listRowBackground(Color("BGColor"))
             .navigationTitle("All People")
             .searchable(text: $searchTerm)
         }

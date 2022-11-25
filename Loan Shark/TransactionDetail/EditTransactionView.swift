@@ -49,7 +49,7 @@ struct EditTransactionView: View {
                             transaction.people[0].dueDate = newValue
                         }
                         
-                        DatePicker("Due by", selection: bindingDate, in: transaction.people[0].dueDate!..., displayedComponents: .date)
+                        DatePicker("Due by", selection: bindingDate, in: transaction.people[0].dueDate..., displayedComponents: .date)
                             .foregroundColor(Color("PrimaryTextColor"))
                     }
                 } else if transaction.transactionType == .billSplitNoSync {
@@ -71,12 +71,12 @@ struct EditTransactionView: View {
                             }
                             
                             let dueDateBinding = Binding {
-                                person.dueDate!
+                                person.dueDate
                             } set: { newValue in
                                 person.dueDate = newValue
                             }
                             
-                            DatePicker("Due by", selection: dueDateBinding, in: person.dueDate!..., displayedComponents: .date)
+                            DatePicker("Due by", selection: dueDateBinding, in: person.dueDate..., displayedComponents: .date)
                                 .foregroundColor(Color("PrimaryTextColor"))
                         }
                     }
