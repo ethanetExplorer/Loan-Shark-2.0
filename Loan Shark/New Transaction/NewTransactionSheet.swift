@@ -4,7 +4,7 @@
 //
 //  Created by Yuhan Du Du Du Du on 6/11/22.
 //
-// Duhan Du Du Du
+// 
 
 import SwiftUI
 
@@ -22,6 +22,7 @@ struct NewTransactionSheet: View {
     @State var dueDate = Date()
     @State var money = 0.0
     @State var transactionType = "Select"
+    @State var enableNotifs = false
     
     var fieldsUnfilled: Bool {
         name.isEmpty || transactionType == "Select" || people.filter({ $0.contact != nil }).count < 1
@@ -52,6 +53,14 @@ struct NewTransactionSheet: View {
                             }
                         }
                         .foregroundColor(Color("PrimaryTextColor"))
+                    }
+                    
+                    Section {
+                        Toggle(isOn: $enableNotifs ) {
+                            Text("Enable notifications")
+                        }
+                    } footer: {
+                        Text("Enable this to allow Money Rush to automatically send you notifications to remind youcollect your money back")
                     }
                     
                     if transactionType == "Bill split" {
@@ -263,9 +272,12 @@ struct NewTransactionSheet: View {
                                                   people: people.filter({
                         $0.contact != nil
                     }), transactionType: transactionTypeItem)
-                    
+                    if enableNotifs {
+                        transaction.isNotificationEnabled = true
+                    } else if !enableNotifs {
+                        transaction.isNotificationEnabled = false
+                    }
                     transactions.append(transaction)
-
                     dismiss()
                 } label: {
                     Text("Save")

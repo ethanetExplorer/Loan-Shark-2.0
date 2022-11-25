@@ -33,12 +33,12 @@ class TransactionManager: ObservableObject {
             }
         }
     }
-    
     var searchResults: [Transaction] {
         allTransactions.filter({ transaction in
             transaction.name.lowercased().contains(searchTerm.lowercased())
         })
     }
+    
     
     let sampleTransactions: [Transaction] = []
     

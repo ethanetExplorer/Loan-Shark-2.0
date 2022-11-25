@@ -63,8 +63,8 @@ struct Person: Identifiable, Codable {
         contact?.name ?? ""
     }
     
-    var money: Double
-    var dueDate: Date
+    var money: Double?
+    var dueDate: Date?
     var hasPaid = false
     
     init(contact: Contact? = nil, money: Double, dueDate: String, hasPaid: Bool = false) {
@@ -76,13 +76,14 @@ struct Person: Identifiable, Codable {
         self.dueDate = dateFormatter.date(from: dueDate)!
         self.hasPaid = hasPaid
     }
-
+    
     init(contact: Contact? = nil, money: Double, dueDate: Date, hasPaid: Bool = false, selected: Bool = false) {
         self.contact = contact
         self.money = money
         self.dueDate = dueDate
         self.hasPaid = hasPaid
     }
+    
 }
 
 class Transaction: Identifiable, Codable {
@@ -92,10 +93,10 @@ class Transaction: Identifiable, Codable {
     
     var dueDate: Date {
         let maxDueDate = people.max { firstPerson, secondPerson in
-            firstPerson.dueDate < secondPerson.dueDate
+            firstPerson.dueDate! < secondPerson.dueDate!
         }!.dueDate
         
-        return maxDueDate
+        return maxDueDate!
     }
     
     var isPaid: Bool {
@@ -119,16 +120,15 @@ class Transaction: Identifiable, Codable {
             return .unpaid
         }
     }
-
+    
     var transactionType: TransactionTypes
+    var isNotificationEnabled = false
     
     var totalMoney: Double {
         people.reduce(0) { partialResult, person in
-            partialResult + (person.money)
+            partialResult + (person.money ?? 0)
         }
     }
-    
-    var isNotificationEnabled = false
 
     init(id: UUID = UUID(), name: String, people: [Person], transactionType: TransactionTypes) {
         self.id = id

@@ -26,7 +26,6 @@ struct PeopleView: View {
                         Text(contact.name)
                             .foregroundColor(Color("PrimaryTextColor"))
                     }
-                    .listRowBackground(Color("BGColor"))
                 }
             }
             .navigationTitle("All People")

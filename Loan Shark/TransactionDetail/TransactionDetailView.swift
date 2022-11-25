@@ -3,7 +3,7 @@
 //  Loan Shark
 //
 //  Created by Ethan Lim on 15/11/22.
-//
+// ...
 
 import SwiftUI
 import UIKit
@@ -14,37 +14,56 @@ struct TransactionDetailView: View {
     @Binding var transaction: Transaction
     @State var presentEditTransactionSheet = false
     @State var showDeleteAlert = false
+    @State var reload = false
     
     var body: some View {
         VStack(alignment: .leading) {
             Group {
                 if transaction.transactionType == .loan {
                     HStack {
+                        Button {
+                            transaction.isNotificationEnabled.toggle()
+                            reload.toggle()
+                            transaction.isNotificationEnabled ? removeNotification(for: transaction) : addNotification(for: transaction)
+                        } label: {
+                            Image(systemName: transaction.isNotificationEnabled ? "bell.fill" : "bell.slash")
+                                .foregroundColor(Color("AccentColor"))
+                        }
                         Text("Loan")
                         Spacer()
                         Text("$" + String(format: "%.2f", transaction.totalMoney))
                     }
-                    .foregroundColor(Color("PrimaryTextColor"))
-                    .font(.title3)
-                    .padding(.horizontal, 20)
+                    .padding()
                 } else if transaction.transactionType == .billSplitSync {
                     HStack {
-                        Text("Bill split, syncronised")
+                        Button {
+                            transaction.isNotificationEnabled.toggle()
+                            reload.toggle()
+                            transaction.isNotificationEnabled ? removeNotification(for: transaction) : addNotification(for: transaction)
+                        } label: {
+                            Image(systemName: transaction.isNotificationEnabled ? "bell.fill" : "bell.slash")
+                                .foregroundColor(Color("AccentColor"))
+                        }
+                        Text("Bill split, unsynchronised")
                         Spacer()
                         Text("$" + String(format: "%.2f", transaction.totalMoney))
                     }
-                    .foregroundColor(Color("PrimaryTextColor"))
-                    .font(.title3)
-                    .padding(.horizontal, 20)
+                    .padding()
                 } else if transaction.transactionType == .billSplitNoSync {
                     HStack {
-                        Text("Bill split, syncronised")
+                        Button {
+                            transaction.isNotificationEnabled.toggle()
+                            reload.toggle()
+                            transaction.isNotificationEnabled ? removeNotification(for: transaction) : addNotification(for: transaction)
+                        } label: {
+                            Image(systemName: transaction.isNotificationEnabled ? "bell.fill" : "bell.slash")
+                                .foregroundColor(Color("AccentColor"))
+                        }
+                        Text("Bill split, synchronised")
                         Spacer()
                         Text("$" + String(format: "%.2f", transaction.totalMoney))
                     }
-                    .foregroundColor(Color("PrimaryTextColor"))
-                    .font(.title3)
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal)
                 }
             }
             
@@ -139,76 +158,25 @@ struct TransactionDetailView: View {
                 }
             }
             .navigationTitle(transaction.name)
-//            .toolbar {
-//                Button {
-//                    presentEditTransactionSheet.toggle()
-//                } label: {
-//                    HStack {
-//                        Image(systemName: "pencil")
-//                    }
-//                }
-//                .foregroundColor(Color("AccentColor"))
-//                .sheet(isPresented: $presentEditTransactionSheet) {
-//                    EditTransactionView(transaction: $transaction)
-//                }
-//                Button {
-//                    showDeleteAlert = true
-//                } label: {
-//                    HStack{
-//                        Image(systemName: "trash.fill")
-//                    }
-//                    .foregroundColor(Color("RadRed"))
-//                    .alert("Are you sure you want to delete this transaction?", isPresented: $showDeleteAlert, actions: {
-//                        Button(role: .cancel) {
-//
-//                        } label: {
-//                            Text("Cancel")
-//                        }
-//
-//                        Button(role: .destructive) {
-//                            if let transactionIndex = manager.allTransactions.firstIndex(where: {
-//                                $0.id == transaction.id
-//                            }) {
-//                                manager.allTransactions.remove(at: transactionIndex)
-//                            }
-//                        } label: {
-//                            Text("Delete")
-//                        }
-//                    }, message: {
-//                        Text("This action cannot be undone.")
-//                    })
-//                }
-//            }
-            HStack {
+            .toolbar {
                 Button {
                     presentEditTransactionSheet.toggle()
                 } label: {
                     HStack {
                         Image(systemName: "pencil")
-                        Text("Edit transaction")
                     }
                 }
-                .foregroundColor(Color("WhiteOrBlack"))
-                .frame(height: 50)
-                .frame(maxWidth: .infinity)
-                .background(Color("AccentColor"))
-                .cornerRadius(10)
+                .foregroundColor(Color("AccentColor"))
                 .sheet(isPresented: $presentEditTransactionSheet) {
                     EditTransactionView(transaction: $transaction)
                 }
-                Spacer()
                 Button {
                     showDeleteAlert = true
                 } label: {
                     HStack{
                         Image(systemName: "trash.fill")
-                        Text("Delete transaction")
                     }
-                    .foregroundColor(Color("WhiteOrBlack"))
-                    .frame(height: 50)
-                    .frame(maxWidth: .infinity)
-                    .background(Color("RadRed"))
-                    .cornerRadius(10)
+                    .foregroundColor(Color("RadRed"))
                     .alert("Are you sure you want to delete this transaction?", isPresented: $showDeleteAlert, actions: {
                         Button(role: .cancel) {
                             
@@ -230,9 +198,65 @@ struct TransactionDetailView: View {
                     })
                 }
             }
-            .padding()
-            Divider()
         }
-        
+    }
+    func removeNotification(for transaction: Transaction) {
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: [transaction.id.uuidString])
+        print("HV: Notification is" + String(transaction.isNotificationEnabled))
+    }
+    
+    func addNotification(for transaction: Transaction) {
+        let center = UNUserNotificationCenter.current()
+        let addRequest = {
+            let content = UNMutableNotificationContent()
+            let unpaidPeople = transaction.people.filter { $0.hasPaid == false }
+            let peopleWhoPaid = transaction.people.filter{$0.hasPaid}
+            let overdueTransactions = manager.allTransactions
+            var amountOfMoneyPaid: Double {
+                peopleWhoPaid.reduce(0) { partialResult, person in
+                    partialResult + (person.money!)
+                }
+            }
+            let amountOfMoneyUnpaid = transaction.totalMoney - amountOfMoneyPaid
+            
+            if overdueTransactions.count > 1 {
+                content.title = "Overdue transactions"
+                content.subtitle = "You have \(String(overdueTransactions.count)) overdue transactions"
+            }
+            else if overdueTransactions.count == 1 && transaction.transactionType == .billSplitNoSync || transaction.transactionType == .billSplitSync {
+                content.title = "Overdue loans"
+                content.subtitle = "Remind \(unpaidPeople.map { $0.name! }.joined(separator: ", ")) to return you \(amountOfMoneyUnpaid)"
+            }
+            else if overdueTransactions.count == 1 && transaction.transactionType == .loan {
+                content.title = "Overdue loan"
+                content.subtitle = "Remind \(overdueTransactions[0].people[0].name ?? "") to return you $\(String(format: ".%2f", overdueTransactions[0].people[0].money!))"
+            }
+            content.sound = UNNotificationSound.default
+            
+            var dateComponents = DateComponents()
+            dateComponents.hour = 7
+            
+            //            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents , repeats: true)
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
+            
+            let request = UNNotificationRequest(identifier: transaction.id.uuidString, content: content, trigger: trigger)
+            
+            center.add(request)
+        }
+        center.getNotificationSettings{ settings in
+            if settings.authorizationStatus == .authorized {
+                addRequest()
+            } else {
+                center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                    if success {
+                        addRequest()
+                        print("HV: Notification is" + String(transaction.isNotificationEnabled))
+                    } else {
+                        print("Skill issue")
+                    }
+                }
+            }
+        }
     }
 }
