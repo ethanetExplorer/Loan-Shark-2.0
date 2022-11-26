@@ -42,10 +42,10 @@ struct PersonTransactionRow: View {
                     }
                 }
                 Spacer()
-                Text("$" + String(format: "%.2f", transactionPerson.money))
-                    .foregroundColor(transaction.transactionStatus == .overdue ? Color("RadRed") : Color("PrimaryTextColor"))
-                    .bold()
-
+                
+                Text("\(decimalNumberFormat.string(for: transactionPerson.money ?? 0)!)")
+                    .foregroundColor(Color("PrimaryTextColor"))
+                    .font(.title2)
             }
         }
         .sheet(isPresented: $showTransactionDetailSheet) {
@@ -61,7 +61,7 @@ struct PersonTransactionRow: View {
         
         if daysAgo == 0 {
             return "Due today"
-        } else if dateDiff < 0 {
+        } else if dateDiff > 0 {
             return "Due in \(daysAgo) days"
         } else {
             return "Due \(daysAgo) days ago"

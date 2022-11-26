@@ -11,7 +11,8 @@ import SwiftUI
 var decimalNumberFormat: NumberFormatter {
     let numberFormatter = NumberFormatter()
     numberFormatter.allowsFloats = true
-    numberFormatter.numberStyle = .none
+    numberFormatter.numberStyle = .currency
+    numberFormatter.currencySymbol = ""
     return numberFormatter
 }
 
@@ -23,9 +24,20 @@ struct NewTransactionSheet: View {
     @State var money = 0.0
     @State var transactionType = "Select"
     
-    var fieldsUnfilled: Bool {
-        name.isEmpty || transactionType == "Select" || people.filter({ $0.contact != nil }).count < 1
+    var sufficientPeople: Bool {
+        if transactionType == "Bill split" {
+            return people.filter({ $0.contact != nil }).count < 2
+        } else if transactionType == "Loan "{
+            return people.filter({$0.contact != nil}).count < 2
+        } else {
+            return false
+        }
     }
+    
+    var fieldsUnfilled: Bool {
+        name.isEmpty || transactionType == "Select" || people.filter({ $0.contact != nil }).count < 1 || sufficientPeople
+    }
+    
     var transactionTypes = ["Select", "Loan", "Bill split"]
     @Environment(\.dismiss) var dismiss
     
@@ -73,7 +85,7 @@ struct NewTransactionSheet: View {
                             }
                             return nil
                         } set: { contact in
-                            people = [Person(contact: contact, money: people[0].money!, dueDate: people[0].dueDate!, hasPaid: false)]
+                            people = [Person(contact: contact, money: people[0].money ?? 0, dueDate: people[0].dueDate ?? .now, hasPaid: false)]
                         }
                         
                         NavigationLink {

@@ -20,22 +20,44 @@ struct TransactionRowView: View {
                 VStack (alignment: .leading) {
                     Text(transaction.name)
                         .foregroundColor(Color("PrimaryTextColor"))
-                    let unpaidPeople = transaction.people.filter { $0.hasPaid == false }
-                    if unpaidPeople.isEmpty == false {
-                        Text(unpaidPeople.map { $0.name! }.joined(separator: ", "))
-                            .font(.caption)
-                            .foregroundColor(Color("SecondaryTextColor"))
-                    } else {
-                        Text(transaction.people.map { $0.name! }.joined(separator: ", "))
-                            .font(.caption)
-                            .foregroundColor(Color("SecondaryTextColor"))
-                    }
+                    Text(findPeopleWhoNeverPay())
+                        .font(.caption)
+                        .foregroundColor(Color("SecondaryTextColor"))
                 }
                 Spacer()
-                Text("$" + String(format: "%.2f", transaction.totalMoney))
+                Text("$" + String(format: "%.2f", moneyCalculator()))
                     .foregroundColor(transaction.transactionStatus == .overdue ? Color("RadRed") : Color("PrimaryTextColor"))
                     .bold()
             }
         }
+    }
+    func findPeopleWhoNeverPay() -> String {
+        let s = transaction.people.filter { $0.hasPaid }
+        let t = String(s.map { $0.name! }.joined(separator: ", "))
+        let r = String(transaction.people.map {$0.name!}.joined(separator: ", "))
+        if !s.isEmpty {
+            return t
+        } else {
+            return r
+        }
+    }
+    
+    func moneyCalculator() -> Double {
+        let s = transaction.people.filter{ $0.hasPaid }
+        let t = s.map {$0.money}
+        let r = transaction.people.map {$0.money}
+        var u = 0.0
+        
+        if !t.isEmpty {
+            u = t.reduce(into: 0.00) { partialResult, person in
+                partialResult += (person ?? 0)
+            }
+        }
+        else {
+            u = r.reduce(into: 0.00) { partialResult, person in
+                partialResult += (person ?? 0)
+            }
+        }
+        return u
     }
 }
