@@ -44,7 +44,7 @@ struct TransactionDetailView: View {
                             Image(systemName: transaction.isNotificationEnabled ? "bell.fill" : "bell.slash")
                                 .foregroundColor(transaction.isNotificationEnabled ? Color("AccentColor")  :Color("AccentColor2"))
                         }
-                        Text("Bill split, unsynchronised")
+                        Text("Bill split, synchronised")
                         Spacer()
                         Text("$" + String(format: "%.2f", transaction.totalMoney))
                     }
@@ -59,7 +59,7 @@ struct TransactionDetailView: View {
                             Image(systemName: transaction.isNotificationEnabled ? "bell.fill" : "bell.slash")
                                 .foregroundColor(transaction.isNotificationEnabled ? Color("AccentColor")  :Color("AccentColor2"))
                         }
-                        Text("Bill split, synchronised")
+                        Text("Bill split, unsynchronised")
                         Spacer()
                         Text("$" + String(format: "%.2f", transaction.totalMoney))
                     }
