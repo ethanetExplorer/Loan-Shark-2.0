@@ -59,12 +59,16 @@ struct PersonTransactionRow: View {
         let dateDiff = Date.now.timeIntervalSince1970 - transaction.dueDate.timeIntervalSince1970
         let daysAgo = abs(Int(dateDiff / (60*60*24)))
         
-        if daysAgo == 0 {
+        if transaction.isPaid == true {
+            return "Paid \(daysAgo) days ago"
+        } else if daysAgo == 0 && transaction.isPaid == false {
             return "Due today"
-        } else if dateDiff > 0 {
+        } else if dateDiff > 0 && transaction.isPaid == false {
             return "Due in \(daysAgo) days"
-        } else {
+        } else if dateDiff < 0 && transaction.isPaid == false {
             return "Due \(daysAgo) days ago"
+        } else {
+            return "No"
         }
     }
 }
