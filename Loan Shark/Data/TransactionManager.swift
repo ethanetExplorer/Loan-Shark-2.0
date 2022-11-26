@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Contacts
+import StringMetric
 
 class TransactionManager: ObservableObject {
     @Published var allTransactions: [Transaction] = [] {
@@ -33,6 +34,22 @@ class TransactionManager: ObservableObject {
             }
         }
     }
+    
+// Text similarity checker: In progress
+//    var searchResults: [Transaction] {
+//        var b: [Transaction]
+//        for transaction in allTransactions {
+//            var a: [Transaction]
+//            let distanceBtSearchTermAndResult = searchTerm.distance(between: transaction.name)
+//            if distanceBtSearchTermAndResult >= 0.80 {
+//                a = allTransactions.filter ({
+//                    transaction in transaction.name.lowercased().contains(searchTerm)
+//                })
+//                return a
+//            }
+//        }
+//    }
+    
     var searchResults: [Transaction] {
         allTransactions.filter({ transaction in
             transaction.name.lowercased().contains(searchTerm.lowercased())

@@ -27,7 +27,7 @@ struct TransactionDetailView: View {
                             transaction.isNotificationEnabled ? removeNotification(for: transaction) : addNotification(for: transaction)
                         } label: {
                             Image(systemName: transaction.isNotificationEnabled ? "bell.fill" : "bell.slash")
-                                .foregroundColor(Color("AccentColor"))
+                                .foregroundColor(transaction.isNotificationEnabled ? Color("AccentColor")  :Color("AccentColor2"))
                         }
                         Text("Loan")
                         Spacer()
@@ -42,7 +42,7 @@ struct TransactionDetailView: View {
                             transaction.isNotificationEnabled ? removeNotification(for: transaction) : addNotification(for: transaction)
                         } label: {
                             Image(systemName: transaction.isNotificationEnabled ? "bell.fill" : "bell.slash")
-                                .foregroundColor(Color("AccentColor"))
+                                .foregroundColor(transaction.isNotificationEnabled ? Color("AccentColor")  :Color("AccentColor2"))
                         }
                         Text("Bill split, unsynchronised")
                         Spacer()
@@ -57,7 +57,7 @@ struct TransactionDetailView: View {
                             transaction.isNotificationEnabled ? removeNotification(for: transaction) : addNotification(for: transaction)
                         } label: {
                             Image(systemName: transaction.isNotificationEnabled ? "bell.fill" : "bell.slash")
-                                .foregroundColor(Color("AccentColor"))
+                                .foregroundColor(transaction.isNotificationEnabled ? Color("AccentColor")  :Color("AccentColor2"))
                         }
                         Text("Bill split, synchronised")
                         Spacer()

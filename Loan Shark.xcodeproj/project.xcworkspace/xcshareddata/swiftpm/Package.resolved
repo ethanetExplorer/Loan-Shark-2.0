@@ -1,12 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "wrappinghstack",
+      "identity" : "stringmetric.swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/dkk/WrappingHStack",
+      "location" : "https://github.com/autozimu/StringMetric.swift",
       "state" : {
-        "revision" : "52eaad02c6a621b9bb5cd56acde94f802ef669f0",
-        "version" : "2.2.4"
+        "revision" : "ac08419f609e53636bd2d5d140d95d1d14960d6a",
+        "version" : "0.3.2"
       }
     }
   ],

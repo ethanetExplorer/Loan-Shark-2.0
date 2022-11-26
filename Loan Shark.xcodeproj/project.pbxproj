@@ -27,12 +27,12 @@
 		74BDE58D28CD868E00D1DA25 /* Loan_SharkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE58C28CD868E00D1DA25 /* Loan_SharkTests.swift */; };
 		74BDE59728CD868E00D1DA25 /* Loan_SharkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE59628CD868E00D1DA25 /* Loan_SharkUITests.swift */; };
 		74BDE59928CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE59828CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift */; };
+		74DBC0522931BB2900588ABC /* StringMetric in Frameworks */ = {isa = PBXBuildFile; productRef = 74DBC0512931BB2900588ABC /* StringMetric */; };
 		74F9B077292489D2008087E9 /* PeopleSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F9B076292489D2008087E9 /* PeopleSelectorView.swift */; };
 		74FB4821290388CC00F23E32 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB4820290388CC00F23E32 /* HomeView.swift */; };
 		74FB4822290388CC00F23E32 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB4820290388CC00F23E32 /* HomeView.swift */; };
 		74FB4823290388CC00F23E32 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB4820290388CC00F23E32 /* HomeView.swift */; };
 		74FB48292903892200F23E32 /* Loan Shark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB48282903892200F23E32 /* Loan Shark.swift */; };
-		74FB482E290391AA00F23E32 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 74FB482D290391AA00F23E32 /* WrappingHStack */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,7 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74FB482E290391AA00F23E32 /* WrappingHStack in Frameworks */,
+				74DBC0522931BB2900588ABC /* StringMetric in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,7 +234,7 @@
 			);
 			name = "Loan Shark";
 			packageProductDependencies = (
-				74FB482D290391AA00F23E32 /* WrappingHStack */,
+				74DBC0512931BB2900588ABC /* StringMetric */,
 			);
 			productName = "Loan Shark";
 			productReference = 74BDE57828CD868C00D1DA25 /* Loan Shark.app */;
@@ -309,7 +309,7 @@
 			);
 			mainGroup = 74BDE56F28CD868C00D1DA25;
 			packageReferences = (
-				74FB482C290391AA00F23E32 /* XCRemoteSwiftPackageReference "WrappingHStack" */,
+				74DBC0502931BB2900588ABC /* XCRemoteSwiftPackageReference "StringMetric" */,
 			);
 			productRefGroup = 74BDE57928CD868C00D1DA25 /* Products */;
 			projectDirPath = "";
@@ -535,6 +535,8 @@
 				DEVELOPMENT_TEAM = ZL64HBDS45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MoneyRush;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_NSContactsUsageDescription = "To import contacts for easier creation of transactions";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -567,6 +569,8 @@
 				DEVELOPMENT_TEAM = ZL64HBDS45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MoneyRush;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_NSContactsUsageDescription = "To import contacts for easier creation of transactions";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -701,21 +705,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		74FB482C290391AA00F23E32 /* XCRemoteSwiftPackageReference "WrappingHStack" */ = {
+		74DBC0502931BB2900588ABC /* XCRemoteSwiftPackageReference "StringMetric" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/dkk/WrappingHStack";
+			repositoryURL = "https://github.com/autozimu/StringMetric.swift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 0.3.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		74FB482D290391AA00F23E32 /* WrappingHStack */ = {
+		74DBC0512931BB2900588ABC /* StringMetric */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 74FB482C290391AA00F23E32 /* XCRemoteSwiftPackageReference "WrappingHStack" */;
-			productName = WrappingHStack;
+			package = 74DBC0502931BB2900588ABC /* XCRemoteSwiftPackageReference "StringMetric" */;
+			productName = StringMetric;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
