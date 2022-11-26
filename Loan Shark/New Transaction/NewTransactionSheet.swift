@@ -4,14 +4,15 @@
 //
 //  Created by Yuhan Du Du Du Du on 6/11/22.
 //
-// 
+// Duhan Du Du Du
 
 import SwiftUI
 
 var decimalNumberFormat: NumberFormatter {
     let numberFormatter = NumberFormatter()
     numberFormatter.allowsFloats = true
-    numberFormatter.numberStyle = .none
+    numberFormatter.numberStyle = .currency
+    numberFormatter.currencySymbol = ""
     return numberFormatter
 }
 
@@ -22,11 +23,21 @@ struct NewTransactionSheet: View {
     @State var dueDate = Date()
     @State var money = 0.0
     @State var transactionType = "Select"
-    @State var enableNotifs = false
+    
+    var sufficientPeople: Bool {
+        if transactionType == "Bill split" {
+            return people.filter({ $0.contact != nil }).count < 2
+        } else if transactionType == "Loan "{
+            return people.filter({$0.contact != nil}).count < 2
+        } else {
+            return false
+        }
+    }
     
     var fieldsUnfilled: Bool {
-        name.isEmpty || transactionType == "Select" || people.filter({ $0.contact != nil }).count < 1
+        name.isEmpty || transactionType == "Select" || people.filter({ $0.contact != nil }).count < 1 || sufficientPeople
     }
+    
     var transactionTypes = ["Select", "Loan", "Bill split"]
     @Environment(\.dismiss) var dismiss
     
@@ -55,14 +66,6 @@ struct NewTransactionSheet: View {
                         .foregroundColor(Color("PrimaryTextColor"))
                     }
                     
-                    Section {
-                        Toggle(isOn: $enableNotifs ) {
-                            Text("Enable notifications")
-                        }
-                    } footer: {
-                        Text("Enable this to allow Money Rush to automatically send you notifications to remind youcollect your money back")
-                    }
-                    
                     if transactionType == "Bill split" {
                         Section {
                             Toggle(isOn: $isDetailSynchronised) {
@@ -82,7 +85,7 @@ struct NewTransactionSheet: View {
                             }
                             return nil
                         } set: { contact in
-                            people = [Person(contact: contact, money: people[0].money!, dueDate: people[0].dueDate!, hasPaid: false)]
+                            people = [Person(contact: contact, money: people[0].money ?? 0, dueDate: people[0].dueDate ?? .now, hasPaid: false)]
                         }
                         
                         NavigationLink {
@@ -272,12 +275,9 @@ struct NewTransactionSheet: View {
                                                   people: people.filter({
                         $0.contact != nil
                     }), transactionType: transactionTypeItem)
-                    if enableNotifs {
-                        transaction.isNotificationEnabled = true
-                    } else if !enableNotifs {
-                        transaction.isNotificationEnabled = false
-                    }
+                    
                     transactions.append(transaction)
+
                     dismiss()
                 } label: {
                     Text("Save")

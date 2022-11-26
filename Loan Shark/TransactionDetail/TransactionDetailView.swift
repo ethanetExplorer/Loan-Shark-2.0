@@ -33,7 +33,7 @@ struct TransactionDetailView: View {
                         Spacer()
                         Text("$" + String(format: "%.2f", transaction.totalMoney))
                     }
-                    .padding()
+                    .padding(.horizontal)
                 } else if transaction.transactionType == .billSplitSync {
                     HStack {
                         Button {
@@ -48,7 +48,7 @@ struct TransactionDetailView: View {
                         Spacer()
                         Text("$" + String(format: "%.2f", transaction.totalMoney))
                     }
-                    .padding()
+                    .padding(.horizontal)
                 } else if transaction.transactionType == .billSplitNoSync {
                     HStack {
                         Button {
@@ -208,21 +208,35 @@ struct TransactionDetailView: View {
     
     func addNotification(for transaction: Transaction) {
         let center = UNUserNotificationCenter.current()
+        let sendNotification = transaction.isNotificationEnabled
         let addRequest = {
             let content = UNMutableNotificationContent()
-            let unpaidPeople = transaction.people.filter { $0.hasPaid == false }
-            let peopleWhoPaid = transaction.people.filter{$0.hasPaid}
-            let overdueTransactions = manager.allTransactions
-            var amountOfMoneyPaid: Double {
-                peopleWhoPaid.reduce(0) { partialResult, person in
-                    partialResult + (person.money!)
+            var unpaidPeople: [Person]
+            var peopleWhoPaid: [Person]
+            var amountOfMoneyUnpaid: Double
+            var overdueTransactions: [Transaction]
+            if !transaction.isNotificationEnabled || transaction.transactionStatus != .overdue {
+                return
+            } else {
+                unpaidPeople = transaction.people.filter { $0.hasPaid == false }
+                peopleWhoPaid = transaction.people.filter{$0.hasPaid}
+                
+                func amountOfMoneyPaid() -> Double {
+                    var u = 0.0
+                    for i in peopleWhoPaid {
+                        u += i.money!
+                    }
+                    return u
                 }
+                amountOfMoneyUnpaid = transaction.totalMoney - amountOfMoneyPaid()
+                overdueTransactions = manager.allTransactions.filter {$0.transactionStatus == .overdue && $0.isNotificationEnabled}
             }
-            let amountOfMoneyUnpaid = transaction.totalMoney - amountOfMoneyPaid
-            
-            if overdueTransactions.count > 1 {
+            if overdueTransactions.count == 0 {
+                return
+            }
+            else if overdueTransactions.count > 1 {
                 content.title = "Overdue transactions"
-                content.subtitle = "You have \(String(overdueTransactions.count)) overdue transactions"
+                content.subtitle = "You have \(overdueTransactions.count) overdue transactions"
             }
             else if overdueTransactions.count == 1 && transaction.transactionType == .billSplitNoSync || transaction.transactionType == .billSplitSync {
                 content.title = "Overdue loans"
@@ -245,7 +259,7 @@ struct TransactionDetailView: View {
             center.add(request)
         }
         center.getNotificationSettings{ settings in
-            if settings.authorizationStatus == .authorized {
+            if settings.authorizationStatus == .authorized && sendNotification {
                 addRequest()
             } else {
                 center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
