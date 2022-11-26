@@ -24,22 +24,25 @@ struct NewTransactionSheet: View {
     @State var money = 0.0
     @State var transactionType = "Select"
     
-    var sufficientPeople: Bool {
+    @Environment(\.dismiss) var dismiss
+    
+    var insufficientPeople: Bool {
         if transactionType == "Bill split" {
             return people.filter({ $0.contact != nil }).count < 2
-        } else if transactionType == "Loan "{
-            return people.filter({$0.contact != nil}).count < 2
         } else {
             return false
         }
     }
     
+    var blankMoney: Bool {
+        return !people.filter { $0.contact != nil }.allSatisfy { $0.money != nil }
+    }
+    
     var fieldsUnfilled: Bool {
-        name.isEmpty || transactionType == "Select" || people.filter({ $0.contact != nil }).count < 1 || sufficientPeople
+        name.isEmpty || transactionType == "Select" || people.filter({ $0.contact != nil }).count < 1 || insufficientPeople || blankMoney
     }
     
     var transactionTypes = ["Select", "Loan", "Bill split"]
-    @Environment(\.dismiss) var dismiss
     
     @State var name = ""
     @State var people: [Person] = [Person(contact: nil, money: 0, dueDate: .now, hasPaid: false)]
@@ -64,241 +67,246 @@ struct NewTransactionSheet: View {
                             }
                         }
                         .foregroundColor(Color("PrimaryTextColor"))
-                    }
-                    
-                    if transactionType == "Bill split" {
-                        Section {
-                            Toggle(isOn: $isDetailSynchronised) {
-                                Text("Synchronise details")
-                                    .foregroundColor(Color("PrimaryTextColor"))
-                            }
-                        } footer: {
-                            Text("Toggle this to distribute the total amount of the transaction equally between all selected contacts, and for the same due date to apply for all. ")
-                                .foregroundColor(Color("SecondaryTextColor"))
-                        }
-                    }
-                    
-                    if transactionType == "Loan" {
-                        let contactBinding = Binding {
-                            if let firstPereson = people.first {
-                                return firstPereson.contact
-                            }
-                            return nil
-                        } set: { contact in
-                            people = [Person(contact: contact, money: people[0].money ?? 0, dueDate: people[0].dueDate ?? .now, hasPaid: false)]
-                        }
                         
-                        NavigationLink {
-                            PeopleSelectorView(manager: manager, selectedContact: contactBinding)
-                        } label: {
-                            HStack {
-                                Text("People")
-                                    .foregroundColor(Color("PrimaryTextColor"))
-                                Spacer()
-                                Text(people[0].name ?? "No contact selected")
+                        if transactionType == "Bill split" {
+                            Section {
+                                Toggle(isOn: $isDetailSynchronised) {
+                                    Text("Synchronise details")
+                                        .foregroundColor(Color("PrimaryTextColor"))
+                                }
+                            } footer: {
+                                Text("Toggle this to distribute the total amount of the transaction equally between all selected contacts, and for the same due date to apply for all. ")
                                     .foregroundColor(Color("SecondaryTextColor"))
                             }
                         }
                         
-                        HStack {
-                            Text("Amount")
-                                .foregroundColor(Color("PrimaryTextColor"))
-                            Spacer()
-                            Text("$")
-                                .foregroundColor(Color("SecondaryTextColor"))
-                            TextField("Amount", value: $people[0].money, formatter: decimalNumberFormat)
-                                .foregroundColor(Color("SecondaryTextColor"))
-                                .multilineTextAlignment(.trailing)
-                                .keyboardType(.decimalPad)
-                                .frame(maxWidth: 70)
-                        }
-                        
-                        let bindingDate = Binding {
-                            people[0].dueDate ?? .now
-                        } set: { newValue in
-                            people[0].dueDate = newValue
-                        }
-                        
-                        DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
-                            .foregroundColor(Color("PrimaryTextColor"))
-                        
-                    } else if transactionType == "Bill split" && !isDetailSynchronised {
-                        if !people.isEmpty {
-                            let excludedContacts = people.compactMap({
-                                $0.contact
-                            })
+                        if transactionType == "Loan" {
+                            let contactBinding = Binding {
+                                if let firstPereson = people.first {
+                                    return firstPereson.contact
+                                }
+                                return nil
+                            } set: { contact in
+                                people = [Person(contact: contact, money: people[0].money ?? 0, dueDate: people[0].dueDate ?? .now, hasPaid: false)]
+                            }
                             
-                            ForEach($people, id: \.name) { $person in
-                                Section(header: Text(person.name ?? "No contact selected")) {
-                                    NavigationLink {
-                                        PeopleSelectorView(manager: manager, selectedContact: $person.contact, excludedContacts: excludedContacts)
-                                    } label: {
+                            NavigationLink {
+                                PeopleSelectorView(manager: manager, selectedContact: contactBinding)
+                            } label: {
+                                HStack {
+                                    Text("People")
+                                        .foregroundColor(Color("PrimaryTextColor"))
+                                    Spacer()
+                                    Text(people[0].name ?? "No contact selected")
+                                        .foregroundColor(Color("SecondaryTextColor"))
+                                }
+                            }
+                            
+                            HStack {
+                                Text("Amount")
+                                    .foregroundColor(Color("PrimaryTextColor"))
+                                Spacer()
+                                Text("$")
+                                    .foregroundColor(Color("SecondaryTextColor"))
+                                DecimalTextField(amount: $people[0].money, hint: "Amount")
+                                    .foregroundColor(Color("SecondaryTextColor"))
+                                    .multilineTextAlignment(.trailing)
+                                    .frame(maxWidth: 70)
+                            }
+                            
+                            let bindingDate = Binding {
+                                people[0].dueDate ?? .now
+                            } set: { newValue in
+                                people[0].dueDate = newValue
+                            }
+                            
+                            DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
+                                .foregroundColor(Color("PrimaryTextColor"))
+                            
+                        } else if transactionType == "Bill split" && !isDetailSynchronised {
+                            if !people.isEmpty {
+                                let excludedContacts = people.compactMap({
+                                    $0.contact
+                                })
+                                
+                                ForEach($people, id: \.name) { $person in
+                                    Section(header: Text(person.name ?? "No contact selected")) {
+                                        NavigationLink {
+                                            PeopleSelectorView(manager: manager, selectedContact: $person.contact, excludedContacts: excludedContacts)
+                                        } label: {
+                                            HStack {
+                                                Text("Person")
+                                                    .foregroundColor(Color("PrimaryTextColor"))
+                                                Spacer()
+                                                Text(person.name ?? "No contact selected")
+                                                    .foregroundColor(Color("SecondaryTextColor"))
+                                            }
+                                        }
+                                        
                                         HStack {
-                                            Text("Person")
+                                            Text("Amount")
                                                 .foregroundColor(Color("PrimaryTextColor"))
                                             Spacer()
-                                            Text(person.name ?? "No contact selected")
+                                            Text("$")
                                                 .foregroundColor(Color("SecondaryTextColor"))
+                                            DecimalTextField(amount: $person.money, hint: "Amount")
+                                                .foregroundColor(Color("SecondaryTextColor"))
+                                                .multilineTextAlignment(.trailing)
+                                                .frame(maxWidth: 70)
                                         }
-                                    }
-                                    
-                                    HStack {
-                                        Text("Amount")
+                                        
+                                        let BindingDate = Binding {
+                                            person.dueDate ?? Date.now
+                                        } set: { newValue in
+                                            person.dueDate = newValue
+                                        }
+                                        
+                                        DatePicker("Due by", selection: BindingDate, in: Date.now..., displayedComponents: .date)
                                             .foregroundColor(Color("PrimaryTextColor"))
-                                        Spacer()
-                                        Text("$")
-                                            .foregroundColor(Color("SecondaryTextColor"))
-                                        TextField("Amount", value: $person.money, formatter: decimalNumberFormat)
-                                            .foregroundColor(Color("SecondaryTextColor"))
-                                            .multilineTextAlignment(.trailing)
-                                            .keyboardType(.decimalPad)
-                                            .frame(maxWidth: 70)
                                     }
-                                    
-                                    let BindingDate = Binding {
-                                        person.dueDate ?? Date.now
-                                    } set: { newValue in
-                                        person.dueDate = newValue
-                                    }
-                                    
-                                    DatePicker("Due by", selection: BindingDate, in: Date.now..., displayedComponents: .date)
-                                        .foregroundColor(Color("PrimaryTextColor"))
                                 }
                             }
-                        }
-                        Section {
-                            if !people.contains(where: {
-                                $0.contact == nil
-                            }) {
-                                Button {
-                                    withAnimation {
-                                        people.append(Person(contact: nil, money: 0, dueDate: .now, hasPaid: false))
+                            Section {
+                                if !people.contains(where: {
+                                    $0.contact == nil
+                                }) {
+                                    Button {
+                                        withAnimation {
+                                            people.append(Person(contact: nil, money: 0, dueDate: .now, hasPaid: false))
+                                        }
+                                    } label: {
+                                        Text("Add contacts")
                                     }
-                                } label: {
-                                    Text("Add contacts")
                                 }
-                            }
-                            
-                            if !people.isEmpty {
-                                Button {
-                                    withAnimation {
-                                        _ = people.removeLast()
-                                    }
-                                } label: {
-                                    Text("Remove contact")
-                                }
-                            }
-                        }
-                    }
-                    else if transactionType == "Bill split" && isDetailSynchronised {
-                        
-                        let contactsBinding = Binding {
-                            people.compactMap {
-                                $0.contact
-                            }
-                        } set: { newValue in
-                            let money = people[0].money
-                            let dueDate = people[0].dueDate
-                            
-                            if newValue.isEmpty {
-                                people = [Person(contact: nil, money: money!, dueDate: dueDate!)]
-                            } else {
-                                people = newValue.map({ contact in
-                                    Person(contact: contact, money: money!, dueDate: dueDate!)
-                                })
-                            }
-                        }
-                        
-                        NavigationLink {
-                            MultiplePeopleSelectorView(manager: manager, selectedContacts: contactsBinding)
-                        } label: {
-                            VStack(alignment: .leading) {
-                                Text("People")
-                                let names = people
-                                    .compactMap {
-                                        $0.name
-                                    }
-                                    .joined(separator: ", ")
                                 
-                                if !names.isEmpty {
-                                    Text(names)
-                                        .font(.caption)
-                                        .foregroundColor(Color("SecondaryTextColor"))
-                                } else {
-                                    Text("No contact selected")
-                                        .font(.caption)
-                                        .foregroundColor(Color("SecondaryTextColor"))
+                                if !people.isEmpty {
+                                    Button {
+                                        withAnimation {
+                                            _ = people.removeLast()
+                                        }
+                                    } label: {
+                                        Text("Remove contact")
+                                    }
                                 }
                             }
                         }
-                        let bindingMoney = Binding {
-                            people[0].money ?? 0
-                        } set: { newValue in
-                            for peopleIndex in 0..<people.count {
-                                people[peopleIndex].money = newValue
+                        else if transactionType == "Bill split" && isDetailSynchronised {
+                            
+                            let contactsBinding = Binding {
+                                people.compactMap {
+                                    $0.contact
+                                }
+                            } set: { newValue in
+                                let money = people[0].money
+                                let dueDate = people[0].dueDate
+                                
+                                if newValue.isEmpty {
+                                    people = [Person(contact: nil, money: money!, dueDate: dueDate!)]
+                                } else {
+                                    people = newValue.map({ contact in
+                                        Person(contact: contact, money: money!, dueDate: dueDate!)
+                                    })
+                                }
                             }
-                        }
-                        
-                        HStack {
-                            Text("Amount each")
+                            
+                            NavigationLink {
+                                MultiplePeopleSelectorView(manager: manager, selectedContacts: contactsBinding)
+                            } label: {
+                                VStack(alignment: .leading) {
+                                    Text("People")
+                                    let names = people
+                                        .compactMap {
+                                            $0.name
+                                        }
+                                        .joined(separator: ", ")
+                                    
+                                    if !names.isEmpty {
+                                        Text(names)
+                                            .font(.caption)
+                                            .foregroundColor(Color("SecondaryTextColor"))
+                                    } else {
+                                        Text("No contact selected")
+                                            .font(.caption)
+                                            .foregroundColor(Color("SecondaryTextColor"))
+                                    }
+                                }
+                            }
+                            let bindingMoney = Binding {
+                                people[0].money ?? 0
+                            } set: { newValue in
+                                for peopleIndex in 0..<people.count {
+                                    people[peopleIndex].money = newValue
+                                }
+                            }
+                            
+                            HStack {
+                                Text("Amount each")
+                                    .foregroundColor(Color("PrimaryTextColor"))
+                                Spacer()
+                                Text("$")
+                                    .foregroundColor(Color("SecondaryTextColor"))
+                                DecimalTextField(amount: $people[0].money, hint: "Amount")
+                                    .foregroundColor(Color("SecondaryTextColor"))
+                                    .multilineTextAlignment(.trailing)
+                                    .frame(maxWidth: 70)
+                            }
+                            
+                            let bindingDate = Binding {
+                                people[0].dueDate ?? .now
+                            } set: { newValue in
+                                people[0].dueDate = newValue
+                            }
+                            DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
                                 .foregroundColor(Color("PrimaryTextColor"))
-                            Spacer()
-                            Text("$")
-                                .foregroundColor(Color("SecondaryTextColor"))
-                            TextField("Amount each", value: bindingMoney, formatter: decimalNumberFormat)
-                                .foregroundColor(Color("SecondaryTextColor"))
-                                .multilineTextAlignment(.trailing)
-                                .keyboardType(.decimalPad)
-                                .frame(maxWidth: 70)
                         }
+                    }
+                    Button {
+                        guard people.first?.money != nil else { return }
                         
-                        let bindingDate = Binding {
-                            people[0].dueDate ?? .now
-                        } set: { newValue in
-                            people[0].dueDate = newValue
-                        }
-                        DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
-                            .foregroundColor(Color("PrimaryTextColor"))
+                        let transactionTypeItem: TransactionTypes = {
+                            switch transactionType {
+                            case "Loan":
+                                return .loan
+                            case "Bill split":
+                                return isDetailSynchronised ? .billSplitSync : .billSplitNoSync
+                            default: return .unselected
+                            }
+                        }()
+                        let transaction = Transaction(name: name,
+                                                      people: people.filter({
+                            $0.contact != nil
+                        }), transactionType: transactionTypeItem)
+                        
+                        transactions.append(transaction)
+                        
+                        dismiss()
+                    } label: {
+                        Text("Save")
+                            .frame(height: 50)
+                            .frame(maxWidth: .infinity)
+                            .background(Color("AccentColor"))
+                            .cornerRadius(10)
+                            .foregroundColor(.white)
+                            .opacity(fieldsUnfilled ? 0.5 : 1)
+                    }
+                    .disabled(fieldsUnfilled)
+                    .padding(.horizontal)
+                    
+                    Button(role: .cancel) {
+                        dismiss()
+                    } label: {
+                        Text("Cancel")
                     }
                 }
-                Button {
-                    let transactionTypeItem: TransactionTypes = {
-                        switch transactionType {
-                        case "Loan":
-                            return .loan
-                        case "Bill split":
-                            return isDetailSynchronised ? .billSplitSync : .billSplitNoSync
-                        default: return .unselected
-                        }
-                    }()
-                    let transaction = Transaction(name: name,
-                                                  people: people.filter({
-                        $0.contact != nil
-                    }), transactionType: transactionTypeItem)
-                    
-                    transactions.append(transaction)
-
-                    dismiss()
-                } label: {
-                    Text("Save")
-                        .frame(height: 50)
-                        .frame(maxWidth: .infinity)
-                        .background(Color("AccentColor"))
-                        .cornerRadius(10)
-                        .foregroundColor(.white)
-                        .opacity(fieldsUnfilled ? 0.5 : 1)
+                .navigationTitle("New transaction")
+                .onChange(of: transactionType) { newValue in
+                    people = [Person(contact: nil, money: 0, dueDate: .now, hasPaid: false)]
                 }
-                .disabled(fieldsUnfilled)
-                .padding(.horizontal)
-            }
-            .navigationTitle("New transaction")
-            .onChange(of: transactionType) { newValue in
-                people = [Person(contact: nil, money: 0, dueDate: .now, hasPaid: false)]
-            }
-            .onChange(of: isDetailSynchronised) { newValue in
-                people = [Person(contact: nil, money: 0, dueDate: .now, hasPaid: false)]
+                .onChange(of: isDetailSynchronised) { newValue in
+                    people = [Person(contact: nil, money: 0, dueDate: .now, hasPaid: false)]
+                }
+                .interactiveDismissDisabled()
             }
         }
     }
 }
-

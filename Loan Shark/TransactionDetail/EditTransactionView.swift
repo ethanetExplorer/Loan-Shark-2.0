@@ -33,7 +33,7 @@ struct EditTransactionView: View {
                             Text("Enable notifications")
                         }
                     } footer: {
-                        Text("Enable this to allow Money Rush to automatically send you notifications to remind youcollect your money back")
+                        Text("Enable this to allow Money Rush to automatically send you notifications to remind youcollect your money back.")
                     }
                     if transaction.transactionType == .loan {
                         Section {
@@ -47,9 +47,9 @@ struct EditTransactionView: View {
                             HStack {
                                 Text("Amount")
                                     .foregroundColor(Color("PrimaryTextColor"))
-                                TextField("Amount", value: $transaction.people[0].money, formatter: decimalNumberFormat)
-                                    .foregroundColor(Color("SecondaryTextColor"))                                .multilineTextAlignment(.trailing)
-                                    .keyboardType(.decimalPad)
+                                DecimalTextField(amount: $transaction.people[0].money, hint: "Amount")
+                                    .foregroundColor(Color("SecondaryTextColor"))
+                                    .multilineTextAlignment(.trailing)
                             }
                             
                             let bindingDate = Binding {
@@ -74,9 +74,11 @@ struct EditTransactionView: View {
                                 HStack {
                                     Text("Amount")
                                         .foregroundColor(Color("PrimaryTextColor"))
-                                    TextField("Amount", value: $person.money, formatter: decimalNumberFormat)
-                                        .foregroundColor(Color("SecondaryTextColor"))                                    .multilineTextAlignment(.trailing)
-                                        .keyboardType(.decimalPad)
+                                    DecimalTextField(amount: $person.money, hint: "Amount")
+                                        .foregroundColor(Color("SecondaryTextColor"))
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(maxWidth: 70)
+
                                 }
                                 
                                 let dueDateBinding = Binding {
@@ -101,10 +103,10 @@ struct EditTransactionView: View {
                         HStack {
                             Text("Amount each")
                                 .foregroundColor(Color("PrimaryTextColor"))
-                            TextField("Amount", value: $transaction.people[0].money, formatter: decimalNumberFormat)
+                            DecimalTextField(amount: $transaction.people[0].money, hint: "Amount")
                                 .foregroundColor(Color("SecondaryTextColor"))
                                 .multilineTextAlignment(.trailing)
-                                .keyboardType(.decimalPad)
+
                         }
                         
                         let bindingDate = Binding {
