@@ -122,7 +122,7 @@ class Transaction: Identifiable, Codable {
     }
     
     var transactionType: TransactionTypes
-    var isNotificationEnabled = false
+    var isNotificationEnabled: Bool
     
     var totalMoney: Double {
         people.reduce(0) { partialResult, person in
@@ -130,11 +130,12 @@ class Transaction: Identifiable, Codable {
         }
     }
 
-    init(id: UUID = UUID(), name: String, people: [Person], transactionType: TransactionTypes) {
+    init(id: UUID = UUID(), name: String, people: [Person], transactionType: TransactionTypes, isNotificationEnabled: Bool = false) {
         self.id = id
         self.name = name
         self.people = people
         self.transactionType = transactionType
+        self.isNotificationEnabled = isNotificationEnabled
     }
 }
 

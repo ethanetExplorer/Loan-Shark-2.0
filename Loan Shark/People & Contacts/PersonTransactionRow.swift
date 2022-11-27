@@ -26,7 +26,7 @@ struct PersonTransactionRow: View {
         Button {
             showTransactionDetailSheet = true
         } label: {
-            HStack{
+            HStack {
                 VStack(alignment: .leading) {
                     Text(transaction.name)
                         .foregroundColor(Color("PrimaryTextColor"))
@@ -43,7 +43,7 @@ struct PersonTransactionRow: View {
                 }
                 Spacer()
                 
-                Text("\(decimalNumberFormat.string(for: transactionPerson.money ?? 0)!)")
+                Text("$\(decimalNumberFormat.string(for: transactionPerson.money ?? 0)!)")
                     .foregroundColor(Color("PrimaryTextColor"))
                     .font(.title2)
             }

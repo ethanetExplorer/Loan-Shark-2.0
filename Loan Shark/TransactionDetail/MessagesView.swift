@@ -35,6 +35,8 @@ struct MessageView: UIViewControllerRepresentable {
     }
     
     static var canSendText: Bool {
+        #warning("PLEASE REMOVE THIS")
+        return true
         MFMessageComposeViewController.canSendText()
     }
     

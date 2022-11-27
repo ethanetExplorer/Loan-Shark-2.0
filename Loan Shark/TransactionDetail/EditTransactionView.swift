@@ -11,7 +11,6 @@ struct EditTransactionView: View {
     
     @Binding var transaction: Transaction
     @Environment(\.dismiss) var dismiss
-    @State var enableNotifs = false
     
     var transactionTypes = ["Select", "Loan", "Bill Split"]
     
@@ -47,9 +46,9 @@ struct EditTransactionView: View {
                             HStack {
                                 Text("Amount")
                                     .foregroundColor(Color("PrimaryTextColor"))
-                                DecimalTextField(amount: $transaction.people[0].money, hint: "Amount")
-                                    .foregroundColor(Color("SecondaryTextColor"))
-                                    .multilineTextAlignment(.trailing)
+                                TextField("Amount", value: $transaction.people[0].money, formatter: decimalNumberFormat)
+                                    .foregroundColor(Color("SecondaryTextColor"))                                .multilineTextAlignment(.trailing)
+                                    .keyboardType(.decimalPad)
                             }
                             
                             let bindingDate = Binding {
@@ -58,7 +57,7 @@ struct EditTransactionView: View {
                                 transaction.people[0].dueDate = newValue
                             }
                             
-                            DatePicker("Due by", selection: bindingDate, in: transaction.people[0].dueDate!..., displayedComponents: .date)
+                            DatePicker("Due by", selection: bindingDate, displayedComponents: .date)
                                 .foregroundColor(Color("PrimaryTextColor"))
                         }
                     } else if transaction.transactionType == .billSplitNoSync {
@@ -74,11 +73,9 @@ struct EditTransactionView: View {
                                 HStack {
                                     Text("Amount")
                                         .foregroundColor(Color("PrimaryTextColor"))
-                                    DecimalTextField(amount: $person.money, hint: "Amount")
-                                        .foregroundColor(Color("SecondaryTextColor"))
-                                        .multilineTextAlignment(.trailing)
-                                        .frame(maxWidth: 70)
-
+                                    TextField("Amount", value: $person.money, formatter: decimalNumberFormat)
+                                        .foregroundColor(Color("SecondaryTextColor"))                                    .multilineTextAlignment(.trailing)
+                                        .keyboardType(.decimalPad)
                                 }
                                 
                                 let dueDateBinding = Binding {
@@ -87,7 +84,7 @@ struct EditTransactionView: View {
                                     person.dueDate = newValue
                                 }
                                 
-                                DatePicker("Due by", selection: dueDateBinding, in: person.dueDate!..., displayedComponents: .date)
+                                DatePicker("Due by", selection: dueDateBinding, displayedComponents: .date)
                                     .foregroundColor(Color("PrimaryTextColor"))
                             }
                         }
@@ -103,10 +100,10 @@ struct EditTransactionView: View {
                         HStack {
                             Text("Amount each")
                                 .foregroundColor(Color("PrimaryTextColor"))
-                            DecimalTextField(amount: $transaction.people[0].money, hint: "Amount")
+                            TextField("Amount", value: $transaction.people[0].money, formatter: decimalNumberFormat)
                                 .foregroundColor(Color("SecondaryTextColor"))
                                 .multilineTextAlignment(.trailing)
-
+                                .keyboardType(.decimalPad)
                         }
                         
                         let bindingDate = Binding {
