@@ -120,7 +120,7 @@ class TransactionManager: ObservableObject {
             }
         case .amount:
             return transactions.sorted { firstTransaction, secondTransaction in
-                firstTransaction.totalMoney < secondTransaction.totalMoney
+                firstTransaction.totalMoney > secondTransaction.totalMoney
             }
         case .alphabetically:
             return transactions.sorted { firstTransaction, secondTransaction in

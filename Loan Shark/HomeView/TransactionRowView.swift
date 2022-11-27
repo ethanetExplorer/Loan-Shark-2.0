@@ -21,7 +21,7 @@ struct TransactionRowView: View {
                 VStack (alignment: .leading) {
                     Text(transaction.name)
                         .foregroundColor(transaction.transactionStatus == .paidOff ? .gray : Color("PrimaryTextColor"))
-                    Text(transaction.people.map {$0.name!}.joined(separator: ", "))
+                    Text(findPeopleWhoNeverPay())
                         .font(.caption)
                         .foregroundColor(transaction.transactionStatus == .paidOff ? .gray : Color("SecondaryTextColor"))
                 }
@@ -33,7 +33,7 @@ struct TransactionRowView: View {
         }
     }
     func findPeopleWhoNeverPay() -> String {
-        let s = transaction.people.filter { $0.hasPaid }
+        let s = transaction.people.filter { !$0.hasPaid }
         let t = String(s.map { $0.name! }.joined(separator: ", "))
         let r = String(transaction.people.map {$0.name!}.joined(separator: ", "))
         if !s.isEmpty {
@@ -42,13 +42,13 @@ struct TransactionRowView: View {
             return r
         }
     }
-    
+
     func moneyCalculator() -> Double {
-        let s = transaction.people.filter{ $0.hasPaid }
+        let s = transaction.people.filter{ !$0.hasPaid }
         let t = s.map {$0.money}
         let r = transaction.people.map {$0.money}
         var u = 0.0
-        
+
         if !t.isEmpty {
             u = t.reduce(into: 0.00) { partialResult, person in
                 partialResult += (person ?? 0)

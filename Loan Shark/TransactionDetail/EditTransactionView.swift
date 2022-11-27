@@ -46,8 +46,16 @@ struct EditTransactionView: View {
                             HStack {
                                 Text("Amount")
                                     .foregroundColor(Color("PrimaryTextColor"))
-                                TextField("Amount", value: $transaction.people[0].money, formatter: decimalNumberFormat)
-                                    .foregroundColor(Color("SecondaryTextColor"))                                .multilineTextAlignment(.trailing)
+                                
+                                let moneyBinding = Binding {
+                                    transaction.people[0].money ?? 0
+                                } set: { money in
+                                    transaction.people[0].money = money
+                                }
+
+                                DecimalTextField(amount: moneyBinding, hint: "Amount")
+                                    .foregroundColor(Color("SecondaryTextColor"))
+                                    .multilineTextAlignment(.trailing)
                                     .keyboardType(.decimalPad)
                             }
                             
@@ -73,8 +81,17 @@ struct EditTransactionView: View {
                                 HStack {
                                     Text("Amount")
                                         .foregroundColor(Color("PrimaryTextColor"))
-                                    TextField("Amount", value: $person.money, formatter: decimalNumberFormat)
-                                        .foregroundColor(Color("SecondaryTextColor"))                                    .multilineTextAlignment(.trailing)
+                                    
+                                    let bindingMoney = Binding {
+                                        return person.money ?? 0
+                                    } set: { money in
+                                        person.money = money
+                                    }
+
+                                    
+                                    DecimalTextField(amount: bindingMoney, hint: "Amount")
+                                        .foregroundColor(Color("SecondaryTextColor"))
+                                        .multilineTextAlignment(.trailing)
                                         .keyboardType(.decimalPad)
                                 }
                                 
@@ -100,7 +117,14 @@ struct EditTransactionView: View {
                         HStack {
                             Text("Amount each")
                                 .foregroundColor(Color("PrimaryTextColor"))
-                            TextField("Amount", value: $transaction.people[0].money, formatter: decimalNumberFormat)
+                            
+                            let moneyBinding = Binding {
+                                transaction.people[0].money ?? 0
+                            } set: { money in
+                                transaction.people[0].money = money
+                            }
+
+                            DecimalTextField(amount: moneyBinding, hint: "Amount")
                                 .foregroundColor(Color("SecondaryTextColor"))
                                 .multilineTextAlignment(.trailing)
                                 .keyboardType(.decimalPad)

@@ -96,7 +96,7 @@ struct TransactionDetailView: View {
                                             .foregroundStyle(.secondary)
                                         }
                                         Spacer()
-                                        Text("$ \(String(format: "%.2f", person.money!))")
+                                        Text("$ \(String(format: "%.2f", person.money ?? 0))")
                                             .foregroundColor(transaction.transactionStatus == .overdue ? Color("RadRed") : Color("PrimaryTextColor"))
                                             .font(.title2)
                                             .foregroundColor(Color("PrimaryTextColor"))
