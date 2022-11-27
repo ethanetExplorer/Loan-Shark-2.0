@@ -11,6 +11,7 @@ struct TransactionRowView: View {
     
     @ObservedObject var manager: TransactionManager
     @Binding var transaction: Transaction
+    @State var reload = false
     
     var body: some View {
         NavigationLink {
@@ -19,10 +20,10 @@ struct TransactionRowView: View {
             HStack {
                 VStack (alignment: .leading) {
                     Text(transaction.name)
-                        .foregroundColor(Color("PrimaryTextColor"))
-                    Text(findPeopleWhoNeverPay())
+                        .foregroundColor(transaction.transactionStatus == .paidOff ? .gray : Color("PrimaryTextColor"))
+                    Text(transaction.people.map {$0.name!}.joined(separator: ", "))
                         .font(.caption)
-                        .foregroundColor(Color("SecondaryTextColor"))
+                        .foregroundColor(transaction.transactionStatus == .paidOff ? .gray : Color("SecondaryTextColor"))
                 }
                 Spacer()
                 Text("$" + String(format: "%.2f", moneyCalculator()))

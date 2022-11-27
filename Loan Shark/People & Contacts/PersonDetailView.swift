@@ -23,38 +23,32 @@ struct PersonDetailView: View {
             })
         }
     }
-//    var personIndex: Int? {
-//        for transaction in userTransactions {
-//            transaction.people.firstIndex(where: $0.name == person.name)
-//        }
-//    }
-//}
-
-var body: some View {
-    NavigationView{
-        List {
-            Section(header: Text("ONGOING TRANSACTIONS")) {
-                
-                ForEach(userTransactions.filter { !$0.people[getPersonIndex(array: $0.people)!].hasPaid }) { transaction in
-                    PersonTransactionRow(manager: manager, transaction: transaction, person: person)
+    
+    var body: some View {
+        NavigationView{
+            List {
+                Section(header: Text("ONGOING TRANSACTIONS")) {
+                    if !userTransactions.filter { !$0.people[getPersonIndex(array: $0.people)!].hasPaid }.isEmpty {
+                        ForEach(userTransactions.filter { !$0.people[getPersonIndex(array: $0.people)!].hasPaid }) { transaction in
+                            PersonTransactionRow(manager: manager, transaction: transaction, person: person)
+                        }
+                    } else {
+                        Text("No ongoing transactions.")
+                            .foregroundColor(Color("SecondaryTextColor"))
+                    }
+                }
+                Section(header: Text("TRANSACTION HISTORY")) {
+                    if !userTransactions.filter { $0.people[getPersonIndex(array: $0.people)!].hasPaid }.isEmpty {
+                        ForEach(userTransactions.filter { $0.people[getPersonIndex(array: $0.people)!].hasPaid }) { transaction in
+                            PersonTransactionRow(manager: manager, transaction: transaction, person: person)
+                        }
+                    } else {
+                        Text("No transaction history.")
+                            .foregroundColor(Color("SecondaryTextColor"))
+                    }
                 }
             }
-            Section(header: Text("TRANSACTION HISTORY")) {
-                ForEach(userTransactions.filter { $0.people[getPersonIndex(array: $0.people)!].hasPaid }) { transaction in
-                    PersonTransactionRow(manager: manager, transaction: transaction, person: person)
-                }
-            }
-            
         }
+        .navigationTitle(person.name)
     }
-    .navigationTitle(person.name)
 }
-}
-
-
-
-//struct contactDetailView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PersonDetailView(person: Person(name: "Jeremy"))
-//    }
-//}
