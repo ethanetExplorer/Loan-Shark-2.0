@@ -28,7 +28,7 @@ struct PeopleView: View {
                     }
                 }
             }
-            .navigationTitle("All People")
+            .navigationTitle("Contacts")
             .searchable(text: $searchTerm)
         }
     }
