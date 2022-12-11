@@ -1,4 +1,4 @@
-# Loan-Shark-2.0
+# Money Rush
 
 The repository of an iOS app, Money Rush, designed to help you keep track of your loans. 
 
