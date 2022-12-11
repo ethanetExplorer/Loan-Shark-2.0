@@ -33,10 +33,3 @@ struct PeopleView: View {
         }
     }
 }
-    
-    struct ContactView_Previews: PreviewProvider {
-        static var previews: some View {
-            PeopleView(manager: TransactionManager(), isContactSheetPresented: true, searchTerm: "")
-        }
-    }
-

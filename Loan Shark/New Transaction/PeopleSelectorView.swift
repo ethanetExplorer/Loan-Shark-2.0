@@ -13,6 +13,8 @@ struct PeopleSelectorView: View {
     
     @Binding var selectedContact: Contact?
     
+    @Environment(\.dismiss) var dismiss
+    
     var excludedContacts: [Contact] = []
     
     @State var searchTerm = ""
@@ -40,6 +42,7 @@ struct PeopleSelectorView: View {
                             selectedContact = nil
                         } else {
                             selectedContact = contact
+                            dismiss()
                         }
                         
                         reload.toggle()

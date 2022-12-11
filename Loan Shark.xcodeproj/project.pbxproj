@@ -56,6 +56,7 @@
 		09E16BC629160437003090BB /* TransactionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
 		55000AD02921E9B900779BBA /* PeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleView.swift; sourceTree = "<group>"; };
 		55000AD22921EB4500779BBA /* PersonDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailView.swift; sourceTree = "<group>"; };
+		55436C002940812000B810B1 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		55DBFA17291377FB008AFA32 /* NewTransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransactionSheet.swift; sourceTree = "<group>"; };
 		55EFC5F4292A0E3A002F8A2D /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		55EFC5F6292A0F80002F8A2D /* SendMessageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageButton.swift; sourceTree = "<group>"; };
@@ -183,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				7405A132292EFF5300571A47 /* Loan Shark.entitlements */,
+				55436C002940812000B810B1 /* TODO.md */,
 				74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */,
 				74BDE57D28CD868C00D1DA25 /* ContentView.swift */,
 				55EFC5FE292BC650002F8A2D /* Data */,

@@ -30,21 +30,14 @@ struct PersonTransactionRow: View {
                 VStack(alignment: .leading) {
                     Text(transaction.name)
                         .foregroundColor(Color("PrimaryTextColor"))
-                    
-                    if transaction.transactionStatus == .paidOff {
-                        Text("Paid off")
-                            .font(.caption)
-                            .foregroundColor(Color("SecondaryTextColor"))
-                    } else {
-                        Text(getTransactionDueDate(for: transaction))
-                            .font(.caption)
-                            .foregroundColor(Color("SecondaryTextColor"))
-                    }
+                    Text(getTransactionDueDate(for: transaction))
+                        .font(.caption)
+                        .foregroundColor(Color("SecondaryTextColor"))
                 }
                 Spacer()
                 
                 Text("$\(decimalNumberFormat.string(for: transactionPerson.money ?? 0)!)")
-                    .foregroundColor(Color("PrimaryTextColor"))
+                    .foregroundColor(Color(transaction.transactionStatus == .overdue ? "RadRed" : "PrimaryTextColor"))
                     .font(.title2)
             }
         }
@@ -64,11 +57,11 @@ struct PersonTransactionRow: View {
         } else if daysAgo == 0 && transaction.isPaid == false {
             return "Due today"
         } else if dateDiff > 0 && transaction.isPaid == false {
-            return "Due in \(daysAgo) days"
-        } else if dateDiff < 0 && transaction.isPaid == false {
             return "Due \(daysAgo) days ago"
+        } else if dateDiff < 0 && transaction.isPaid == false {
+            return "Due in \(daysAgo) days"
         } else {
-            return "No"
+            return ""
         }
     }
 }

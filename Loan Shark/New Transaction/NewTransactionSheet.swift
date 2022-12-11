@@ -26,6 +26,7 @@ struct NewTransactionSheet: View {
     @State var money = 0.0
     @State var transactionType = "Select"
     @State var enableNotifs = false
+    @State var noDueDate = false
     @Environment(\.dismiss) var dismiss
     
     var insufficientPeople: Bool {
@@ -37,7 +38,7 @@ struct NewTransactionSheet: View {
     }
     
     var blankMoney: Bool {
-        return !people.filter { $0.contact != nil }.allSatisfy { $0.money != nil }
+        return !people.filter { $0.contact != nil }.allSatisfy { $0.money != nil && $0.money! > 0 }
     }
     
     var fieldsUnfilled: Bool {
@@ -136,8 +137,15 @@ struct NewTransactionSheet: View {
                             people[0].dueDate = newValue
                         }
                         
-                        DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
-                            .foregroundColor(Color("PrimaryTextColor"))
+//                        Toggle(isOn: $noDueDate) {
+//                            Text("No due date")
+//                                .foregroundColor(Color("PrimaryTextColor"))
+//                        }
+//
+//                        if noDueDate == false {
+//                            DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
+//                                .foregroundColor(Color("PrimaryTextColor"))
+//                        }
                         
                     } else if transactionType == "Bill split" && !isDetailSynchronised {
                         if !people.isEmpty {
@@ -180,8 +188,15 @@ struct NewTransactionSheet: View {
                                         person.dueDate = newValue
                                     }
                                     
-                                    DatePicker("Due by", selection: BindingDate, in: Date.now..., displayedComponents: .date)
-                                        .foregroundColor(Color("PrimaryTextColor"))
+                                    Toggle(isOn: $noDueDate) {
+                                        Text("No due date")
+                                            .foregroundColor(Color("PrimaryTextColor"))
+                                    }
+                                    
+                                    if noDueDate == false {
+                                        DatePicker("Due by", selection: BindingDate, in: Date.now..., displayedComponents: .date)
+                                            .foregroundColor(Color("PrimaryTextColor"))
+                                    }
                                 }
                             }
                         }
@@ -277,8 +292,15 @@ struct NewTransactionSheet: View {
                                 people[peopleIndex].dueDate = newValue
                             }
                         }
-                        DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
-                            .foregroundColor(Color("PrimaryTextColor"))
+                        Toggle(isOn: $noDueDate) {
+                            Text("No due date")
+                                .foregroundColor(Color("PrimaryTextColor"))
+                        }
+                        
+                        if noDueDate == false {
+                            DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
+                                .foregroundColor(Color("PrimaryTextColor"))
+                        }
                     }
                 }
                 VStack {

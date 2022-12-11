@@ -37,7 +37,7 @@ struct PersonDetailView: View {
                             .foregroundColor(Color("SecondaryTextColor"))
                     }
                 }
-                Section(header: Text("TRANSACTION HISTORY")) {
+                Section(header: Text("PAST TRANSACTIONS")) {
                     if !userTransactions.filter { $0.people[getPersonIndex(array: $0.people)!].hasPaid }.isEmpty {
                         ForEach(userTransactions.filter { $0.people[getPersonIndex(array: $0.people)!].hasPaid }) { transaction in
                             PersonTransactionRow(manager: manager, transaction: transaction, person: person)
