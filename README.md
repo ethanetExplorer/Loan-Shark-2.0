@@ -9,7 +9,7 @@ Money Rush is directly integrated with your contacts, making it simpler than eve
 
 Developed as part of the Swift Accelerator Programme, Class of 2022, Yuhan and Ethan were the main ones involved in the programming of this app, while other group members also helped out in separate components of our graduation task. 
 
-_Learn more about our app at: swiftinsg.org/apps_
+_Learn more about our app at: [swiftinsg.org/apps](swiftinsg.org/apps)_
 
 ---
 <img src="https://user-images.githubusercontent.com/103890582/206902183-89d466fa-7a4a-4f89-a91c-33167cb957f5.png" alt="drawing" width="100"/>
