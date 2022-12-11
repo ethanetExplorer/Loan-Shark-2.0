@@ -7,7 +7,6 @@
 
 import Foundation
 import Contacts
-//import SwiftUI /* Why the fuck do you need to import SwiftUI???*/
 
 enum TransactionTypes: Codable {
     case unselected
