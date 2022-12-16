@@ -101,7 +101,7 @@ struct EditTransactionView: View {
                                     person.dueDate = newValue
                                 }
                                 
-                                DatePicker("Due by", selection: dueDateBinding, displayedComponents: .date)
+                                DatePicker("Due by", selection: dueDateBinding, in: Date.now..., displayedComponents: .date)
                                     .foregroundColor(Color("PrimaryTextColor"))
                             }
                         }
@@ -136,7 +136,7 @@ struct EditTransactionView: View {
                             transaction.people[0].dueDate = newValue
                         }
                         
-                        DatePicker("Due by", selection: bindingDate, in: transaction.dueDate..., displayedComponents: .date)
+                        DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
                             .foregroundColor(Color("PrimaryTextColor"))
                     }
                 }

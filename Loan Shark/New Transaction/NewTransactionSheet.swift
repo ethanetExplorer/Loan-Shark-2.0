@@ -71,14 +71,13 @@ struct NewTransactionSheet: View {
                         }
                         .foregroundColor(Color("PrimaryTextColor"))
                     }
-                    Section {
-                        Toggle(isOn: $enableNotifs ) {
-                            Text("Enable notifications")
-                                .foregroundColor(Color("PrimaryTextColor"))
+                    if transactionType != "Select" {
+                        Section {
+                            Toggle(isOn: $enableNotifs ) {
+                                Text("Enable notifications")
+                                    .foregroundColor(Color("PrimaryTextColor"))
+                            }
                         }
-                    } footer: {
-                        Text("Enable this to allow Money Rush to automatically send you notifications to remind you to collect your money back.")
-                            .foregroundColor(Color("SecondaryTextColor"))
                     }
                     
                     if transactionType == "Bill split" {
@@ -143,8 +142,8 @@ struct NewTransactionSheet: View {
 //                        }
 //
 //                        if noDueDate == false {
-//                            DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
-//                                .foregroundColor(Color("PrimaryTextColor"))
+                            DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
+                                .foregroundColor(Color("PrimaryTextColor"))
 //                        }
                         
                     } else if transactionType == "Bill split" && !isDetailSynchronised {
@@ -213,7 +212,7 @@ struct NewTransactionSheet: View {
                                 }
                             }
                             
-                            if !people.isEmpty {
+                            if !people.isEmpty && people.count > 2 {
                                 Button {
                                     withAnimation {
                                         _ = people.removeLast()

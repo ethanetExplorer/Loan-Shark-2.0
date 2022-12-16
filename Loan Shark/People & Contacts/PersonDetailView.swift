@@ -29,7 +29,9 @@ struct PersonDetailView: View {
             List {
                 Section(header: Text("ONGOING TRANSACTIONS")) {
                     if !userTransactions.filter { !$0.people[getPersonIndex(array: $0.people)!].hasPaid }.isEmpty {
-                        ForEach(userTransactions.filter { !$0.people[getPersonIndex(array: $0.people)!].hasPaid }) { transaction in
+                        ForEach(userTransactions.filter { !$0.people[getPersonIndex(array: $0.people)!].hasPaid }.sorted { firstTransaction, secondTransaction in
+                            firstTransaction.dueDate < secondTransaction.dueDate})
+                            { transaction in
                             PersonTransactionRow(manager: manager, transaction: transaction, person: person)
                         }
                     } else {
