@@ -13,10 +13,13 @@ struct PeopleView: View {
     @ObservedObject var manager: TransactionManager
     @State var isContactSheetPresented = false
     @State var searchTerm = ""
-    
+    var contactsSelectedForTransactions: [Contact] {
+        manager.contactsList.filter { $0.selectedForTransaction == true}
+    }
+
     var body: some View {
         NavigationView {
-            List(manager.contactsList.filter({ contact in
+            List(contactsSelectedForTransactions.filter({ contact in
                 contact.name.lowercased().contains(searchTerm.lowercased()) || searchTerm.isEmpty
             })) { contact in
                 NavigationLink {
@@ -30,6 +33,10 @@ struct PeopleView: View {
             }
             .navigationTitle("Contacts")
             .searchable(text: $searchTerm)
+            .onAppear {
+                print(contactsSelectedForTransactions)
+                print(manager.contactsList)
+            }
         }
     }
 }

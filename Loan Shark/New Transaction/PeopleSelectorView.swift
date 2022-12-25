@@ -56,6 +56,13 @@ struct PeopleSelectorView: View {
             }
         }
         .searchable(text: $searchTerm, prompt: Text("Search for a person"))
-        .navigationTitle("Select people")
+        .navigationTitle("Select a contact")
+//        .onDisappear {
+//            var listContact = manager.contactsList.first(where: { $0.id == selectedContact?.id })
+//            listContact?.selectedForTransaction = true
+//            if selectedContact != nil {
+//                manager.contactsList[manager.contactsList.firstIndex(where: { $0.id == selectedContact?.id })!] = listContact!
+//            }
+//        }
     }
 }

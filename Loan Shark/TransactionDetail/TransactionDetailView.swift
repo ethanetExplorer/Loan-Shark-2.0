@@ -85,6 +85,7 @@ struct TransactionDetailView: View {
                                             HStack(alignment: .center, spacing: 0) {
                                                 Text(transaction.transactionStatus == .overdue ? "Due " : "Due in ")
                                                     .foregroundColor(Color("SecondaryTextColor"))
+                                                #warning("CHANGE THIS")
                                                 Text(person.dueDate!, style: .relative)
                                                     .foregroundColor(Color("SecondaryTextColor"))
                                                 if transaction.transactionStatus == .overdue {

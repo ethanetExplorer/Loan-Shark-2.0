@@ -106,7 +106,7 @@ struct NewTransactionSheet: View {
                             PeopleSelectorView(manager: manager, selectedContact: contactBinding)
                         } label: {
                             HStack {
-                                Text("People")
+                                Text("Person")
                                     .foregroundColor(Color("PrimaryTextColor"))
                                 Spacer()
                                 Text(people[0].name ?? "No contact selected")
@@ -200,9 +200,7 @@ struct NewTransactionSheet: View {
                             }
                         }
                         Section {
-                            if !people.contains(where: {
-                                $0.contact == nil
-                            }) {
+                            if !people.contains(where: { $0.contact == nil }) {
                                 Button {
                                     withAnimation {
                                         people.append(Person(contact: nil, money: 0, dueDate: .now, hasPaid: false))
@@ -318,6 +316,11 @@ struct NewTransactionSheet: View {
                             $0.contact != nil
                         }), transactionType: transactionTypeItem, isNotificationEnabled: enableNotifs)
                         manageNotification(for: transaction)
+                        for person in transaction.people.filter( {$0.contact != nil }) {
+                            var listContact = manager.contactsList.first(where: { $0.id == person.contact!.id })
+                            listContact!.selectedForTransaction = true
+                            manager.contactsList[manager.contactsList.firstIndex(where: { $0.id == person.contact!.id })!] = listContact!
+                        }
                         transactions.append(transaction)
                         
                         dismiss()
