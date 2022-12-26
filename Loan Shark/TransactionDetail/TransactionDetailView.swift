@@ -19,55 +19,28 @@ struct TransactionDetailView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Group {
-                if transaction.transactionType == .loan {
-                    HStack {
-                        Button {
-                            transaction.isNotificationEnabled.toggle()
-                            reload.toggle()
-                            transaction.isNotificationEnabled ? removeNotification(for: transaction) : addNotification(for: transaction)
-                            manageNotification(for: transaction)
-                        } label: {
-                            Image(systemName: transaction.isNotificationEnabled ? "bell.fill" : "bell.slash")
-                                .foregroundColor(transaction.isNotificationEnabled ? Color("AccentColor")  :Color("AccentColor2"))
-                        }
+                HStack {
+                    Button {
+                        transaction.isNotificationEnabled.toggle()
+                        reload.toggle()
+                        transaction.isNotificationEnabled ? removeNotification(for: transaction) : addNotification(for: transaction)
+                        manageNotification(for: transaction)
+                    } label: {
+                        Image(systemName: transaction.isNotificationEnabled ? "bell.fill" : "bell.slash")
+                            .foregroundColor(transaction.isNotificationEnabled ? Color("AccentColor")  :Color("AccentColor2"))
+                    }
+                    
+                    if transaction.transactionType == .loan {
                         Text("Loan")
-                        Spacer()
-                        Text("$" + String(format: "%.2f", transaction.totalMoney))
-                    }
-                    .padding(.horizontal)
-                } else if transaction.transactionType == .billSplitSync {
-                    HStack {
-                        Button {
-                            transaction.isNotificationEnabled.toggle()
-                            reload.toggle()
-                            transaction.isNotificationEnabled ? removeNotification(for: transaction) : addNotification(for: transaction)
-                            manageNotification(for: transaction)
-                        } label: {
-                            Image(systemName: transaction.isNotificationEnabled ? "bell.fill" : "bell.slash")
-                                .foregroundColor(transaction.isNotificationEnabled ? Color("AccentColor")  :Color("AccentColor2"))
-                        }
-                        Text("Bill split, synchronised")
-                        Spacer()
-                        Text("$" + String(format: "%.2f", transaction.totalMoney))
-                    }
-                    .padding(.horizontal)
-                } else if transaction.transactionType == .billSplitNoSync {
-                    HStack {
-                        Button {
-                            transaction.isNotificationEnabled.toggle()
-                            reload.toggle()
-                            transaction.isNotificationEnabled ? removeNotification(for: transaction) : addNotification(for: transaction)
-                            manageNotification(for: transaction)
-                        } label: {
-                            Image(systemName: transaction.isNotificationEnabled ? "bell.fill" : "bell.slash")
-                                .foregroundColor(transaction.isNotificationEnabled ? Color("AccentColor")  :Color("AccentColor2"))
-                        }
+                    } else if transaction.transactionType == .billSplitNoSync {
                         Text("Bill split, unsynchronised")
-                        Spacer()
-                        Text("$" + String(format: "%.2f", transaction.totalMoney))
+                    } else if transaction.transactionType == .billSplitSync {
+                        Text("Bill split, synchronised")
                     }
-                    .padding(.horizontal)
+                    Spacer()
+                    Text("$" + String(format: "%.2f", transaction.totalMoney))
                 }
+                .padding(.horizontal)
             }
             
             List {
@@ -83,12 +56,11 @@ struct TransactionDetailView: View {
                                                 .foregroundColor(Color("PrimaryTextColor"))
                                                 .font(.title3)
                                             HStack(alignment: .center, spacing: 0) {
-                                                Text(transaction.transactionStatus == .overdue ? "Due " : "Due in ")
+                                                Text(person.personTransactionStatus == .overdue ? "Due " : "Due in ")
                                                     .foregroundColor(Color("SecondaryTextColor"))
-                                                #warning("CHANGE THIS")
                                                 Text(person.dueDate!, style: .relative)
                                                     .foregroundColor(Color("SecondaryTextColor"))
-                                                if transaction.transactionStatus == .overdue {
+                                                if person.personTransactionStatus == .overdue {
                                                     Text(" ago")
                                                         .foregroundColor(Color("SecondaryTextColor"))
                                                 }
@@ -98,7 +70,7 @@ struct TransactionDetailView: View {
                                         }
                                         Spacer()
                                         Text("$ \(String(format: "%.2f", person.money ?? 0))")
-                                            .foregroundColor(transaction.transactionStatus == .overdue ? Color("RadRed") : Color("PrimaryTextColor"))
+                                            .foregroundColor(person.personTransactionStatus == .overdue ? Color("RadRed") : Color("PrimaryTextColor"))
                                             .font(.title2)
                                             .foregroundColor(Color("PrimaryTextColor"))
                                     }

@@ -68,6 +68,22 @@ struct Person: Identifiable, Codable {
     var dueDate: Date?
     var hasPaid = false
     
+    var personTransactionStatus: TransactionStatus {
+        if hasPaid {
+            return .paidOff
+        } else if dueDate != nil {
+            if Date.now > dueDate! && !hasPaid {
+                return .overdue
+            } else if abs(dueDate!.timeIntervalSinceNow) <= 604800 && !hasPaid{
+                return .dueInOneWeek
+            } else {
+                return .unpaid
+            }
+        } else {
+            return .unpaid
+        }
+    }
+    
     init(contact: Contact? = nil, money: Double, dueDate: String, hasPaid: Bool = false) {
         self.contact = contact
         self.money = money
