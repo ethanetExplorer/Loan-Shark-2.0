@@ -22,8 +22,7 @@ struct DecimalTextField: View {
         }
         .keyboardType(.decimalPad)
         .onAppear {
-            let number = decimalNumberFormat.string(for: amount)!
-            text = number
+            text = ""
             previousValue = text
         }
         .onChange(of: text) { newValue in

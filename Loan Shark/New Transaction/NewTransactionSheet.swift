@@ -15,6 +15,7 @@ var decimalNumberFormat: NumberFormatter {
     numberFormatter.allowsFloats = true
     numberFormatter.numberStyle = .currency
     numberFormatter.currencySymbol = ""
+    numberFormatter.maximumFractionDigits = 2
     return numberFormatter
 }
 
@@ -130,21 +131,21 @@ struct NewTransactionSheet: View {
                                 .frame(maxWidth: 70)
                         }
                         
+                        Toggle(isOn: $noDueDate) {
+                            Text("No due date")
+                                .foregroundColor(Color("PrimaryTextColor"))
+                        }
+                        
                         let bindingDate = Binding {
                             people[0].dueDate ?? .now
                         } set: { newValue in
                             people[0].dueDate = newValue
                         }
                         
-//                        Toggle(isOn: $noDueDate) {
-//                            Text("No due date")
-//                                .foregroundColor(Color("PrimaryTextColor"))
-//                        }
-//
-//                        if noDueDate == false {
+                        if noDueDate == false {
                             DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
                                 .foregroundColor(Color("PrimaryTextColor"))
-//                        }
+                        }
                         
                     } else if transactionType == "Bill split" && !isDetailSynchronised {
                         if !people.isEmpty {
@@ -181,15 +182,15 @@ struct NewTransactionSheet: View {
                                             .frame(maxWidth: 70)
                                     }
                                     
+                                    Toggle(isOn: $noDueDate) {
+                                        Text("No due date")
+                                            .foregroundColor(Color("PrimaryTextColor"))
+                                    }
+                                    
                                     let BindingDate = Binding {
                                         person.dueDate ?? Date.now
                                     } set: { newValue in
                                         person.dueDate = newValue
-                                    }
-                                    
-                                    Toggle(isOn: $noDueDate) {
-                                        Text("No due date")
-                                            .foregroundColor(Color("PrimaryTextColor"))
                                     }
                                     
                                     if noDueDate == false {
@@ -316,12 +317,14 @@ struct NewTransactionSheet: View {
                             $0.contact != nil
                         }), transactionType: transactionTypeItem, isNotificationEnabled: enableNotifs)
                         manageNotification(for: transaction)
+                        transactions.append(transaction)
+                        
+                        //for filtering PeopleView
                         for person in transaction.people.filter( {$0.contact != nil }) {
                             var listContact = manager.contactsList.first(where: { $0.id == person.contact!.id })
                             listContact!.selectedForTransaction = true
                             manager.contactsList[manager.contactsList.firstIndex(where: { $0.id == person.contact!.id })!] = listContact!
                         }
-                        transactions.append(transaction)
                         
                         dismiss()
                     } label: {
