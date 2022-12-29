@@ -7,20 +7,22 @@
 import SwiftUI
 
 struct DecimalTextField: View {
-
+    
     @Binding var amount: Double
     var hint: String
     
+    @FocusState var isTextFieldFocused: Bool
     @State var validValue = false
     @State var text = ""
     @State var previousValue = ""
-
+    
     var body: some View {
         TextField(hint, text: $text) {
             let number = decimalNumberFormat.string(for: amount)!
             text = number
         }
         .keyboardType(.decimalPad)
+        .focused($isTextFieldFocused)
         .onAppear {
             if validValue == false {
                 text = ""
@@ -42,6 +44,14 @@ struct DecimalTextField: View {
                 validValue = true
             } else {
                 text = previousValue
+            }
+        }
+        .toolbar{
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button ("Done") {
+                    isTextFieldFocused = false
+                }
             }
         }
     }

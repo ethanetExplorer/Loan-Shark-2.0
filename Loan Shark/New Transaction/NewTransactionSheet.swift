@@ -28,6 +28,7 @@ struct NewTransactionSheet: View {
     @State var transactionType = "Select"
     @State var enableNotifs = false
     @State var noDueDate = false
+    @FocusState var isTextFieldFocused: Bool
     @Environment(\.dismiss) var dismiss
     
     var insufficientPeople: Bool {
@@ -63,7 +64,12 @@ struct NewTransactionSheet: View {
                                 .foregroundColor(Color("PrimaryTextColor"))
                             TextField("Title", text: $name)
                                 .foregroundColor(Color("SecondaryTextColor"))
+                                .focused($isTextFieldFocused)
                                 .multilineTextAlignment(.trailing)
+                                .submitLabel(.done)
+                                .onSubmit {
+                                    isTextFieldFocused = false
+                                }
                         }
                         Picker("Transaction type", selection: $transactionType) {
                             ForEach(transactionTypes, id: \.self) {

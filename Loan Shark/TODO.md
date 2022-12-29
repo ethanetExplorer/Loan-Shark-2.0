@@ -1,5 +1,4 @@
 #BUGS:  I
--Scroll away keyboard
 -edits in transaction detail regarding due date is not reflected within home page, but editing other fields seems to refresh it
 -selectedForTransactions attribute not persisting
 -restrict transactions to > 0.01
@@ -16,6 +15,7 @@
 -sort unpaid people to the top in billsplit of transaction detail view
 
 #Fixed: 
+-keyboard dismissal
 
 
 
