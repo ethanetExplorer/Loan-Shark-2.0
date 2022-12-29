@@ -367,6 +367,7 @@ struct NewTransactionSheet: View {
             }
             .interactiveDismissDisabled()
         }
+        .scrollDismissesKeyboard(.interactively)
     }
     func manageNotification(for transaction: Transaction) {
         if transaction.isNotificationEnabled {

@@ -10,13 +10,13 @@ import SwiftUI
 struct EditTransactionView: View {
     
     @Binding var transaction: Transaction
+    @FocusState var isTextFieldFocused: Bool
     @Environment(\.dismiss) var dismiss
     
     var transactionTypes = ["Select", "Loan", "Bill Split"]
     
     var body: some View {
         NavigationView{
-            ScrollView {
                 VStack {
                     Form {
                         Section(header: Text("Transaction details")) {
@@ -26,6 +26,11 @@ struct EditTransactionView: View {
                                 TextField("Title", text: $transaction.name)
                                     .foregroundColor(.gray)
                                     .multilineTextAlignment(.trailing)
+                                    .focused($isTextFieldFocused)
+                                    .submitLabel(.done)
+                                    .onSubmit {
+                                        isTextFieldFocused = false
+                                    }
                             }
                         }
                         Section {
@@ -57,7 +62,6 @@ struct EditTransactionView: View {
                                     DecimalTextField(amount: moneyBinding, hint: "Amount")
                                         .foregroundColor(Color("SecondaryTextColor"))
                                         .multilineTextAlignment(.trailing)
-                                        .keyboardType(.decimalPad)
                                 }
                                 
                                 let bindingDate = Binding {
@@ -93,7 +97,6 @@ struct EditTransactionView: View {
                                         DecimalTextField(amount: bindingMoney, hint: "Amount")
                                             .foregroundColor(Color("SecondaryTextColor"))
                                             .multilineTextAlignment(.trailing)
-                                            .keyboardType(.decimalPad)
                                     }
                                     
                                     let dueDateBinding = Binding {
@@ -128,7 +131,6 @@ struct EditTransactionView: View {
                                 DecimalTextField(amount: moneyBinding, hint: "Amount")
                                     .foregroundColor(Color("SecondaryTextColor"))
                                     .multilineTextAlignment(.trailing)
-                                    .keyboardType(.decimalPad)
                             }
                             
                             let bindingDate = Binding {
@@ -156,12 +158,8 @@ struct EditTransactionView: View {
                 
                 .navigationTitle("Edit Transaction")
             }
-            .onAppear {
-                UIScrollView.appearance().keyboardDismissMode = .onDrag
-            }
-//            .scrollDismissesKeyboard(.interactively)
+            .scrollDismissesKeyboard(.interactively)
         }
     }
-}
 
 

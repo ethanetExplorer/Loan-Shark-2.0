@@ -12,6 +12,14 @@ struct DecimalTextField: View {
     var hint: String
     
     @FocusState var isTextFieldFocused: Bool
+    @State var showToolbar: Bool = true
+    var hasExistingValue: Bool {
+        if amount != 0 {
+            return true
+        } else {
+            return false
+        }
+    }
     @State var validValue = false
     @State var text = ""
     @State var previousValue = ""
@@ -24,12 +32,12 @@ struct DecimalTextField: View {
         .keyboardType(.decimalPad)
         .focused($isTextFieldFocused)
         .onAppear {
-            if validValue == false {
-                text = ""
-                previousValue = text
-            } else {
+            if hasExistingValue || validValue == true {
                 let number = decimalNumberFormat.string(for: amount)!
                 text = number
+                previousValue = text
+            } else {
+                text = ""
                 previousValue = text
             }
         }
@@ -46,11 +54,14 @@ struct DecimalTextField: View {
                 text = previousValue
             }
         }
-        .toolbar{
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button ("Done") {
-                    isTextFieldFocused = false
+        .toolbar {
+            if showToolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button ("Done") {
+                        isTextFieldFocused = false
+                        showToolbar = false
+                    }
                 }
             }
         }
