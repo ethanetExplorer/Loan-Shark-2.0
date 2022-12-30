@@ -4,6 +4,7 @@
 -discard changes button for editTransactionView
 -Implement no due date (GLOBAL SEARCH dueDate! to make sure everything is correct and implement exceptions if need be)
 -sort unpaid people to the top in billsplit of transaction detail view
+-add loading + tips while waiting for contacts to load
 
 #LONG TERM GOALS: 
 -implement editing people
@@ -16,4 +17,3 @@
 
 
 #Fixed: 
--fix lag when searching
