@@ -27,7 +27,7 @@ struct NewTransactionSheet: View {
     @State var money = 0.0
     @State var transactionType = "Select"
     @State var enableNotifs = false
-    @State var noDueDate = false
+//    @State var noDueDate = false
     @FocusState var isTextFieldFocused: Bool
     @Environment(\.dismiss) var dismiss
     
@@ -137,10 +137,10 @@ struct NewTransactionSheet: View {
                                 .frame(maxWidth: 70)
                         }
                         
-                        Toggle(isOn: $noDueDate) {
-                            Text("No due date")
-                                .foregroundColor(Color("PrimaryTextColor"))
-                        }
+//                        Toggle(isOn: $noDueDate) {
+//                            Text("No due date")
+//                                .foregroundColor(Color("PrimaryTextColor"))
+//                        }
                         
                         let bindingDate = Binding {
                             people[0].dueDate ?? .now
@@ -148,10 +148,10 @@ struct NewTransactionSheet: View {
                             people[0].dueDate = newValue
                         }
                         
-                        if noDueDate == false {
+//                        if noDueDate == false {
                             DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
                                 .foregroundColor(Color("PrimaryTextColor"))
-                        }
+//                        }
                         
                     } else if transactionType == "Bill split" && !isDetailSynchronised {
                         if !people.isEmpty {
@@ -188,10 +188,10 @@ struct NewTransactionSheet: View {
                                             .frame(maxWidth: 70)
                                     }
                                     
-                                    Toggle(isOn: $noDueDate) {
-                                        Text("No due date")
-                                            .foregroundColor(Color("PrimaryTextColor"))
-                                    }
+//                                    Toggle(isOn: $noDueDate) {
+//                                        Text("No due date")
+//                                            .foregroundColor(Color("PrimaryTextColor"))
+//                                    }
                                     
                                     let BindingDate = Binding {
                                         person.dueDate ?? Date.now
@@ -199,10 +199,10 @@ struct NewTransactionSheet: View {
                                         person.dueDate = newValue
                                     }
                                     
-                                    if noDueDate == false {
+//                                    if noDueDate == false {
                                         DatePicker("Due by", selection: BindingDate, in: Date.now..., displayedComponents: .date)
                                             .foregroundColor(Color("PrimaryTextColor"))
-                                    }
+//                                    }
                                 }
                             }
                         }
@@ -296,15 +296,15 @@ struct NewTransactionSheet: View {
                                 people[peopleIndex].dueDate = newValue
                             }
                         }
-                        Toggle(isOn: $noDueDate) {
-                            Text("No due date")
-                                .foregroundColor(Color("PrimaryTextColor"))
-                        }
+//                        Toggle(isOn: $noDueDate) {
+//                            Text("No due date")
+//                                .foregroundColor(Color("PrimaryTextColor"))
+//                        }
                         
-                        if noDueDate == false {
+//                        if noDueDate == false {
                             DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
                                 .foregroundColor(Color("PrimaryTextColor"))
-                        }
+//                        }
                     }
                 }
                 VStack {
