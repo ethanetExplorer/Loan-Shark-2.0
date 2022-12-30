@@ -14,13 +14,12 @@ struct MultiplePeopleSelectorView: View {
     @Binding var selectedContacts: [Contact]
     
     @State var searchTerm = ""
+    @State var listToFetchFrom: [Contact]
     @State var reload = false
     
     var body: some View {
         List {
-            ForEach(manager.contactsList.filter({ contact in
-                contact.name.lowercased().contains(searchTerm.lowercased()) || searchTerm.isEmpty
-            })) { contact in
+            ForEach(listToFetchFrom) { contact in
                 
                 let contactIndex = selectedContacts.firstIndex {
                     $0.id == contact.id
@@ -42,7 +41,19 @@ struct MultiplePeopleSelectorView: View {
                 }
                 .foregroundColor(Color("PrimaryTextColor"))            }
         }
-        .searchable(text: $searchTerm, prompt: Text("Search for a person"))
+        .searchable(text: $manager.contactsSearchTerm, prompt: Text("Search for a contact"))
         .navigationTitle("Select people")
+        .onAppear {
+            listToFetchFrom = manager.contactsList
+        }
+        .onChange(of: manager.contactsSearchTerm) { newValue in
+            if newValue.isEmpty {
+                listToFetchFrom = manager.contactsList
+                print("fetching from contacts list")
+            } else {
+                listToFetchFrom = manager.contactsSearchResult
+                print("fetching from search result")
+            }
+        }
     }
 }

@@ -32,7 +32,7 @@ struct PeopleView: View {
                 }
             }
             .navigationTitle("Contacts")
-            .searchable(text: $manager.contactsSearchTerm)
+            .searchable(text: $manager.contactsSearchTerm, prompt: Text("Search for a contact"))
         }
         .onAppear {
             listToFetchFrom = manager.contactsList
@@ -40,10 +40,10 @@ struct PeopleView: View {
         .onChange(of: manager.contactsSearchTerm) { newValue in
             if newValue.isEmpty {
                 listToFetchFrom = manager.contactsList
-                print("fetching from contacts list")
+//                print("fetching from contacts list")
             } else {
                 listToFetchFrom = manager.contactsSearchResult
-                print("fetching from search result")
+//                print("fetching from search result")
             }
         }
     }

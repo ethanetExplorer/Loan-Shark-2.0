@@ -110,7 +110,7 @@ struct NewTransactionSheet: View {
                         }
                         
                         NavigationLink {
-                            PeopleSelectorView(manager: manager, selectedContact: contactBinding)
+                            PeopleSelectorView(manager: manager, selectedContact: contactBinding, listToFetchFrom: manager.contactsList)
                         } label: {
                             HStack {
                                 Text("Person")
@@ -161,7 +161,7 @@ struct NewTransactionSheet: View {
                             ForEach($people, id: \.name) { $person in
                                 Section(header: Text(person.name ?? "No contact selected")) {
                                     NavigationLink {
-                                        PeopleSelectorView(manager: manager, selectedContact: $person.contact, excludedContacts: excludedContacts)
+                                        PeopleSelectorView(manager: manager, selectedContact: $person.contact, excludedContacts: excludedContacts, listToFetchFrom: manager.contactsList)
                                     } label: {
                                         HStack {
                                             Text("Person")
@@ -248,7 +248,7 @@ struct NewTransactionSheet: View {
                         }
                         
                         NavigationLink {
-                            MultiplePeopleSelectorView(manager: manager, selectedContacts: contactsBinding)
+                            MultiplePeopleSelectorView(manager: manager, selectedContacts: contactsBinding, listToFetchFrom: manager.contactsList)
                         } label: {
                             VStack(alignment: .leading) {
                                 Text("People")

@@ -17,16 +17,14 @@ struct PeopleSelectorView: View {
     
     var excludedContacts: [Contact] = []
     
+    @State var listToFetchFrom: [Contact]
+    
     @State var searchTerm = ""
     @State var reload = false
     
     var body: some View {
         List {
-            ForEach(manager.contactsList
-                .filter { contact in
-                    contact.name.lowercased().contains(searchTerm.lowercased()) || searchTerm.isEmpty
-                }
-                .filter { contact in
+            ForEach(listToFetchFrom.filter { contact in
                     if (selectedContact?.id == contact.id) {
                         return true
                     } else {
@@ -55,7 +53,19 @@ struct PeopleSelectorView: View {
                 .foregroundColor(Color("PrimaryTextColor"))
             }
         }
-        .searchable(text: $searchTerm, prompt: Text("Search for a person"))
+        .searchable(text: $manager.contactsSearchTerm, prompt: Text("Search for a contact"))
         .navigationTitle("Select a contact")
+        .onAppear {
+            listToFetchFrom = manager.contactsList
+        }
+        .onChange(of: manager.contactsSearchTerm) { newValue in
+            if newValue.isEmpty {
+                listToFetchFrom = manager.contactsList
+                print("fetching from contacts list")
+            } else {
+                listToFetchFrom = manager.contactsSearchResult
+                print("fetching from search result")
+            }
+        }
     }
 }
