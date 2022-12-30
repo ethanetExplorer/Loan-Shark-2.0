@@ -53,7 +53,7 @@ struct Contact: Codable, Identifiable {
         return nil
     }
     
-    var selectedForTransaction = false
+//    var selectedForTransaction = false
 }
 
 struct Person: Identifiable, Codable {

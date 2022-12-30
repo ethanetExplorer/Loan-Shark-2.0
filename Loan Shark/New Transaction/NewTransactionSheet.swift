@@ -326,11 +326,11 @@ struct NewTransactionSheet: View {
                         transactions.append(transaction)
                         
                         //for filtering PeopleView
-                        for person in transaction.people.filter( {$0.contact != nil }) {
-                            var listContact = manager.contactsList.first(where: { $0.id == person.contact!.id })
-                            listContact!.selectedForTransaction = true
-                            manager.contactsList[manager.contactsList.firstIndex(where: { $0.id == person.contact!.id })!] = listContact!
-                        }
+//                        for person in transaction.people.filter( {$0.contact != nil }) {
+//                            var listContact = manager.contactsList.first(where: { $0.id == person.contact!.id })
+//                            listContact!.selectedForTransaction = true
+//                            manager.contactsList[manager.contactsList.firstIndex(where: { $0.id == person.contact!.id })!] = listContact!
+//                        }
                         
                         dismiss()
                     } label: {

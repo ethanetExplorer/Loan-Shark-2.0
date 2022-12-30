@@ -1,5 +1,5 @@
 #BUGS & Additions:  I
--selectedForTransactions attribute not persisting
+-selectedForTransactions attribute not persisting (currently commented out relevant filtering of used contacts)
 -restrict transactions to > 0.01
 -discard changes button for editTransactionView
 -Implement no due date (GLOBAL SEARCH dueDate! to make sure everything is correct and implement exceptions if need be)
@@ -17,5 +17,4 @@
 
 
 #Fixed: 
--transaction due date in persondetailview not specific to person
 

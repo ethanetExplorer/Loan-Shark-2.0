@@ -13,13 +13,14 @@ struct PeopleView: View {
     @ObservedObject var manager: TransactionManager
     @State var isContactSheetPresented = false
     @State var searchTerm = ""
-    var contactsSelectedForTransactions: [Contact] {
-        manager.contactsList.filter { $0.selectedForTransaction == true}
-    }
+//    var contactsSelectedForTransactions: [Contact] {
+//        manager.contactsList.filter { $0.selectedForTransaction == true}
+//    }
 
     var body: some View {
         NavigationView {
-            List(contactsSelectedForTransactions.filter({ contact in
+            //Change manager.contactsList to contactsSelectedForTransactions once the persistence issue is solved
+            List(manager.contactsList.filter({ contact in
                 contact.name.lowercased().contains(searchTerm.lowercased()) || searchTerm.isEmpty
             })) { contact in
                 NavigationLink {
@@ -33,10 +34,6 @@ struct PeopleView: View {
             }
             .navigationTitle("Contacts")
             .searchable(text: $searchTerm)
-            .onAppear {
-                print(contactsSelectedForTransactions)
-                print(manager.contactsList)
-            }
         }
     }
 }
