@@ -7,7 +7,6 @@
 
 #LONG TERM GOALS: 
 -implement editing people
--fix lag when searching
 -Add total owed to home screen
 -Add tags
 
@@ -17,4 +16,4 @@
 
 
 #Fixed: 
-
+-fix lag when searching

@@ -20,7 +20,13 @@ class TransactionManager: ObservableObject {
     @Published var selectedSortMethod = SortingMethods.alphabetically
     
     @Published var searchTerm = ""
+    @Published var contactsSearchTerm = "" {
+        didSet {
+            loadSearchedContacts()
+        }
+    }
     @Published var contactsList: [Contact] = []
+    @Published var contactsSearchResult: [Contact] = []
     
     var sortedTransactions: [Transaction] {
         get {
@@ -46,7 +52,7 @@ class TransactionManager: ObservableObject {
     init() {
         load()
         loadContacts()
-        print(getArchiveURL())
+//        print(getArchiveURL())
     }
     
     func getArchiveURL() -> URL {
@@ -104,6 +110,41 @@ class TransactionManager: ObservableObject {
                         }
                     } catch let error {
                         print("Failed to enumerate contact", error)
+                    }
+                }
+            } else {
+                print("access denied")
+            }
+        }
+    }
+    
+    func loadSearchedContacts() {
+        let store = CNContactStore()
+        
+        store.requestAccess(for: .contacts) { (granted, error) in
+            if let error = error {
+                print("failed to request access", error)
+                return
+            }
+            if granted {
+                let keys = [CNContactGivenNameKey, CNContactFamilyNameKey] as [CNKeyDescriptor]
+                let predicate = CNContact.predicateForContacts(matchingName: self.contactsSearchTerm)
+                
+                DispatchQueue.global(qos: .userInitiated).async {
+                    do {
+                        var contacts: [Contact] = []
+                        
+                        let cnContactsList = try store.unifiedContacts(matching: predicate, keysToFetch: keys)
+                        
+                        for contact in cnContactsList {
+                            contacts.append(Contact(id: contact.identifier))
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.contactsSearchResult = contacts
+                        }
+                    } catch let error {
+                        print("Failed to fetch contacts", error)
                     }
                 }
             } else {

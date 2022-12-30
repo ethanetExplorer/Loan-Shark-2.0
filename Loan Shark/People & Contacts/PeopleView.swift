@@ -13,6 +13,7 @@ struct PeopleView: View {
     @ObservedObject var manager: TransactionManager
     @State var isContactSheetPresented = false
     @State var searchTerm = ""
+    @State var listToFetchFrom: [Contact]
 //    var contactsSelectedForTransactions: [Contact] {
 //        manager.contactsList.filter { $0.selectedForTransaction == true}
 //    }
@@ -20,9 +21,7 @@ struct PeopleView: View {
     var body: some View {
         NavigationView {
             //Change manager.contactsList to contactsSelectedForTransactions once the persistence issue is solved
-            List(manager.contactsList.filter({ contact in
-                contact.name.lowercased().contains(searchTerm.lowercased()) || searchTerm.isEmpty
-            })) { contact in
+            List(listToFetchFrom) { contact in
                 NavigationLink {
                     PersonDetailView(manager: TransactionManager(), person: contact)
                 } label: {
@@ -33,7 +32,19 @@ struct PeopleView: View {
                 }
             }
             .navigationTitle("Contacts")
-            .searchable(text: $searchTerm)
+            .searchable(text: $manager.contactsSearchTerm)
+        }
+        .onAppear {
+            listToFetchFrom = manager.contactsList
+        }
+        .onChange(of: manager.contactsSearchTerm) { newValue in
+            if newValue.isEmpty {
+                listToFetchFrom = manager.contactsList
+                print("fetching from contacts list")
+            } else {
+                listToFetchFrom = manager.contactsSearchResult
+                print("fetching from search result")
+            }
         }
     }
 }

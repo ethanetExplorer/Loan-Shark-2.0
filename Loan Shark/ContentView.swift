@@ -17,7 +17,7 @@ struct ContentView: View {
 				.tabItem {
 					Label("Home", systemImage: "house")
 				}
-			PeopleView(manager: transactionManager)
+			PeopleView(manager: transactionManager, listToFetchFrom: manager.contactsList)
 				.tabItem {
 					Label("Contacts", systemImage: "person.circle")
 				}
